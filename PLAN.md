@@ -1,0 +1,91 @@
+# AstraCore Neo — Master Build Tracker
+
+> **Session Protocol:** Read this file first. Python sim is COMPLETE (842/842). Next work is RTL — find the next PENDING Verilog module in the RTL Status table, write it, run cocotb, update this file.
+
+## Project Phases
+
+| Phase | Status | Notes |
+|-------|--------|-------|
+| Python behavioral simulation | ✅ COMPLETE | 842/842 tests, all 11 modules |
+| RTL (Verilog) + cocotb verification | 🔄 IN PROGRESS | 1/11 modules done |
+| FPGA implementation (Vivado) | ⏳ NOT STARTED | Needs all RTL done first |
+| ASIC (OpenLane + sky130) | ⏳ NOT STARTED | After FPGA validated |
+
+## Module Status
+
+| # | Module | Status | Session Date | Tests | Pass Rate | Log |
+|---|--------|--------|-------------|-------|-----------|-----|
+| 1 | hal | DONE | 2026-03-31 | 79 | 79/79 (100%) | logs/test_hal.log |
+| 2 | memory | DONE | 2026-03-31 | 73 | 73/73 (100%) | logs/test_memory.log |
+| 3 | compute | DONE | 2026-03-31 | 91 | 91/91 (100%) | logs/test_compute.log |
+| 4 | inference | DONE | 2026-03-31 | 65 | 65/65 (100%) | logs/test_inference.log |
+| 5 | perception | DONE | 2026-04-02 | 83 | 83/83 (100%) | logs/test_perception.log |
+| 6 | safety | DONE | 2026-04-02 | 92 | 92/92 (100%) | logs/test_safety.log |
+| 7 | security | DONE | 2026-04-02 | 75 | 75/75 (100%) | logs/test_security.log |
+| 8 | telemetry | DONE | 2026-04-02 | 76 | 76/76 (100%) | logs/test_telemetry.log |
+| 9 | dms | DONE | 2026-04-02 | 78 | 78/78 (100%) | logs/test_dms.log |
+| 10 | connectivity | DONE | 2026-04-02 | 75 | 75/75 (100%) | logs/test_connectivity.log |
+| 11 | models | DONE | 2026-04-02 | 55 | 55/55 (100%) | logs/test_models.log |
+
+## RTL Status (Verilog + cocotb)
+
+Run any sim: `cd sim/<module> && PATH=../../.venv/bin:$PATH make`
+
+| # | Module | Verilog | cocotb Tests | Result |
+|---|--------|---------|--------------|--------|
+| 1 | gaze_tracker | rtl/gaze_tracker/gaze_tracker.v | sim/gaze_tracker/ | ✅ 11/11 PASS |
+| 2 | thermal_zone | — | — | PENDING |
+| 3 | canfd_controller | — | — | PENDING |
+| 4 | ecc_secded | — | — | PENDING |
+| 5 | tmr_voter | — | — | PENDING |
+| 6 | fault_predictor | — | — | PENDING |
+| 7 | head_pose_tracker | — | — | PENDING |
+| 8 | pcie_controller | — | — | PENDING |
+| 9 | ethernet_controller | — | — | PENDING |
+| 10 | mac_array | — | — | PENDING |
+| 11 | inference_runtime | — | — | PENDING |
+
+## Dependency Graph
+
+```
+hal
+├── memory (needs hal)
+├── compute (needs hal, memory)
+│   └── inference (needs compute, memory)
+├── perception (needs hal, memory)
+│   └── dms (needs compute, perception)
+├── safety (needs hal, compute)
+│   └── telemetry (needs hal, safety)
+├── security (needs hal)
+└── connectivity (needs hal)
+models (needs inference, perception)
+```
+
+## Build Order
+
+1. hal → 2. memory → 3. compute → 4. inference → 5. perception → 6. safety → 7. security → 8. telemetry → 9. dms → 10. connectivity → 11. models
+
+## Per-Module Checklist
+
+Before marking DONE, confirm all 4 deliverables exist:
+- [ ] `src/<module>/` — implementation files
+- [ ] `tests/test_<module>.py` — testbench
+- [ ] `logs/test_<module>.log` — captured test run output
+- [ ] `docs/<module>.md` — documentation
+
+## Session Log
+
+| Date | Module | Notes |
+|------|--------|-------|
+| 2026-03-31 | — | Project initialized |
+| 2026-03-31 | hal | 79/79 tests pass. Fixed: STATUS/CLK_STATUS are R/O to SW, use _hw_write() for internal device sim updates. |
+| 2026-03-31 | memory | 73/73 tests pass. Fixed: INT4 test used bytes(range(128)) which clamps to nibble range — corrected to use i%16 data. |
+| 2026-03-31 | compute | 91/91 tests pass. Fixed: identity matmul test must use FP32 (float [0,1) casts to 0 in INT8); layer norm variance tolerance loosened to 2e-4 (biased np.var). |
+| 2026-03-31 | inference | 65/65 tests pass. Clean first run — no fixes needed. |
+| 2026-04-02 | perception | 83/83 tests pass. Clean first run — code was pre-written, just needed venv setup and test run. |
+| 2026-04-02 | safety | 92/92 tests pass. Fixed: SECDED overall-parity syndrome computation — P7 must be XOR of all codeword bits (data + P0-P6), not just data; flipping a data bit also flips its Hamming parity bit, cancelling out in a naive computation. Separated _compute_hamming() from _compute_parity(). |
+| 2026-04-02 | security | 75/75 tests pass. Fixed: (1) TEE switch_to_normal must increment SMC counter; (2) OTA begin_update must allow COMPLETE state for sequential updates; (3) UpdatePackage.payload_hash must be stored at creation time (use __post_init__), not recomputed from payload; (4) tampered-payload test catches SecurityBaseError (not OTAError) since signature check fires after auto-hash. |
+| 2026-04-02 | telemetry | 76/76 tests pass. Clean first run — no fixes needed. Three sub-systems: TelemetryLogger (ring buffer, LogLevel, per-level counters), ThermalMonitor/ThermalZone (5-state NOMINAL→SHUTDOWN machine, slope tracking), FaultPredictor/MetricTracker (rolling window stats, spike z-score detection, trend escalation). |
+| 2026-04-02 | dms | 78/78 tests pass. Clean first run — no fixes needed. GazeTracker (EAR→EyeState, PERCLOS rolling window, blink counting), HeadPoseTracker (AttentionZone ±yaw/pitch/roll, distraction ratio), DMSAnalyzer (5-state: ALERT/DROWSY/DISTRACTED/MICROSLEEP/EMERGENCY), DMSMonitor (single process_frame() entry point). |
+| 2026-04-02 | connectivity | 75/75 tests pass. Fixed: Ethernet test OTHER_MAC first byte 0x11 is odd (multicast bit set); changed to 0x22. CAN-FD, Ethernet, PCIe (BAR/TLP), V2X (DSRC channels, RSSI filter), ConnectivityManager. |
+| 2026-04-02 | models | 55/55 tests pass. Clean first run — no fixes needed. ModelDescriptor (versioned metadata), HardwareSpec + ModelValidator (4 violation types), ModelCatalog (registry, filter, recommendation), 5 reference models all pass ASTRA_HW_SPEC validation. |

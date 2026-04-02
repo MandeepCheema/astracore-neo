@@ -1,0 +1,34 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+*.egg-info/
+dist/
+build/
+
+# Virtual environment
+.venv/
+venv/
+env/
+
+# cocotb / Icarus simulation artifacts
+sim_build/
+results.xml
+*.vvp
+*.vcd
+*.lxt
+*.fst
+dump.vcd
+
+# Logs (keep structure, ignore content)
+logs/*.log
+
+# macOS
+.DS_Store
+
+# Editor
+.idea/
+.vscode/
+*.swp
+*.swo
