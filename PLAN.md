@@ -34,16 +34,16 @@ Run any sim: `cd sim/<module> && PATH=../../.venv/bin:$PATH make`
 | # | Module | Verilog | cocotb Tests | Result |
 |---|--------|---------|--------------|--------|
 | 1 | gaze_tracker | rtl/gaze_tracker/gaze_tracker.v | sim/gaze_tracker/ | ✅ 11/11 PASS |
-| 2 | thermal_zone | — | — | PENDING |
-| 3 | canfd_controller | — | — | PENDING |
-| 4 | ecc_secded | — | — | PENDING |
-| 5 | tmr_voter | — | — | PENDING |
-| 6 | fault_predictor | — | — | PENDING |
-| 7 | head_pose_tracker | — | — | PENDING |
-| 8 | pcie_controller | — | — | PENDING |
-| 9 | ethernet_controller | — | — | PENDING |
-| 10 | mac_array | — | — | PENDING |
-| 11 | inference_runtime | — | — | PENDING |
+| 2 | thermal_zone | rtl/thermal_zone/thermal_zone.v | sim/thermal_zone/ | ✅ 10/10 PASS |
+| 3 | canfd_controller | rtl/canfd_controller/canfd_controller.v | sim/canfd_controller/ | ✅ 9/9 PASS |
+| 4 | ecc_secded | rtl/ecc_secded/ecc_secded.v | sim/ecc_secded/ | ✅ 9/9 PASS |
+| 5 | tmr_voter | rtl/tmr_voter/tmr_voter.v | sim/tmr_voter/ | ✅ 9/9 PASS |
+| 6 | fault_predictor | rtl/fault_predictor/fault_predictor.v | sim/fault_predictor/ | ✅ 11/11 PASS |
+| 7 | head_pose_tracker | rtl/head_pose_tracker/head_pose_tracker.v | sim/head_pose_tracker/ | ✅ 11/11 PASS |
+| 8 | pcie_controller | rtl/pcie_controller/pcie_controller.v | sim/pcie_controller/ | ✅ 8/8 PASS |
+| 9 | ethernet_controller | rtl/ethernet_controller/ethernet_controller.v | sim/ethernet_controller/ | ✅ 9/9 PASS |
+| 10 | mac_array | rtl/mac_array/mac_array.v | sim/mac_array/ | ✅ 11/11 PASS |
+| 11 | inference_runtime | rtl/inference_runtime/inference_runtime.v | sim/inference_runtime/ | ✅ 10/10 PASS |
 
 ## Dependency Graph
 
