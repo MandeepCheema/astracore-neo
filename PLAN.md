@@ -7,8 +7,8 @@
 | Phase | Status | Notes |
 |-------|--------|-------|
 | Python behavioral simulation | ✅ COMPLETE | 842/842 tests, all 11 modules |
-| RTL (Verilog) + cocotb verification | 🔄 IN PROGRESS | 1/11 modules done |
-| FPGA implementation (Vivado) | ⏳ NOT STARTED | Needs all RTL done first |
+| RTL (Verilog) + cocotb verification | ✅ COMPLETE | 108/108 tests, all 11 modules |
+| FPGA implementation (Vivado) | 🔄 IN PROGRESS | Top-level done, synthesis pending |
 | ASIC (OpenLane + sky130) | ⏳ NOT STARTED | After FPGA validated |
 
 ## Module Status
@@ -44,6 +44,50 @@ Run any sim: `cd sim/<module> && PATH=../../.venv/bin:$PATH make`
 | 9 | ethernet_controller | rtl/ethernet_controller/ethernet_controller.v | sim/ethernet_controller/ | ✅ 9/9 PASS |
 | 10 | mac_array | rtl/mac_array/mac_array.v | sim/mac_array/ | ✅ 11/11 PASS |
 | 11 | inference_runtime | rtl/inference_runtime/inference_runtime.v | sim/inference_runtime/ | ✅ 10/10 PASS |
+
+## FPGA Status (Arty A7-35T — xc7a35ticsg324-1L)
+
+Run lint check: `python fpga/scripts/synth_check.py`
+Run Vivado build: `vivado -mode batch -source fpga/scripts/build.tcl`
+
+| # | Deliverable | File | Status |
+|---|-------------|------|--------|
+| 1 | Top-level integration | rtl/astracore_top/astracore_top.v | ✅ DONE |
+| 2 | Pin constraints (XDC) | fpga/constraints/arty_a7_35t.xdc | ✅ DONE |
+| 3 | Vivado build script | fpga/scripts/build.tcl | ✅ DONE |
+| 4 | Pre-synth lint check | fpga/scripts/synth_check.py | ✅ PASS (0 warnings, 12 files) |
+| 5 | Vivado synthesis | fpga/reports/utilization.rpt | ⏳ Needs Vivado install |
+| 6 | Timing closure | fpga/reports/timing.rpt | ⏳ After synthesis |
+| 7 | Bitstream | fpga/output/astracore_neo.bit | ⏳ After timing closure |
+
+### Top-Level AXI4-Lite Register Map
+
+| Offset | Name | Direction | Description |
+|--------|------|-----------|-------------|
+| 0x00 | CTRL | W | [0]=mod_valid (pulse) [1]=sw_rst |
+| 0x04 | GAZE | W | [7:0]=left_ear [15:8]=right_ear |
+| 0x08 | THERMAL | W | [7:0]=temp_in |
+| 0x0C | CANFD | W | [0]=tx_success [1]=tx_error [2]=rx_error [3]=bus_off_recovery |
+| 0x10/14 | ECC_LO/HI | W | 64-bit data_in |
+| 0x18 | ECC_CTRL | W | [0]=mode [15:8]=parity_in |
+| 0x1C/20/24 | TMR_A/B/C | W | 32-bit TMR lane inputs |
+| 0x28 | FAULT | W | [15:0]=fault_value |
+| 0x2C | HEAD_POSE | W | [7:0]=yaw [15:8]=pitch [23:16]=roll |
+| 0x30–3C | PCIE_* | W | link_up/down, TLP type/start, req_id, addr, length |
+| 0x40 | ETH | W | [0]=rx_valid [1]=rx_last [9:2]=rx_byte |
+| 0x44 | MAC | W | [0]=valid [1]=clear [9:2]=a [17:10]=b |
+| 0x48 | INF_CTRL | W | load/run/abort/done strobes |
+| 0x80 | GAZE_ST | R | eye_state, perclos_num, blink_count |
+| 0x84 | THERM_ST | R | state, throttle_en, shutdown_req |
+| 0x88 | CANFD_ST | R | tec[8:0], rec[7:0], bus_state[1:0] |
+| 0x8C–94 | ECC_ST/D | R | single/double/corrected, err_pos, data_out |
+| 0x98–9C | TMR_* | R | voted result, fault flags |
+| 0xA0 | FAULT_ST | R | risk, alarm, rolling_mean |
+| 0xA4 | HEAD_ST | R | in_zone, distracted_count |
+| 0xA8–B4 | PCIE_* | R | link_state, tlp_done, 96-bit tlp_hdr |
+| 0xB8–BC | ETH_ST | R | frame_ok/err, types, byte_count, ethertype |
+| 0xC0 | MAC_RES | R | 32-bit accumulated result |
+| 0xC4 | INF_ST | R | state, busy, session_done, error |
 
 ## Dependency Graph
 
