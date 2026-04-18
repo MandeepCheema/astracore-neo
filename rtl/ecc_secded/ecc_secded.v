@@ -156,4 +156,37 @@ module ecc_secded (
         end
     end
 
+    // =========================================================================
+    // SECDED safety invariants — Phase-F formal verification targets
+    // =========================================================================
+`ifndef SYNTHESIS
+`ifndef __ICARUS__
+    // Invariant 1: single_err and double_err are mutually exclusive.
+    property p_err_mutex;
+        @(posedge clk) disable iff (!rst_n)
+        !(single_err && double_err);
+    endproperty
+    a_err_mutex: assert property (p_err_mutex)
+        else $error("ECC: single_err and double_err both set (mutex violation)");
+
+    // Invariant 2: corrected=1 iff single_err=1 (only single-bit errors are
+    // corrected by SECDED; double-bit errors are detected, not corrected).
+    property p_corrected_iff_single;
+        @(posedge clk) disable iff (!rst_n)
+        corrected == single_err;
+    endproperty
+    a_corrected_iff_single: assert property (p_corrected_iff_single)
+        else $error("ECC: corrected != single_err");
+
+    // Invariant 3: encode mode (mode=0) never asserts error outputs.
+    property p_encode_no_errors;
+        @(posedge clk) disable iff (!rst_n)
+        valid && (mode == 1'b0)
+            |=> (!single_err && !double_err && !corrected);
+    endproperty
+    a_encode_no_errors: assert property (p_encode_no_errors)
+        else $error("ECC: encode mode produced error flag");
+`endif
+`endif
+
 endmodule

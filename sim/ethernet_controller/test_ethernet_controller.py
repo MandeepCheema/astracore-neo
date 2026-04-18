@@ -1,8 +1,9 @@
 """
-AstraCore Neo — Ethernet Controller cocotb testbench.
+AstraCore Neo — Ethernet Controller cocotb testbench  (Rev 2)
 
-Validates the Ethernet frame receiver: length validation, EtherType extraction,
-and MAC type classification.
+Rev 1 tests (9): frame reception, length validation, EtherType extraction,
+                 MAC type classification — ALL PRESERVED, unchanged.
+Rev 2 tests (5): RX payload byte streaming (bytes 14+), TX byte pipeline.
 
 Frame type encoding:
   2'd0  DATA (unknown)
@@ -29,6 +30,10 @@ async def reset_dut(dut):
     dut.rx_valid.value = 0
     dut.rx_byte.value  = 0
     dut.rx_last.value  = 0
+    # Rev-2 TX ports
+    dut.tx_valid.value   = 0
+    dut.tx_byte_in.value = 0
+    dut.tx_last.value    = 0
     for _ in range(5):
         await RisingEdge(dut.clk)
     dut.rst_n.value = 1
@@ -42,7 +47,7 @@ def build_frame(dst_mac: bytes, src_mac: bytes, ethertype: int, payload: bytes) 
 
 
 async def send_frame(dut, frame: bytes):
-    """Drive a byte stream into the DUT. Returns (frame_ok, frame_err, ethertype, frame_type, mac_type)."""
+    """Drive a byte stream into the DUT. Returns (frame_ok, frame_err, ethertype, frame_type, mac_type, byte_count)."""
     for i, byte_val in enumerate(frame):
         dut.rx_byte.value  = byte_val
         dut.rx_valid.value = 1
@@ -70,6 +75,10 @@ SRC_MAC       = bytes([0xAA, 0xBB, 0xCC, 0xDD, 0xEE, 0xFF])
 PAYLOAD_MIN   = bytes([0x00] * (64 - 14))    # minimum payload for 64-byte frame
 PAYLOAD_DATA  = bytes([0xAB] * 100)
 
+
+# ===========================================================================
+# Rev-1 Tests (9) — ALL PRESERVED UNCHANGED
+# ===========================================================================
 
 @cocotb.test()
 async def test_valid_ipv4_frame(dut):
@@ -129,7 +138,6 @@ async def test_frame_too_short(dut):
     cocotb.start_soon(Clock(dut.clk, 10, unit="ns").start())
     await reset_dut(dut)
 
-    # 40-byte frame (14 header + 26 payload) — too short
     frame = build_frame(DST_UNICAST, SRC_MAC, 0x0800, bytes([0] * 26))
     assert len(frame) == 40
 
@@ -146,7 +154,6 @@ async def test_frame_max_valid_length(dut):
     cocotb.start_soon(Clock(dut.clk, 10, unit="ns").start())
     await reset_dut(dut)
 
-    # 1518 = 14 header + 1504 payload
     frame = build_frame(DST_UNICAST, SRC_MAC, 0x0800, bytes([0xAB] * 1504))
     assert len(frame) == 1518
 
@@ -203,14 +210,186 @@ async def test_two_consecutive_frames(dut):
     cocotb.start_soon(Clock(dut.clk, 10, unit="ns").start())
     await reset_dut(dut)
 
-    # Frame 1: IPv4
     frame1 = build_frame(DST_UNICAST, SRC_MAC, 0x0800, PAYLOAD_MIN)
     ok1, _, et1, _, _, _ = await send_frame(dut, frame1)
     assert ok1 == 1 and et1 == 0x0800
 
-    # Frame 2: ARP
     frame2 = build_frame(DST_BROADCAST, SRC_MAC, 0x0806, PAYLOAD_MIN)
     ok2, _, et2, ftype2, _, _ = await send_frame(dut, frame2)
     assert ok2 == 1 and et2 == 0x0806 and ftype2 == 2
 
     dut._log.info("two_consecutive_frames test passed")
+
+
+# ===========================================================================
+# Rev-2 Tests (5) — RX payload streaming + TX pipeline
+# ===========================================================================
+
+@cocotb.test()
+async def test_rx_payload_streaming(dut):
+    """Bytes 14+ appear on rx_payload_valid/byte/last; bytes 0-13 do not."""
+    cocotb.start_soon(Clock(dut.clk, 10, unit="ns").start())
+    await reset_dut(dut)
+
+    # Build a frame with a recognisable payload pattern
+    payload = bytes([0xA0 + i for i in range(10)])  # 10 bytes: 0xA0..0xA9
+    frame   = build_frame(DST_UNICAST, SRC_MAC, 0x0800, payload)
+    # Note: 24-byte frame is too short to be "frame_ok", but payload stream
+    # doesn't depend on length validity — test payload capture only.
+
+    captured_bytes = []
+    captured_lasts = []
+
+    # Drive bytes one at a time and sample the combinatorial payload outputs
+    # at each clock edge (rx_count is PRE-edge at this point, so byte i arrives
+    # when rx_count == i).
+    for i, byte_val in enumerate(frame):
+        dut.rx_byte.value  = byte_val
+        dut.rx_valid.value = 1
+        dut.rx_last.value  = 1 if (i == len(frame) - 1) else 0
+        await RisingEdge(dut.clk)
+        # rx_payload_valid is combinatorial: uses rx_count (= i, pre-edge)
+        if int(dut.rx_payload_valid.value) == 1:
+            captured_bytes.append(int(dut.rx_payload_byte.value))
+            captured_lasts.append(int(dut.rx_payload_last.value))
+
+    dut.rx_valid.value = 0
+    dut.rx_last.value  = 0
+    await RisingEdge(dut.clk)
+
+    assert len(captured_bytes) == len(payload), \
+        f"Expected {len(payload)} payload bytes, captured {len(captured_bytes)}"
+    assert list(captured_bytes) == list(payload), \
+        f"Payload data mismatch: {[hex(b) for b in captured_bytes]}"
+    assert captured_lasts[-1] == 1, "rx_payload_last should be 1 on last byte"
+    assert all(v == 0 for v in captured_lasts[:-1]), \
+        "rx_payload_last should be 0 on non-final payload bytes"
+    dut._log.info(f"rx_payload_streaming passed: {len(captured_bytes)} payload bytes captured")
+
+
+@cocotb.test()
+async def test_rx_no_payload_on_header_bytes(dut):
+    """rx_payload_valid must be 0 for bytes 0-13 (header region)."""
+    cocotb.start_soon(Clock(dut.clk, 10, unit="ns").start())
+    await reset_dut(dut)
+
+    frame = build_frame(DST_UNICAST, SRC_MAC, 0x0800, PAYLOAD_MIN)
+
+    header_valid_count = 0
+    for i, byte_val in enumerate(frame[:14]):   # only header bytes
+        dut.rx_byte.value  = byte_val
+        dut.rx_valid.value = 1
+        dut.rx_last.value  = 0
+        await RisingEdge(dut.clk)
+        if int(dut.rx_payload_valid.value) == 1:
+            header_valid_count += 1
+
+    # Clean up
+    dut.rx_valid.value = 0
+    await RisingEdge(dut.clk)
+
+    assert header_valid_count == 0, \
+        f"rx_payload_valid fired {header_valid_count} times during header (bytes 0-13)"
+    dut._log.info("rx_no_payload_on_header_bytes passed")
+
+
+@cocotb.test()
+async def test_tx_pipeline_single_byte(dut):
+    """Single TX byte passes through with exactly 1-cycle pipeline delay."""
+    cocotb.start_soon(Clock(dut.clk, 10, unit="ns").start())
+    await reset_dut(dut)
+
+    assert int(dut.tx_ready.value) == 1, "tx_ready should always be 1"
+    assert int(dut.tx_out_valid.value) == 0, "tx_out_valid idle after reset"
+
+    dut.tx_valid.value   = 1
+    dut.tx_byte_in.value = 0xAB
+    dut.tx_last.value    = 1
+    await RisingEdge(dut.clk)      # EDGE A: byte latched into pipeline register
+    dut.tx_valid.value   = 0
+    dut.tx_last.value    = 0
+    # EDGE A's NBA: tx_out_valid=1, tx_out_byte=0xAB, tx_out_last=1
+    # To read EDGE A's result, must be at EDGE B's active region:
+    await RisingEdge(dut.clk)      # EDGE B: EDGE A's NBA now visible
+    assert int(dut.tx_out_valid.value) == 1, "tx_out_valid should be 1"
+    assert int(dut.tx_out_byte.value)  == 0xAB, \
+        f"tx_out_byte should be 0xAB, got 0x{int(dut.tx_out_byte.value):02X}"
+    assert int(dut.tx_out_last.value)  == 1, "tx_out_last should be 1"
+
+    # After EDGE B: tx_valid=0, so tx_out_valid scheduled to 0
+    await RisingEdge(dut.clk)      # EDGE C: EDGE B's result (tx_valid=0 → tx_out_valid=0)
+    assert int(dut.tx_out_valid.value) == 0, "tx_out_valid should de-assert"
+    assert int(dut.tx_out_last.value)  == 0, "tx_out_last should de-assert"
+    dut._log.info("tx_pipeline_single_byte passed")
+
+
+@cocotb.test()
+async def test_tx_pipeline_multi_byte(dut):
+    """Multi-byte TX frame: each byte appears at output 1 cycle after input."""
+    cocotb.start_soon(Clock(dut.clk, 10, unit="ns").start())
+    await reset_dut(dut)
+
+    tx_data = [0x11, 0x22, 0x33, 0x44]
+
+    # Drive all bytes, capturing output at each edge (1-cycle behind input)
+    # At EDGE i: input = tx_data[i]; output = tx_data[i-1] (EDGE i-1 result)
+    out_bytes  = []
+    out_valids = []
+    out_lasts  = []
+
+    for i, b in enumerate(tx_data):
+        dut.tx_valid.value   = 1
+        dut.tx_byte_in.value = b
+        dut.tx_last.value    = 1 if (i == len(tx_data) - 1) else 0
+        await RisingEdge(dut.clk)   # EDGE i: byte b latched; reading EDGE i-1 result
+        out_valids.append(int(dut.tx_out_valid.value))
+        out_bytes.append(int(dut.tx_out_byte.value))
+        out_lasts.append(int(dut.tx_out_last.value))
+
+    # Deassert and capture final byte output
+    dut.tx_valid.value = 0
+    dut.tx_last.value  = 0
+    await RisingEdge(dut.clk)   # final edge: last byte's NBA visible
+    out_valids.append(int(dut.tx_out_valid.value))
+    out_bytes.append(int(dut.tx_out_byte.value))
+    out_lasts.append(int(dut.tx_out_last.value))
+
+    # out_valids[0]  = result of EDGE -1 (reset state) = 0
+    # out_valids[1]  = result of EDGE  0 (tx_data[0])  = 1
+    # ...
+    # out_valids[4]  = result of EDGE  3 (tx_data[3])  = 1  (last byte)
+    assert out_valids[0] == 0, "No output before first byte"
+    for i in range(1, len(tx_data) + 1):
+        assert out_valids[i] == 1, f"tx_out_valid should be 1 at step {i}"
+        assert out_bytes[i]  == tx_data[i - 1], \
+            f"Step {i}: expected 0x{tx_data[i-1]:02X}, got 0x{out_bytes[i]:02X}"
+
+    # Last flag should only fire on the last byte's output
+    assert out_lasts[len(tx_data)] == 1, "tx_out_last should fire on last byte output"
+    assert all(v == 0 for v in out_lasts[:len(tx_data)]), \
+        "tx_out_last should be 0 for all but last output byte"
+
+    dut._log.info(f"tx_pipeline_multi_byte passed: {len(tx_data)}-byte frame")
+
+
+@cocotb.test()
+async def test_tx_ready_always_asserted(dut):
+    """tx_ready is permanently 1 regardless of tx_valid or reset state."""
+    cocotb.start_soon(Clock(dut.clk, 10, unit="ns").start())
+    await reset_dut(dut)
+
+    # Check during idle
+    assert int(dut.tx_ready.value) == 1, "tx_ready should be 1 when idle"
+
+    # Check during active transmission
+    dut.tx_valid.value   = 1
+    dut.tx_byte_in.value = 0x55
+    dut.tx_last.value    = 0
+    await RisingEdge(dut.clk)
+    assert int(dut.tx_ready.value) == 1, "tx_ready should be 1 during TX"
+
+    dut.tx_valid.value = 0
+    await RisingEdge(dut.clk)
+    assert int(dut.tx_ready.value) == 1, "tx_ready should be 1 after TX"
+
+    dut._log.info("tx_ready_always_asserted passed")

@@ -110,4 +110,27 @@ module fault_predictor #(
         end
     end
 
+    // =========================================================================
+    // Fault-predictor invariants — Phase-F formal verification targets
+    // =========================================================================
+`ifndef SYNTHESIS
+`ifndef __ICARUS__
+    // Invariant 1: alarm is set iff risk >= HIGH (3).
+    property p_alarm_iff_high_risk;
+        @(posedge clk) disable iff (!rst_n)
+        alarm == (risk >= 3'd3);
+    endproperty
+    a_alarm_iff_high_risk: assert property (p_alarm_iff_high_risk)
+        else $error("fault_predictor: alarm != (risk >= 3)");
+
+    // Invariant 2: risk encoding stays within 0..4 (no illegal 5/6/7 encoding).
+    property p_risk_valid_range;
+        @(posedge clk) disable iff (!rst_n)
+        (risk <= 3'd4);
+    endproperty
+    a_risk_valid_range: assert property (p_risk_valid_range)
+        else $error("fault_predictor: risk encoding out of 0..4");
+`endif
+`endif
+
 endmodule

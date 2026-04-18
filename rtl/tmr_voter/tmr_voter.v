@@ -90,4 +90,53 @@ module tmr_voter (
         end
     end
 
+    // =========================================================================
+    // ASIL-D safety invariants (SystemVerilog Assertions)
+    // =========================================================================
+    // These assertions encode the safety properties the module must
+    // preserve.  Verified by simulation (cocotb) and targeted by the
+    // Phase-F formal flow (SymbiYosys / JasperGold).
+    //
+    // Iverilog 12 does not support SVA property/assert property syntax.
+    // Assertions are guarded by `ifndef SYNTHESIS` (simulation-only) and
+    // `ifndef __ICARUS__` (skipped in iverilog).  Compile in Verilator
+    // v5.030+ and Cadence Xcelium / Synopsys VCS, which is what Phase-F
+    // formal verification targets.
+`ifndef SYNTHESIS
+`ifndef __ICARUS__
+    // Invariant 1: agreement implies at least one pair of lanes matched.
+    property p_agreement_consistent;
+        @(posedge clk) disable iff (!rst_n)
+        agreement |-> (ab_eq || ac_eq || bc_eq);
+    endproperty
+    a_agreement_consistent: assert property (p_agreement_consistent)
+        else $error("TMR: agreement=1 but no lane-pair match");
+
+    // Invariant 2: triple_fault is mutually exclusive with agreement.
+    property p_no_agreement_in_triple_fault;
+        @(posedge clk) disable iff (!rst_n)
+        triple_fault |-> !agreement;
+    endproperty
+    a_no_agreement_in_triple_fault:
+        assert property (p_no_agreement_in_triple_fault)
+        else $error("TMR: triple_fault=1 and agreement=1 simultaneously");
+
+    // Invariant 3: vote_count is one of {0, 2, 3} — 1 is impossible.
+    property p_vote_count_valid;
+        @(posedge clk) disable iff (!rst_n)
+        (vote_count != 2'd1);
+    endproperty
+    a_vote_count_valid: assert property (p_vote_count_valid)
+        else $error("TMR: vote_count=1 is impossible by design");
+
+    // Invariant 4: at most one single-lane fault can be set at a time.
+    property p_single_fault_lane;
+        @(posedge clk) disable iff (!rst_n)
+        ($countones({fault_a, fault_b, fault_c}) <= 1);
+    endproperty
+    a_single_fault_lane: assert property (p_single_fault_lane)
+        else $error("TMR: multiple single-lane faults set (impossible)");
+`endif
+`endif
+
 endmodule

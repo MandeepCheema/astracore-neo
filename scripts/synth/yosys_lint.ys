@@ -1,0 +1,62 @@
+# =============================================================================
+# AstraCore Neo — Yosys Lint Sweep (fusion pipeline)
+# =============================================================================
+# Usage (from repo root):
+#   yosys -s scripts/synth/yosys_lint.ys
+#
+# Produces:
+#   • Lint violations (inferred latches, combinational loops, multi-driver,
+#     unresolved hierarchies) flagged via `check -assert`
+#   • Resource stats per module and total
+#   • Schematic JSON for visual inspection (optional)
+#
+# This script does NOT target a specific vendor library — it's pure generic
+# synthesis lint.  For FPGA synthesis use `scripts/synth/vivado_synth.tcl`.
+# =============================================================================
+
+# Read every RTL file in the fusion pipeline
+read_verilog rtl/astracore_fusion_top/astracore_fusion_top.v
+read_verilog rtl/det_arbiter/det_arbiter.v
+read_verilog rtl/mipi_csi2_rx/mipi_csi2_rx.v
+read_verilog rtl/imu_interface/imu_interface.v
+read_verilog rtl/gnss_interface/gnss_interface.v
+read_verilog rtl/ptp_clock_sync/ptp_clock_sync.v
+read_verilog rtl/canfd_controller/canfd_controller.v
+read_verilog rtl/can_odometry_decoder/can_odometry_decoder.v
+read_verilog rtl/radar_interface/radar_interface.v
+read_verilog rtl/ultrasonic_interface/ultrasonic_interface.v
+read_verilog rtl/ethernet_controller/ethernet_controller.v
+read_verilog rtl/lidar_interface/lidar_interface.v
+read_verilog rtl/cam_detection_receiver/cam_detection_receiver.v
+read_verilog rtl/sensor_sync/sensor_sync.v
+read_verilog rtl/coord_transform/coord_transform.v
+read_verilog rtl/ego_motion_estimator/ego_motion_estimator.v
+read_verilog rtl/object_tracker/object_tracker.v
+read_verilog rtl/lane_fusion/lane_fusion.v
+read_verilog rtl/plausibility_checker/plausibility_checker.v
+read_verilog rtl/ttc_calculator/ttc_calculator.v
+read_verilog rtl/aeb_controller/aeb_controller.v
+read_verilog rtl/ldw_lka_controller/ldw_lka_controller.v
+read_verilog rtl/safe_state_controller/safe_state_controller.v
+
+# Resolve hierarchy (catches unknown modules / port mismatches)
+hierarchy -check -top astracore_fusion_top
+
+# Convert processes + always blocks into netlist primitives
+proc
+
+# Common optimisations — makes the check pass more meaningful
+opt
+
+# Pull unused cells out so `check` sees the real design
+clean
+
+# Core lint step — aborts on inferred latches, combinational loops,
+# undriven/multi-driver nets, unsupported constructs.
+check -assert
+
+# Per-module statistics
+stat
+
+# Optional: generate a netlist JSON for graphical inspection with netlistsvg
+# write_json build/fusion_top.json

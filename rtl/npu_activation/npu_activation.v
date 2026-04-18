@@ -1,0 +1,173 @@
+`timescale 1ns/1ps
+// =============================================================================
+// AstraCore Neo — NPU Activation Function Unit  (npu_activation.v)
+// =============================================================================
+// Element-wise activation + re-quantisation.  Consumes one accumulator value
+// per cycle from the systolic array (or anywhere else that produces an ACC_W
+// signed value), applies a selected function, and emits the result one cycle
+// later.
+//
+// ── V1 supported modes ──────────────────────────────────────────────────────
+//   mode[2:0]
+//     000 PASS             y = x
+//     001 RELU             y = x < 0 ? 0 : x
+//     010 LEAKY_RELU       y = x < 0 ? (x >>> 3) : x             (1/8 leak)
+//     011 CLIP_INT8        y = clamp(x, -128, +127)
+//     100 RELU_CLIP_INT8   y = clamp(x < 0 ? 0 : x, 0, +127)
+//     101 RESERVED         (future SIGMOID-LUT / SiLU / GELU)
+//     110 RESERVED         (future TANH-LUT)
+//     111 RESERVED
+//
+//   All paths are 1-cycle registered.  The next cycle after a valid input,
+//   out_valid pulses with out_data and out_saturated (= 1 if the clip path
+//   was engaged and clipped either boundary this cycle).
+//
+// ── Saturation flag semantics ───────────────────────────────────────────────
+//   out_saturated is only meaningful in the CLIP_INT8 and RELU_CLIP_INT8
+//   modes.  In every other mode it reads 0.  For V1 it is a 1-cycle flag
+//   (no accumulated counter); a statistics wrapper can be added later if
+//   the compiler wants to track quantisation loss.
+//
+// ── Parameter constraints ──────────────────────────────────────────────────
+//   • OUT_W must satisfy OUT_W ≤ ACC_W.  The RTL truncates the selected
+//     function's result to the low OUT_W bits of the ACC_W-wide working
+//     value.  OUT_W > ACC_W would bit-select above the source width, which
+//     is implementation-defined in Verilog.  V2 re-quantisation will
+//     narrow ACC_W → OUT_W via an explicit scale+round stage.
+//
+// ── V1 gaps ─────────────────────────────────────────────────────────────────
+//   • No LUT-based functions (SIGMOID/TANH/SiLU/GELU) — placeholders only.
+//   • No per-channel scale+bias folding — quantisation scale is the caller's
+//     responsibility until V2 adds a scale register bank.
+//   • No saturation counter / interrupt — only a single-cycle flag.
+//   • No backpressure signalling — consumer must always be ready.
+//   • Multi-pass activations (Softmax, LayerNorm) live in separate V2 modules
+//     because their dataflow (max-reduction, mean/var-reduction) is not
+//     element-wise.
+// =============================================================================
+
+module npu_activation #(
+    parameter integer ACC_W = 32,
+    parameter integer OUT_W = 32    // may equal ACC_W for now; future
+                                    // re-quantising modes can narrow this
+)(
+    input  wire                         clk,
+    input  wire                         rst_n,
+
+    input  wire [2:0]                   mode,
+
+    input  wire                         in_valid,
+    input  wire signed [ACC_W-1:0]      in_data,
+
+    output reg                          out_valid,
+    output reg  signed [OUT_W-1:0]      out_data,
+    output reg                          out_saturated
+);
+
+    // Mode encoding
+    localparam [2:0] MODE_PASS           = 3'b000;
+    localparam [2:0] MODE_RELU           = 3'b001;
+    localparam [2:0] MODE_LEAKY_RELU     = 3'b010;
+    localparam [2:0] MODE_CLIP_INT8      = 3'b011;
+    localparam [2:0] MODE_RELU_CLIP_INT8 = 3'b100;
+    // WP-7: LUT-based activations. Input interpreted as INT8 (high-saturated
+    // from ACC_W to 8 bits, value/16 = real). Output is INT8 (value/16 =
+    // real). Tanh not yet assigned (V2 will expand mode to 4 bits).
+    localparam [2:0] MODE_SILU           = 3'b101;
+    localparam [2:0] MODE_GELU           = 3'b110;
+    localparam [2:0] MODE_SIGMOID        = 3'b111;
+
+    // INT8 bounds (signed)
+    localparam signed [ACC_W-1:0] INT8_MAX =  32'sd127;
+    localparam signed [ACC_W-1:0] INT8_MIN = -32'sd128;
+
+    // =========================================================================
+    // Combinational candidate results for each mode
+    // =========================================================================
+    wire                         is_neg      = in_data[ACC_W-1];
+    wire signed [ACC_W-1:0]      relu_val    = is_neg ? {ACC_W{1'b0}} : in_data;
+    wire signed [ACC_W-1:0]      leaky_val   = is_neg ? (in_data >>> 3) : in_data;
+
+    wire                         above_max   = (in_data > INT8_MAX);
+    wire                         below_min   = (in_data < INT8_MIN);
+
+    // CLIP_INT8: symmetric saturate into [-128, +127]
+    wire signed [ACC_W-1:0]      clip_val    = above_max ? INT8_MAX
+                                             : below_min ? INT8_MIN
+                                             : in_data;
+    wire                         clip_sat    = above_max | below_min;
+
+    // RELU_CLIP_INT8: combine: first ReLU (negatives → 0), then saturate upper
+    // bound (lower is already 0).
+    wire signed [ACC_W-1:0]      relu_clip_val = is_neg ? {ACC_W{1'b0}}
+                                              : (in_data > INT8_MAX)
+                                                  ? INT8_MAX : in_data;
+    wire                         relu_clip_sat = (~is_neg) & above_max;
+
+    // WP-7: LUT input = high-saturated INT8 from the ACC_W accumulator.
+    // LUTs are INT8 -> INT8 (auto-generated by tools/npu_ref/gen_afu_luts.py).
+    wire signed [7:0] lut_in = above_max ? 8'sd127
+                             : below_min ? -8'sd128
+                             : in_data[7:0];
+    wire signed [7:0] silu_val    = afu_silu_lut(lut_in);
+    wire signed [7:0] gelu_val    = afu_gelu_lut(lut_in);
+    wire signed [7:0] sigmoid_val = afu_sigmoid_lut(lut_in);
+
+    // =========================================================================
+    // Select and register
+    // =========================================================================
+    always @(posedge clk) begin
+        if (!rst_n) begin
+            out_valid     <= 1'b0;
+            out_data      <= {OUT_W{1'b0}};
+            out_saturated <= 1'b0;
+        end else begin
+            out_valid     <= in_valid;
+            // Default the saturation flag to 0 each cycle; only asserted
+            // by CLIP modes below.  Keeps out_saturated deterministic:
+            // it is valid-for-this-cycle-only, never holds a stale value.
+            out_saturated <= 1'b0;
+            if (in_valid) begin
+                case (mode)
+                    MODE_PASS: begin
+                        out_data <= in_data[OUT_W-1:0];
+                    end
+                    MODE_RELU: begin
+                        out_data <= relu_val[OUT_W-1:0];
+                    end
+                    MODE_LEAKY_RELU: begin
+                        out_data <= leaky_val[OUT_W-1:0];
+                    end
+                    MODE_CLIP_INT8: begin
+                        out_data      <= clip_val[OUT_W-1:0];
+                        out_saturated <= clip_sat;
+                    end
+                    MODE_RELU_CLIP_INT8: begin
+                        out_data      <= relu_clip_val[OUT_W-1:0];
+                        out_saturated <= relu_clip_sat;
+                    end
+                    MODE_SILU: begin
+                        out_data <= {{(OUT_W-8){silu_val[7]}}, silu_val};
+                    end
+                    MODE_GELU: begin
+                        out_data <= {{(OUT_W-8){gelu_val[7]}}, gelu_val};
+                    end
+                    MODE_SIGMOID: begin
+                        out_data <= {{(OUT_W-8){sigmoid_val[7]}}, sigmoid_val};
+                    end
+                    default: begin
+                        out_data <= in_data[OUT_W-1:0];
+                    end
+                endcase
+            end
+            // When in_valid is low: out_valid falls next cycle, out_data holds.
+            // out_saturated always clears (defaulted above).
+        end
+    end
+
+    // =========================================================================
+    // Auto-generated LUT functions for SiLU / GELU / Sigmoid
+    // =========================================================================
+`include "afu_luts.vh"
+
+endmodule

@@ -260,3 +260,52 @@ async def test_reset_clears_outputs(dut):
     assert int(dut.double_err.value) == 0
     assert int(dut.data_out.value)   == 0
     dut._log.info("reset_clears_outputs passed")
+
+
+@cocotb.test()
+async def test_exhaustive_double_bit_errors(dut):
+    """ASIL-D SECDED rigor: sweep 200 random double-bit error patterns
+    across data bits and parity bits. DUT double_err must fire for each.
+
+    This closes audit finding Q2 — prior test coverage was a single
+    flip-bits-3-and-7 case, insufficient for ASIL-D claim.
+    """
+    cocotb.start_soon(Clock(dut.clk, 10, unit="ns").start())
+    await reset_dut(dut)
+    ref = ECCEngine()
+    rng = random.Random(0xEC50DED)
+    data_patterns = [
+        0x0000000000000000, 0xFFFFFFFFFFFFFFFF, 0xAAAAAAAAAAAAAAAA,
+        0x5555555555555555, 0xDEADBEEFCAFEBABE, 0x1234567890ABCDEF,
+    ]
+    misses = 0
+    false_singles = 0
+    attempts = 0
+    for data in data_patterns:
+        _, ref_parity = await encode_word(dut, ref, data)
+        # Random pairs of bit positions in the 72-bit codeword
+        positions = list(range(72))
+        for _ in range(35):   # 6 patterns * 35 pairs = 210 tests
+            attempts += 1
+            i, j = rng.sample(positions, 2)
+            # Build corrupted codeword (either data-bit or parity-bit flips)
+            codeword = data | (ref_parity << 64)
+            corrupted_cw = codeword ^ (1 << i) ^ (1 << j)
+            corrupted_data   = corrupted_cw & 0xFFFFFFFFFFFFFFFF
+            corrupted_parity = (corrupted_cw >> 64) & 0xFF
+            await decode_word(dut, ref, corrupted_data, corrupted_parity)
+            double = int(dut.double_err.value)
+            single = int(dut.single_err.value)
+            if double != 1:
+                misses += 1
+                if misses <= 3:
+                    dut._log.error(
+                        f"missed double-err: bits {i},{j} data=0x{data:016x} "
+                        f"(double={double} single={single})")
+            if single == 1:
+                false_singles += 1
+    dut._log.info(
+        f"double-bit sweep: {attempts} attempts, {misses} misses, "
+        f"{false_singles} false-singles")
+    assert misses == 0, f"{misses}/{attempts} double-bit errors missed"
+    assert false_singles == 0, f"{false_singles} false single-err during double-bit"

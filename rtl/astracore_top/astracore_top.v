@@ -210,14 +210,35 @@ module astracore_top #(
             if (s_axil_bvalid && s_axil_bready)
                 s_axil_bvalid <= 1'b0;
 
-            // Auto-clear pulse signals (mod_valid, tx_success, etc.)
-            wreg_ctrl[0]    <= 1'b0;  // mod_valid is a single-cycle pulse
-            wreg_canfd[3:0] <= 4'h0;  // CAN-FD event strobes
-            wreg_pcie_ctrl[5] <= 1'b0; // tlp_start
-            wreg_inf[0]     <= 1'b0;  // load_start
-            wreg_inf[2]     <= 1'b0;  // run_start
-            wreg_inf[3]     <= 1'b0;  // abort
-            wreg_inf[4]     <= 1'b0;  // run_done_in
+            // Auto-clear pulse signals (mod_valid, tx_success, etc.).
+            //
+            // Integration-test finding: these auto-clears MUST be gated on
+            // "no write to the same register happened this cycle", otherwise
+            // Verilog NBA semantics make the clear override the write, and
+            // pulse bits never reach '1' via AXI.  The condition below only
+            // auto-clears when the current AXI transaction is NOT writing
+            // to the pulse-bearing register's word-offset.  One-cycle pulse
+            // lifetime is preserved because the clear still runs on every
+            // subsequent cycle.
+            if (!(s_axil_wvalid && aw_valid_lat && !s_axil_bvalid &&
+                  aw_addr_lat[7:2] == 6'h00)) begin
+                wreg_ctrl[0]      <= 1'b0;  // mod_valid
+            end
+            if (!(s_axil_wvalid && aw_valid_lat && !s_axil_bvalid &&
+                  aw_addr_lat[7:2] == 6'h03)) begin
+                wreg_canfd[3:0]   <= 4'h0;  // CAN-FD event strobes
+            end
+            if (!(s_axil_wvalid && aw_valid_lat && !s_axil_bvalid &&
+                  aw_addr_lat[7:2] == 6'h0C)) begin
+                wreg_pcie_ctrl[5] <= 1'b0;  // tlp_start
+            end
+            if (!(s_axil_wvalid && aw_valid_lat && !s_axil_bvalid &&
+                  aw_addr_lat[7:2] == 6'h12)) begin
+                wreg_inf[0]       <= 1'b0;  // load_start
+                wreg_inf[2]       <= 1'b0;  // run_start
+                wreg_inf[3]       <= 1'b0;  // abort
+                wreg_inf[4]       <= 1'b0;  // run_done_in
+            end
         end
     end
 
@@ -402,7 +423,23 @@ module astracore_top #(
         .bus_off_recovery(wreg_canfd[3]),
         .tec             (w_tec),
         .rec             (w_rec),
-        .bus_state       (w_bus_state)
+        .bus_state       (w_bus_state),
+        .rx_frame_valid  (1'b0),
+        .rx_frame_id     (29'd0),
+        .rx_frame_dlc    (4'd0),
+        .rx_frame_data   (64'd0),
+        .rx_frame_ready  (),
+        .rx_out_valid    (),
+        .rx_out_id       (),
+        .rx_out_dlc      (),
+        .rx_out_data     (),
+        .rx_out_ready    (1'b0),
+        .tx_frame_valid  (1'b0),
+        .tx_frame_id     (29'd0),
+        .tx_frame_dlc    (4'd0),
+        .tx_frame_data   (64'd0),
+        .tx_frame_ready  (),
+        .tx_frame_done   ()
     );
 
     // =========================================================================
@@ -503,17 +540,27 @@ module astracore_top #(
     // 9. Ethernet Controller
     // =========================================================================
     ethernet_controller u_eth (
-        .clk       (clk),
-        .rst_n     (sw_rst_n),
-        .rx_valid  (wreg_eth[0]),
-        .rx_last   (wreg_eth[1]),
-        .rx_byte   (wreg_eth[9:2]),
-        .frame_ok  (w_frame_ok),
-        .frame_err (w_frame_err),
-        .ethertype (w_ethertype),
-        .frame_type(w_frame_type),
-        .mac_type  (w_mac_type),
-        .byte_count(w_byte_count)
+        .clk             (clk),
+        .rst_n           (sw_rst_n),
+        .rx_valid        (wreg_eth[0]),
+        .rx_last         (wreg_eth[1]),
+        .rx_byte         (wreg_eth[9:2]),
+        .frame_ok        (w_frame_ok),
+        .frame_err       (w_frame_err),
+        .ethertype       (w_ethertype),
+        .frame_type      (w_frame_type),
+        .mac_type        (w_mac_type),
+        .byte_count      (w_byte_count),
+        .rx_payload_valid(),
+        .rx_payload_byte (),
+        .rx_payload_last (),
+        .tx_valid        (1'b0),
+        .tx_byte_in      (8'd0),
+        .tx_last         (1'b0),
+        .tx_ready        (),
+        .tx_out_valid    (),
+        .tx_out_byte     (),
+        .tx_out_last     ()
     );
 
     // =========================================================================

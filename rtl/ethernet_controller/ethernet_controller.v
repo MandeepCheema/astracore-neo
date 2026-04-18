@@ -1,44 +1,38 @@
 `timescale 1ns/1ps
 // =============================================================================
-// AstraCore Neo — Ethernet Controller RTL
+// AstraCore Neo — Ethernet Controller RTL  (Rev 2 — payload stream + TX added)
 // =============================================================================
-// Implements an Ethernet II frame receiver and validator.
+// Rev 1: Ethernet II frame receiver + validator.
+//        Extracts dst MAC, EtherType, validates length (64–1518 B).
+// Rev 2: Adds RX payload byte streaming and a TX byte pipeline.
 //
-// Receives an incoming byte stream and validates the frame:
-//   - Extracts destination MAC (bytes 0-5)
-//   - Extracts source MAC (bytes 6-11)
-//   - Extracts EtherType (bytes 12-13)
-//   - Counts payload bytes
-//   - Validates total frame length (min 64B, max 1518B for Ethernet II)
+// ── Rev-1 (preserved, backward compatible) ───────────────────────────────────
+//   clk, rst_n
+//   rx_valid, rx_byte, rx_last          ← incoming byte stream from PHY
+//   frame_ok, frame_err                 ← 1-cycle pulse after rx_last
+//   ethertype[15:0], frame_type[1:0], mac_type[1:0], byte_count[10:0]
 //
-// Frame type encoding (frame_type):
-//   2'd0  DATA      — unknown / raw
-//   2'd1  IPv4      — EtherType = 0x0800
-//   2'd2  ARP       — EtherType = 0x0806
-//   2'd3  IPv6      — EtherType = 0x86DD
+// ── Rev-2: RX payload stream (new) ───────────────────────────────────────────
+//   Combinatorial: bytes 14+ (after 6B dst + 6B src + 2B EtherType) forwarded
+//   as they arrive.  No buffering — consumer (lidar_interface) must accept each
+//   byte in the same cycle it appears.
+//     rx_payload_valid  — 1 when a payload byte is present
+//     rx_payload_byte   — payload byte value (= rx_byte, pass-through)
+//     rx_payload_last   — 1 with the last payload byte (= rx_last, combinatorial)
 //
-// MAC type encoding (mac_type):
-//   2'd0  UNICAST   — LSB of dst_mac byte 0 = 0
-//   2'd1  MULTICAST — LSB of dst_mac byte 0 = 1
-//   2'd2  BROADCAST — dst_mac == FF:FF:FF:FF:FF:FF
-//
-// Interface:
-//   clk          — system clock (rising edge)
-//   rst_n        — active-low synchronous reset
-//   rx_valid     — high when rx_byte contains a valid byte
-//   rx_byte      — incoming byte from PHY
-//   rx_last      — asserted with the last byte of the frame
-//   frame_ok     — pulsed when frame_done and length is valid (64–1518 bytes)
-//   frame_err    — pulsed when frame_done and length is invalid
-//   ethertype    — 16-bit EtherType field (valid after frame_ok/frame_err)
-//   frame_type   — 2-bit frame type (valid after frame_ok/frame_err)
-//   mac_type     — 2-bit MAC address type (valid after frame_ok/frame_err)
-//   byte_count   — number of bytes received in this frame
+// ── Rev-2: TX byte pipeline (new) ────────────────────────────────────────────
+//   1-cycle registered pipeline: upstream (ptp_clock_sync / aeb_controller)
+//   drives tx_valid + tx_byte_in + tx_last; output appears one cycle later.
+//     tx_valid, tx_byte_in[7:0], tx_last  ← from upstream
+//     tx_ready                            ← always 1 (PHY always ready model)
+//     tx_out_valid, tx_out_byte[7:0], tx_out_last  ← to PHY
 // =============================================================================
 
 module ethernet_controller (
     input  wire        clk,
     input  wire        rst_n,
+
+    // ── Rev-1: RX byte stream (preserved) ───────────────────────────────────
     input  wire        rx_valid,
     input  wire [7:0]  rx_byte,
     input  wire        rx_last,
@@ -48,38 +42,54 @@ module ethernet_controller (
     output reg  [15:0] ethertype,
     output reg  [1:0]  frame_type,
     output reg  [1:0]  mac_type,
-    output reg  [10:0] byte_count
+    output reg  [10:0] byte_count,
+
+    // ── Rev-2: RX payload stream (new, combinatorial) ───────────────────────
+    // Active for bytes 14+ of each received frame (after 6+6+2 header bytes).
+    output wire        rx_payload_valid,  // high when payload byte present
+    output wire [7:0]  rx_payload_byte,   // payload byte (= rx_byte)
+    output wire        rx_payload_last,   // high with last payload byte
+
+    // ── Rev-2: TX byte pipeline (new) ────────────────────────────────────────
+    input  wire        tx_valid,          // upstream has a TX byte to send
+    input  wire [7:0]  tx_byte_in,        // TX byte data
+    input  wire        tx_last,           // last byte of this TX frame
+    output wire        tx_ready,          // always 1 — PHY always ready model
+
+    output reg         tx_out_valid,      // TX byte valid (registered, 1-cycle delay)
+    output reg  [7:0]  tx_out_byte,       // TX byte to PHY
+    output reg         tx_out_last        // last TX byte pulse
 );
 
-    // -------------------------------------------------------------------------
-    // EtherType constants
-    // -------------------------------------------------------------------------
+    // =========================================================================
+    // 1. Rev-1: EtherType constants and frame length bounds (unchanged)
+    // =========================================================================
     localparam ET_IPv4 = 16'h0800;
     localparam ET_ARP  = 16'h0806;
     localparam ET_IPv6 = 16'h86DD;
 
-    // Frame length bounds
-    localparam MIN_FRAME = 11'd64;
-    localparam MAX_FRAME = 11'd1518;
+    localparam MIN_FRAME    = 11'd64;
+    localparam MAX_FRAME    = 11'd1518;
+    localparam PAYLOAD_START= 11'd14;   // byte index of first payload byte
 
-    // -------------------------------------------------------------------------
-    // Byte counter and field extraction
-    // -------------------------------------------------------------------------
-    reg [10:0] rx_count;    // bytes received so far
+    // =========================================================================
+    // 2. Rev-1: Byte counter, field extraction, frame validation (unchanged)
+    // =========================================================================
+    reg [10:0] rx_count;
     reg [47:0] dst_mac_reg;
-    reg [7:0]  et_hi;       // EtherType high byte (byte 12)
+    reg [7:0]  et_hi;
 
     always @(posedge clk) begin
         if (!rst_n) begin
-            rx_count   <= 11'd0;
-            dst_mac_reg<= 48'h0;
-            et_hi      <= 8'h0;
-            ethertype  <= 16'h0;
-            frame_ok   <= 1'b0;
-            frame_err  <= 1'b0;
-            frame_type <= 2'd0;
-            mac_type   <= 2'd0;
-            byte_count <= 11'd0;
+            rx_count    <= 11'd0;
+            dst_mac_reg <= 48'h0;
+            et_hi       <= 8'h0;
+            ethertype   <= 16'h0;
+            frame_ok    <= 1'b0;
+            frame_err   <= 1'b0;
+            frame_type  <= 2'd0;
+            mac_type    <= 2'd0;
+            byte_count  <= 11'd0;
         end else begin
             frame_ok  <= 1'b0;
             frame_err <= 1'b0;
@@ -89,24 +99,21 @@ module ethernet_controller (
 
                 // Capture destination MAC (bytes 0-5)
                 case (rx_count)
-                    11'd0: dst_mac_reg[47:40] <= rx_byte;
-                    11'd1: dst_mac_reg[39:32] <= rx_byte;
-                    11'd2: dst_mac_reg[31:24] <= rx_byte;
-                    11'd3: dst_mac_reg[23:16] <= rx_byte;
-                    11'd4: dst_mac_reg[15:8]  <= rx_byte;
-                    11'd5: dst_mac_reg[7:0]   <= rx_byte;
-                    // Bytes 6-11: source MAC (not stored, just count)
-                    // Byte 12: EtherType high
+                    11'd0:  dst_mac_reg[47:40] <= rx_byte;
+                    11'd1:  dst_mac_reg[39:32] <= rx_byte;
+                    11'd2:  dst_mac_reg[31:24] <= rx_byte;
+                    11'd3:  dst_mac_reg[23:16] <= rx_byte;
+                    11'd4:  dst_mac_reg[15:8]  <= rx_byte;
+                    11'd5:  dst_mac_reg[7:0]   <= rx_byte;
+                    // Bytes 6-11: source MAC (counted, not stored)
                     11'd12: et_hi <= rx_byte;
-                    // Byte 13: EtherType low → form complete EtherType
                     11'd13: ethertype <= {et_hi, rx_byte};
                     default: ;
                 endcase
 
                 if (rx_last) begin
-                    byte_count <= rx_count + 11'd1;  // total byte count
+                    byte_count <= rx_count + 11'd1;
 
-                    // Length validation
                     if ((rx_count + 11'd1) >= MIN_FRAME &&
                         (rx_count + 11'd1) <= MAX_FRAME) begin
                         frame_ok <= 1'b1;
@@ -114,7 +121,6 @@ module ethernet_controller (
                         frame_err <= 1'b1;
                     end
 
-                    // EtherType decode — use the stored register (captured at byte 13)
                     case (ethertype)
                         ET_IPv4: frame_type <= 2'd1;
                         ET_ARP:  frame_type <= 2'd2;
@@ -122,18 +128,47 @@ module ethernet_controller (
                         default: frame_type <= 2'd0;
                     endcase
 
-                    // MAC type decode (from dst_mac captured so far)
                     if (dst_mac_reg == 48'hFFFFFFFFFFFF)
-                        mac_type <= 2'd2;   // broadcast
-                    else if (dst_mac_reg[40])  // multicast bit = bit 0 of first byte
-                        mac_type <= 2'd1;   // multicast
+                        mac_type <= 2'd2;
+                    else if (dst_mac_reg[40])
+                        mac_type <= 2'd1;
                     else
-                        mac_type <= 2'd0;   // unicast
+                        mac_type <= 2'd0;
 
-                    // Reset for next frame
                     rx_count <= 11'd0;
                 end
             end
+        end
+    end
+
+    // =========================================================================
+    // 3. Rev-2: RX payload streaming (combinatorial)
+    // Bytes 14+ forwarded in real-time.  rx_payload_byte / rx_payload_last are
+    // direct pass-throughs of rx_byte / rx_last; only rx_payload_valid gates
+    // whether the byte is part of the payload.
+    // =========================================================================
+    // rx_count holds the byte index of the CURRENT incoming byte (pre-NBA).
+    assign rx_payload_valid = rx_valid && (rx_count >= PAYLOAD_START);
+    assign rx_payload_byte  = rx_byte;
+    assign rx_payload_last  = rx_last;   // meaningful only when rx_payload_valid
+
+    // =========================================================================
+    // 4. Rev-2: TX byte pipeline (1-cycle registered delay)
+    // ptp_clock_sync drives tx_valid + tx_byte_in + tx_last.
+    // Result appears on tx_out_* one cycle later.
+    // tx_ready is permanently 1 (no back-pressure in this model).
+    // =========================================================================
+    assign tx_ready = 1'b1;
+
+    always @(posedge clk) begin
+        if (!rst_n) begin
+            tx_out_valid <= 1'b0;
+            tx_out_byte  <= 8'h00;
+            tx_out_last  <= 1'b0;
+        end else begin
+            tx_out_valid <= tx_valid;
+            tx_out_byte  <= tx_byte_in;
+            tx_out_last  <= tx_valid && tx_last;  // last only fires when byte is valid
         end
     end
 
