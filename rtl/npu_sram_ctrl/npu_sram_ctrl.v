@@ -60,7 +60,10 @@ module npu_sram_ctrl #(
     parameter integer ACC_W          = 32,
     parameter integer N_ROWS         = 4,
     parameter integer N_COLS         = 4,
-    parameter integer WEIGHT_DEPTH   = 16,
+    // Auto-derives from array size. Matches npu_top's derivation.
+    // Overriding this inconsistently used to silently break at non-
+    // default array sizes (GAP-3 finding, fixed 2026-04-19).
+    parameter integer WEIGHT_DEPTH   = N_ROWS * N_COLS,
     parameter integer ACT_IN_DEPTH   = 16,
     parameter integer ACT_OUT_DEPTH  = 16,
     parameter integer SCRATCH_DEPTH  = 16,

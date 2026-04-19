@@ -27,6 +27,9 @@ data/calibration/*.npz
 # ASIC build run logs — large + regenerable
 asic/reports/*_run.log
 
+# Probe artefacts — regenerable via scripts/int2_baseline_probe.py
+reports/int2_probe_artefacts/
+
 # cocotb / Icarus simulation artifacts
 sim_build/
 results.xml

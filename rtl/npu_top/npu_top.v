@@ -75,7 +75,13 @@ module npu_top #(
     parameter integer ACC_W          = 32,
     parameter integer N_ROWS         = 4,
     parameter integer N_COLS         = 4,
-    parameter integer WEIGHT_DEPTH   = 16,
+    // WEIGHT_DEPTH must equal N_ROWS * N_COLS — the weight SRAM holds
+    // exactly one stationary weight matrix. Before 2026-04-19 the
+    // default was a literal 16 (matching the 4×4 default) which
+    // silently broke at other array sizes (GAP-3 finding on 8×8).
+    // Now auto-derives; callers overriding to a wrong value trip the
+    // elaboration-time check below.
+    parameter integer WEIGHT_DEPTH   = N_ROWS * N_COLS,
     parameter integer ACT_IN_DEPTH   = 16,
     parameter integer ACT_OUT_DEPTH  = 16,
     parameter integer SCRATCH_DEPTH  = 16,
@@ -167,6 +173,29 @@ module npu_top #(
     output wire signed [ACC_W-1:0]     afu_out_data,
     output wire                        afu_out_saturated
 );
+
+    // =========================================================================
+    // Parameter sanity — catch silent couplings that historically have
+    // cost time at board bring-up. Verilator + Vivado both honour
+    // $fatal in initial blocks; the check is constant-folded in
+    // synthesis if the condition never fires.
+    // =========================================================================
+    initial begin
+        if (WEIGHT_DEPTH != N_ROWS * N_COLS) begin
+            $display("npu_top: FATAL parameter mismatch — WEIGHT_DEPTH (%0d) != N_ROWS (%0d) * N_COLS (%0d).",
+                     WEIGHT_DEPTH, N_ROWS, N_COLS);
+            $display("                    Weight SRAM holds exactly one stationary matrix of N_ROWS*N_COLS bytes.");
+            $fatal(1);
+        end
+        if (W_ROW_DEPTH * N_COLS != WEIGHT_DEPTH) begin
+            $display("npu_top: FATAL derived W_ROW_DEPTH (%0d) * N_COLS (%0d) != WEIGHT_DEPTH (%0d).",
+                     W_ROW_DEPTH, N_COLS, WEIGHT_DEPTH);
+            $fatal(1);
+        end
+        if (ACT_IN_DEPTH  < 2) begin $display("npu_top: ACT_IN_DEPTH must be >= 2");  $fatal(1); end
+        if (ACT_OUT_DEPTH < 2) begin $display("npu_top: ACT_OUT_DEPTH must be >= 2"); $fatal(1); end
+        if (K_W < 4) begin $display("npu_top: K_W must be >= 4"); $fatal(1); end
+    end
 
     // =========================================================================
     // Tile controller

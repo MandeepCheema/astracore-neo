@@ -1,0 +1,40 @@
+{
+  "results": [
+    {
+      "label": "int8",
+      "fq_path": "C:\\Users\\mande\\astracore-neo\\reports\\int2_probe_artefacts\\yolov8n.int8.onnx",
+      "wall_s": 18.15931950000231,
+      "agg": {
+        "iou>=0.50": 0.984,
+        "iou>=0.70": 0.96,
+        "iou>=0.90": 0.944
+      },
+      "zero_det_images": 0,
+      "max_class_score_any_image": 0.9407172799110413
+    },
+    {
+      "label": "int4",
+      "fq_path": "C:\\Users\\mande\\astracore-neo\\reports\\int2_probe_artefacts\\yolov8n.int4.onnx",
+      "wall_s": 16.33139300000039,
+      "agg": {
+        "iou>=0.50": 0.0,
+        "iou>=0.70": 0.0,
+        "iou>=0.90": 0.0
+      },
+      "zero_det_images": 19,
+      "max_class_score_any_image": 0.33786118030548096
+    },
+    {
+      "label": "int2",
+      "fq_path": "C:\\Users\\mande\\astracore-neo\\reports\\int2_probe_artefacts\\yolov8n.int2.onnx",
+      "wall_s": 19.072811699996237,
+      "agg": {
+        "iou>=0.50": 0.0,
+        "iou>=0.70": 0.0,
+        "iou>=0.90": 0.0
+      },
+      "zero_det_images": 0,
+      "max_class_score_any_image": 1.0
+    }
+  ]
+}

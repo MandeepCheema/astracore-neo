@@ -63,10 +63,9 @@ runner.build(
     parameters={
         'N_ROWS': 8,
         'N_COLS': 8,
-        # WEIGHT_DEPTH must equal N_ROWS × N_COLS. Latent coupling
-        # the RTL doesn't auto-derive — flagged during GAP-3. For
-        # the 64×64 AWS-F1 build WEIGHT_DEPTH must be 4096.
-        'WEIGHT_DEPTH': 64,
+        # WEIGHT_DEPTH now auto-derives from N_ROWS * N_COLS in
+        # npu_top.v (2026-04-19 fix after GAP-3). No longer needs to
+        # be passed here. Kept as a comment for future 64×64 reviewers.
         'MP_EXP_LUT_FILE':   f'"{build_dir}/exp_lut.mem"',
         'MP_RECIP_LUT_FILE': f'"{build_dir}/recip_lut.mem"',
         'MP_RSQRT_LUT_FILE': f'"{build_dir}/rsqrt_lut.mem"',
