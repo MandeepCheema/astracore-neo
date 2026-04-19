@@ -1,0 +1,35 @@
+# =============================================================================
+# AstraCore Neo - sensor_sync single-module OpenLane 2 config
+# Target: sky130A | sky130_fd_sc_hd | 50 MHz
+# Sky130 synthesis area: 19359 um^2 (1869 cells)
+# Die: 350 x 350 um^2 (tier: medium)
+# =============================================================================
+
+DESIGN_NAME: sensor_sync
+VERILOG_FILES: dir::../rtl/sensor_sync/sensor_sync.v
+
+CLOCK_PORT: clk
+CLOCK_PERIOD: 20.0   # 50 MHz
+
+PNR_SDC_FILE: dir::scripts/base.sdc
+SIGNOFF_SDC_FILE: dir::scripts/base.sdc
+
+FP_SIZING: absolute
+DIE_AREA: [0, 0, 350, 350]
+FP_CORE_UTIL: 42
+FP_ASPECT_RATIO: 1
+
+PL_TARGET_DENSITY_PCT: 48
+
+SYNTH_STRATEGY: DELAY 0
+MAX_FANOUT_CONSTRAINT: 10
+
+RUN_CTS: true
+
+DRT_THREADS: 4
+
+pdk::sky130*:
+  FP_PDN_VOFFSET: 5
+  FP_PDN_HOFFSET: 5
+  GPL_CELL_PADDING: 4
+  DPL_CELL_PADDING: 4

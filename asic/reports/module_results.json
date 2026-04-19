@@ -1,0 +1,155 @@
+{
+  "run_date": "2026-04-15",
+  "openlane_version": "2.3.10",
+  "pdk": "sky130A",
+  "scl": "sky130_fd_sc_hd",
+  "clock_period_ns": 20.0,
+  "clock_freq_mhz": 50,
+  "summary": "All 11 modules + full chip pass RTL-to-GDSII. Full chip DRC/LVS clean. 3 minor antenna violations remain. dms_fusion RTL complete (sim: 14/14 pass), ASIC run pending.",
+  "full_chip": {
+    "design": "astracore_top",
+    "status": "PASS",
+    "cells": 16523,
+    "die_um": "600x600",
+    "utilization": 0.225,
+    "setup_wns_worst_ns": 0.618,
+    "setup_wns_tt_ns": 7.21,
+    "hold_r2r_violations": 0,
+    "hold_input_port_ff_corner_ns": -0.061,
+    "hold_note": "Input-port hold -61ps in FF corner only — SDC artifact (set_input_delay -min 0.0). Not a real silicon violation. R2R hold clean.",
+    "magic_drc_errors": 0,
+    "klayout_drc_errors": 0,
+    "lvs_errors": 0,
+    "antenna_violations": 3,
+    "antenna_note": "3 nets remain despite heuristic diode insertion. Minor — acceptable for Chipignite submission.",
+    "gdsii": "asic/runs/astracore_top/final/gds/astracore_top.gds"
+  },
+  "modules": {
+    "gaze_tracker": {
+      "status": "PASS",
+      "cells": 1013,
+      "die_um": "200x200",
+      "utilization": 0.178,
+      "wns_ns": 4.68,
+      "hold_ns": 0.12,
+      "antenna_violations": 0,
+      "notes": "TinyTapeout candidate. Minimum viable die for this cell count."
+    },
+    "thermal_zone": {
+      "status": "PASS",
+      "cells": 312,
+      "die_um": "150x150",
+      "utilization": 0.046,
+      "wns_ns": 8.56,
+      "hold_ns": 0.13,
+      "antenna_violations": 0
+    },
+    "canfd_controller": {
+      "status": "PASS",
+      "cells": 400,
+      "die_um": "150x150",
+      "utilization": 0.101,
+      "wns_ns": 9.96,
+      "hold_ns": 0.17,
+      "antenna_violations": 0
+    },
+    "inference_runtime": {
+      "status": "PASS",
+      "cells": 296,
+      "die_um": "150x150",
+      "utilization": 0.043,
+      "wns_ns": 9.37,
+      "hold_ns": 0.20,
+      "antenna_violations": 0
+    },
+    "tmr_voter": {
+      "status": "PASS",
+      "cells": 936,
+      "die_um": "150x150",
+      "utilization": 0.353,
+      "wns_ns": 5.28,
+      "hold_ns": 0.13,
+      "antenna_violations": 0,
+      "notes": "Highest utilization at 150x150 — do not reduce die."
+    },
+    "head_pose_tracker": {
+      "status": "PASS",
+      "cells": 688,
+      "die_um": "200x200",
+      "utilization": 0.074,
+      "wns_ns": 7.32,
+      "hold_ns": 0.13,
+      "antenna_violations": 0
+    },
+    "ethernet_controller": {
+      "status": "PASS",
+      "cells": 990,
+      "die_um": "200x200",
+      "utilization": 0.186,
+      "wns_ns": 8.80,
+      "hold_ns": 0.11,
+      "antenna_violations": 0
+    },
+    "ecc_secded": {
+      "status": "PASS_WITH_WARNINGS",
+      "cells": 2801,
+      "die_um": "300x300",
+      "utilization": 0.213,
+      "wns_ns": 2.39,
+      "hold_ns": 0.11,
+      "antenna_violations": 6,
+      "notes": "6 antenna violations standalone. RUN_HEURISTIC_DIODE_INSERTION added to config. 64-bit SECDED XOR logic is cell-heavy. Needed 300x300 (failed at 200x200)."
+    },
+    "pcie_controller": {
+      "status": "PASS",
+      "cells": 1047,
+      "die_um": "200x200",
+      "utilization": 0.187,
+      "wns_ns": 9.02,
+      "hold_ns": 0.11,
+      "antenna_violations": 0
+    },
+    "mac_array": {
+      "status": "PASS",
+      "cells": 2240,
+      "die_um": "300x300",
+      "utilization": 0.166,
+      "wns_ns": 0.943,
+      "hold_ns": 0.14,
+      "antenna_violations": 0,
+      "notes": "Standalone WNS +0.943 ns (tight). In full chip R2R context timing is clean (+7.2 ns at TT). Standalone WNS was pessimistic due to SDC input_delay. No RTL changes needed."
+    },
+    "dms_fusion": {
+      "status": "SIM_PASS_ASIC_PENDING",
+      "cocotb_tests": "14/14",
+      "cells": null,
+      "die_um": "200x200",
+      "utilization": null,
+      "wns_ns": null,
+      "hold_ns": null,
+      "antenna_violations": null,
+      "notes": "New sensor fusion module. Combines gaze_tracker + head_pose_tracker into driver_attention_level[2:0]. IIR smoothing, ASIL-D watchdog. ASIC run not yet executed — use config_dms_fusion.yaml."
+    },
+    "fault_predictor": {
+      "status": "PASS",
+      "cells": 2338,
+      "die_um": "250x250",
+      "utilization": 0.337,
+      "wns_ns": 7.95,
+      "hold_ns": 0.07,
+      "antenna_violations": 0,
+      "notes": "Rolling window multiply path — was flagged as timing risk. DELAY 1 strategy resolved it cleanly."
+    }
+  },
+  "die_size_rules": {
+    "150x150": "Up to ~950 cells",
+    "200x200": "Up to ~1050 cells (PDN overhead limits)",
+    "300x300": "Up to ~3000 cells",
+    "full_chip_600x600": "16523 cells at 22.5% utilization"
+  },
+  "sdc_lessons": {
+    "set_load": "Use 0.05 pF (not 17.65 — that is fF for Yosys, not pF for OpenSTA)",
+    "remove_from_collection": "Synopsys DC only — use all_inputs directly in OpenSTA",
+    "hold_input_port": "set_input_delay -min 0.0 causes FF corner input-port hold violations — not real silicon violations"
+  }
+}

@@ -1,0 +1,35 @@
+# =============================================================================
+# AstraCore Neo - lane_fusion single-module OpenLane 2 config
+# Target: sky130A | sky130_fd_sc_hd | 50 MHz
+# Sky130 synthesis area: 106497 um^2 (9994 cells)
+# Die: 900 x 900 um^2 (tier: large)
+# =============================================================================
+
+DESIGN_NAME: lane_fusion
+VERILOG_FILES: dir::../rtl/lane_fusion/lane_fusion.v
+
+CLOCK_PORT: clk
+CLOCK_PERIOD: 20.0   # 50 MHz
+
+PNR_SDC_FILE: dir::scripts/base.sdc
+SIGNOFF_SDC_FILE: dir::scripts/base.sdc
+
+FP_SIZING: absolute
+DIE_AREA: [0, 0, 900, 900]
+FP_CORE_UTIL: 40
+FP_ASPECT_RATIO: 1
+
+PL_TARGET_DENSITY_PCT: 45
+
+SYNTH_STRATEGY: DELAY 0
+MAX_FANOUT_CONSTRAINT: 10
+
+RUN_CTS: true
+
+DRT_THREADS: 4
+
+pdk::sky130*:
+  FP_PDN_VOFFSET: 5
+  FP_PDN_HOFFSET: 5
+  GPL_CELL_PADDING: 2
+  DPL_CELL_PADDING: 2

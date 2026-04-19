@@ -1,0 +1,37 @@
+# =============================================================================
+# AstraCore Neo - canfd_controller single-module OpenLane 2 config
+# Target: sky130A | sky130_fd_sc_hd | 50 MHz
+# Sky130 synthesis area: 16890 um^2 (1057 cells) — Rev2 with RX/TX FIFOs
+# Die: 350 x 350 um^2
+# Note: Rev2 is ~12x larger than v1 (1398 um^2) due to 4-entry RX/TX
+#       FIFOs, AXI-S ports, and BUS_OFF gating logic.
+# =============================================================================
+
+DESIGN_NAME: canfd_controller
+VERILOG_FILES: dir::../rtl/canfd_controller/canfd_controller.v
+
+CLOCK_PORT: clk
+CLOCK_PERIOD: 20.0   # 50 MHz
+
+PNR_SDC_FILE: dir::scripts/base.sdc
+SIGNOFF_SDC_FILE: dir::scripts/base.sdc
+
+FP_SIZING: absolute
+DIE_AREA: [0, 0, 350, 350]
+FP_CORE_UTIL: 42
+FP_ASPECT_RATIO: 1
+
+PL_TARGET_DENSITY_PCT: 48
+
+SYNTH_STRATEGY: DELAY 0
+MAX_FANOUT_CONSTRAINT: 10
+
+RUN_CTS: true
+
+DRT_THREADS: 4
+
+pdk::sky130*:
+  FP_PDN_VOFFSET: 5
+  FP_PDN_HOFFSET: 5
+  GPL_CELL_PADDING: 4
+  DPL_CELL_PADDING: 4

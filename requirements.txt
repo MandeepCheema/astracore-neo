@@ -1,3 +1,9 @@
 pytest>=7.4
 pytest-cov>=4.1
 numpy>=1.26
+
+# Compiler track (tools/npu_ref/onnx_loader.py and downstream).
+# Kept separate from the RTL-sim toolchain (cocotb, verilator) which
+# is installed by run_verilator_integration.sh.
+onnx>=1.14
+onnxruntime>=1.16

@@ -338,6 +338,18 @@ class TestQuantizerCalibration:
         with pytest.raises(QuantizationError):
             quantizer.stats("missing")
 
+    def test_iter_stats_yields_every_calibrated_tensor(self, quantizer):
+        quantizer.calibrate("a", np.array([1.0, -2.0], dtype=np.float32))
+        quantizer.calibrate("b", np.array([0.5], dtype=np.float32))
+        quantizer.calibrate("a", np.array([4.0], dtype=np.float32))
+        seen = dict(quantizer.iter_stats())
+        assert set(seen) == {"a", "b"}
+        assert seen["a"].max_val == pytest.approx(4.0)
+        assert seen["b"].max_val == pytest.approx(0.5)
+
+    def test_iter_stats_empty_when_no_calibration(self, quantizer):
+        assert list(quantizer.iter_stats()) == []
+
 
 # ===========================================================================
 # 5. Quantizer — quantize / dequantize

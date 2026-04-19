@@ -81,6 +81,11 @@ module npu_top #(
     parameter integer SCRATCH_DEPTH  = 16,
     parameter integer K_W            = 16,
     parameter integer DRAIN_CYCLES   = 2,
+    // F1-A4 multi-pass AFU LUT files (pass absolute paths via Verilator -G
+    // at build time so $readmemh resolves regardless of simulator cwd).
+    parameter         MP_EXP_LUT_FILE   = "exp_lut.mem",
+    parameter         MP_RECIP_LUT_FILE = "recip_lut.mem",
+    parameter         MP_RSQRT_LUT_FILE = "rsqrt_lut.mem",
 
     // Derived address widths (SRAM controller exposes these)
     parameter integer W_ADDR_W      = (WEIGHT_DEPTH  <= 1) ? 1 : $clog2(WEIGHT_DEPTH),
@@ -110,6 +115,12 @@ module npu_top #(
     //   00 INT8 (baseline)   01 INT4 (2x MACs/cycle)
     //   10 INT2 (4x MACs/cycle)   11 FP16 (placeholder, falls back to INT8)
     input  wire [1:0]                  cfg_precision_mode,
+    // F1-A4 multi-pass AFU mode (0 = disabled; 4'd8 = softmax; 4'd9 = LN;
+    // 4'd10 = RMSNorm).  When nonzero at `start`, skips tile compute and
+    // runs the multi-pass AFU against AI SRAM directly.  Outputs land in
+    // AO[cfg_ao_base +:]
+    input  wire [3:0]                  cfg_mp_mode,
+    input  wire [10:0]                 cfg_mp_vec_len,
     output wire                        busy,
     output wire                        done,
 
@@ -175,6 +186,14 @@ module npu_top #(
     wire                    tc_ao_we;
     wire [AO_ADDR_W-1:0]    tc_ao_waddr;
 
+    // F1-A4 multi-pass AFU interface
+    wire                    tc_mp_start;
+    wire [3:0]              tc_mp_mode;
+    wire                    tc_mp_in_valid;
+    wire                    tc_mp_ao_we;
+    wire [AO_ADDR_W-1:0]    tc_mp_ao_waddr;
+    wire                    mp_afu_out_valid;     // aggregated AFU out_valid to tile_ctrl
+
     npu_tile_ctrl #(
         .N_ROWS       (N_ROWS),
         .N_COLS       (N_COLS),
@@ -193,6 +212,9 @@ module npu_top #(
         .cfg_ao_base (cfg_ao_base),
         .cfg_acc_init_mode (cfg_acc_init_mode),
         .cfg_acc_init_data (cfg_acc_init_data),
+        .cfg_mp_mode       (cfg_mp_mode),
+        .cfg_mp_vec_len    (cfg_mp_vec_len),
+        .mp_out_valid      (mp_afu_out_valid),
         .busy        (busy),
         .done        (done),
         .w_bank_sel            (tc_w_bank_sel),
@@ -208,7 +230,12 @@ module npu_top #(
         .array_exec_valid      (tc_array_exec_valid),
         .array_afu_in_valid    (tc_array_afu_in_valid),
         .ao_we                 (tc_ao_we),
-        .ao_waddr              (tc_ao_waddr)
+        .ao_waddr              (tc_ao_waddr),
+        .mp_start              (tc_mp_start),
+        .mp_mode               (tc_mp_mode),
+        .mp_in_valid           (tc_mp_in_valid),
+        .mp_ao_we              (tc_mp_ao_we),
+        .mp_ao_waddr           (tc_mp_ao_waddr)
     );
 
     // =========================================================================
@@ -345,9 +372,12 @@ module npu_top #(
         pack_ai_we ? pack_buf             :
                      ext_ai_wdata;
 
-    // AO write from tile_ctrl, AO read always external.
-    wire sram_ao_we    = tc_ao_we;
-    wire [AO_ADDR_W-1:0] sram_ao_waddr = tc_ao_waddr;
+    // AO write: either from tile_ctrl's normal writeback path OR from the
+    // multi-pass AFU (softmax/layernorm) when in multi-pass mode. The two
+    // paths are mutually exclusive by FSM construction (normal states never
+    // overlap with S_MP_*).
+    wire sram_ao_we    = tc_ao_we | tc_mp_ao_we;
+    wire [AO_ADDR_W-1:0] sram_ao_waddr = tc_mp_ao_we ? tc_mp_ao_waddr : tc_ao_waddr;
     wire sram_ao_re    = ext_ao_re;
     wire [AO_ADDR_W-1:0] sram_ao_raddr = ext_ao_raddr;
 
@@ -389,7 +419,7 @@ module npu_top #(
         .ao_rdata(sram_ao_rdata),
         .ao_we   (sram_ao_we),
         .ao_waddr(sram_ao_waddr),
-        .ao_wdata(writeback_afu_out),  // gap #3: activated c_vec via N_COLS AFUs
+        .ao_wdata(sram_ao_wdata),      // mp-mux: AFU or writeback AFU output
 
         // Scratch bank unused in V1.  sc_rdata explicitly left floating
         // (documented by the wire below rather than implicitly unconnected,
@@ -458,6 +488,94 @@ module npu_top #(
             );
         end
     endgenerate
+
+    // =========================================================================
+    // F1-A4 multi-pass AFUs — softmax + layernorm/RMSNorm
+    // =========================================================================
+    // Both AFUs receive start+in_valid from tile_ctrl's mp_* ports. in_data
+    // comes from AI SRAM rdata (registered with 1-cycle latency, matching
+    // tc_mp_in_valid which tile_ctrl aligns with that latency). Only one
+    // AFU is active at a time, chosen by cfg_mp_mode.
+    //
+    //   cfg_mp_mode = 4'd8  -> softmax (uses low 32 bits of sram_ai_rdata)
+    //   cfg_mp_mode = 4'd9  -> layernorm (full 32 bits; γ/β tied to
+    //                          identity for this first integration — future
+    //                          work will pipe them from dedicated SRAMs)
+    //   cfg_mp_mode = 4'd10 -> rmsnorm  (same, with mode bit=1)
+    //
+    // Outputs (softmax: 8-bit Q0.8; LN: 32-bit Q16.16) are zero-padded into
+    // the AO word's low bits; external reader extracts per its compiler
+    // contract.
+    // =========================================================================
+    wire                    sm_start     = tc_mp_start && (tc_mp_mode == 4'd8);
+    wire                    ln_start     = tc_mp_start && (tc_mp_mode == 4'd9 || tc_mp_mode == 4'd10);
+    wire [31:0]             mp_in_data   = sram_ai_rdata[31:0];
+
+    wire                    sm_out_valid;
+    wire [7:0]              sm_out_data;
+    wire                    sm_done;
+
+    npu_softmax #(
+        .VEC_LEN        (64),
+        .IN_W           (32),
+        .OUT_W          (8),
+        .EXP_LUT_FILE   (MP_EXP_LUT_FILE),
+        .RECIP_LUT_FILE (MP_RECIP_LUT_FILE)
+    ) u_mp_softmax (
+        .clk       (clk),
+        .rst_n     (rst_n),
+        .start     (sm_start),
+        .in_valid  (tc_mp_in_valid),
+        .in_data   (mp_in_data),
+        .out_valid (sm_out_valid),
+        .out_data  (sm_out_data),
+        .done      (sm_done)
+    );
+
+    wire                    ln_out_valid;
+    wire signed [31:0]      ln_out_data;
+    wire                    ln_done;
+
+    npu_layernorm #(
+        .VEC_LEN         (256),
+        .LOG2_VEC_LEN    (8),
+        .IN_W            (32),
+        .OUT_W           (32),
+        .RSQRT_LUT_FILE  (MP_RSQRT_LUT_FILE)
+    ) u_mp_layernorm (
+        .clk       (clk),
+        .rst_n     (rst_n),
+        .start     (ln_start),
+        .mode      ({1'b0, tc_mp_mode == 4'd10}),   // rmsnorm bit
+        .in_valid  (tc_mp_in_valid),
+        .in_data   (mp_in_data),
+        .in_scale  (32'h0001_0000),                 // γ = 1.0 (Q16.16) — identity
+        .in_bias   (32'h0000_0000),                 // β = 0
+        .out_valid (ln_out_valid),
+        .out_data  (ln_out_data),
+        .done      (ln_done)
+    );
+
+    // Aggregate out_valid feeds tile_ctrl's mp_out_valid (drives ao writes).
+    assign mp_afu_out_valid = sm_out_valid | ln_out_valid;
+
+    // tile_ctrl registers mp_ao_we/mp_ao_waddr one cycle after mp_out_valid,
+    // so we must also register the AFU's out_data for one cycle to keep it
+    // aligned with the SRAM write.
+    reg [AO_DATA_W-1:0] mp_ao_wdata_r;
+    always @(posedge clk) begin
+        if (!rst_n) begin
+            mp_ao_wdata_r <= {AO_DATA_W{1'b0}};
+        end else if (sm_out_valid) begin
+            mp_ao_wdata_r <= {{(AO_DATA_W - 8){1'b0}}, sm_out_data};
+        end else if (ln_out_valid) begin
+            mp_ao_wdata_r <= {{(AO_DATA_W - 32){1'b0}}, ln_out_data};
+        end
+    end
+
+    // AO wdata mux: in MP mode, use the registered AFU output; otherwise
+    // (normal flow), use writeback_afu_out (existing path).
+    wire [AO_DATA_W-1:0] sram_ao_wdata = tc_mp_ao_we ? mp_ao_wdata_r : writeback_afu_out;
 
     // =========================================================================
     // Column-0 debug AFU (live tap on array output during EXECUTE).

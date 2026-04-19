@@ -1,0 +1,35 @@
+# =============================================================================
+# AstraCore Neo - ego_motion_estimator single-module OpenLane 2 config
+# Target: sky130A | sky130_fd_sc_hd | 50 MHz
+# Sky130 synthesis area: 9539 um^2 (882 cells)
+# Die: 250 x 250 um^2 (tier: small)
+# =============================================================================
+
+DESIGN_NAME: ego_motion_estimator
+VERILOG_FILES: dir::../rtl/ego_motion_estimator/ego_motion_estimator.v
+
+CLOCK_PORT: clk
+CLOCK_PERIOD: 20.0   # 50 MHz
+
+PNR_SDC_FILE: dir::scripts/base.sdc
+SIGNOFF_SDC_FILE: dir::scripts/base.sdc
+
+FP_SIZING: absolute
+DIE_AREA: [0, 0, 250, 250]
+FP_CORE_UTIL: 45
+FP_ASPECT_RATIO: 1
+
+PL_TARGET_DENSITY_PCT: 50
+
+SYNTH_STRATEGY: DELAY 0
+MAX_FANOUT_CONSTRAINT: 10
+
+RUN_CTS: true
+
+DRT_THREADS: 4
+
+pdk::sky130*:
+  FP_PDN_VOFFSET: 5
+  FP_PDN_HOFFSET: 5
+  GPL_CELL_PADDING: 4
+  DPL_CELL_PADDING: 4

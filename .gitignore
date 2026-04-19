@@ -9,8 +9,23 @@ build/
 
 # Virtual environment
 .venv/
+.venv-*/
 venv/
 env/
+
+# Model artifacts — rebuild via scripts/export_yolov8n_onnx.py
+data/models/*.onnx
+data/models/*.pt
+data/models/*.bin
+
+# Pruned model variants — rebuild via scripts/prune_yolov8n_nm.py
+data/models/pruned/*.onnx
+
+# Calibration tensors — rebuild via scripts/fetch_yolo_calibration.py
+data/calibration/*.npz
+
+# ASIC build run logs — large + regenerable
+asic/reports/*_run.log
 
 # cocotb / Icarus simulation artifacts
 sim_build/

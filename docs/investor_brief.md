@@ -376,10 +376,17 @@ camera-system. fps numbers are model predictions cross-checked to within
 
 | Workload            | MACs/frame | fps         | Latency  | MAC util | Automotive baseline      | Meets? |
 |---------------------|------------|-------------|----------|----------|--------------------------|--------|
-| YOLOv8-N 640×640    | 5.5 G      | **661**     | 1.5 ms   | 7.4%     | 180 fps (6 cams × 30 fps)| ✓ 3.7× over |
+| YOLOv8-N 640×640    | 4.4 G      | **690**     | 1.45 ms  | 6.1%     | 180 fps (6 cams × 30 fps)| ✓ 3.8× over |
 | ViT-B/16 224×224    | 17.6 G     | **488**     | 2.0 ms   | 17.5%    | 180 fps                  | ✓ 2.7× over |
 | BEVFormer-Tiny 6-cam| 75.0 G     | **38.5**    | 26 ms    | 5.9%     | 15 fps (6-cam joint)     | ✓ 2.6× over |
 | LLaMA-7B decode     | 6.7 G/tok  | **36 tok/s**| 28 ms/tok| 0.49%    | 10–30 tok/s              | ✓ |
+
+<!-- YOLOv8-N row re-measured 2026-04-18 against real ultralytics 8.4.38
+ONNX export. Previous 5.5 G MAC count came from yolo_trace's detection-
+head width bug; real export is 4.37 G MACs (= 8.74 GFLOPs, matches the
+published Ultralytics spec). Fps and util recomputed from the
+corrected workload. -->
+
 
 ### 5.2 Ultra effective (INT2 + 2:4 structured sparsity + 50% model sparsity)
 
@@ -388,7 +395,7 @@ Applies standard industry convention (NVIDIA uses the same math for
 
 | Workload            | fps       | Headroom vs automotive baseline |
 |---------------------|-----------|--------------------------------|
-| YOLOv8-N 640×640    | 10,581    | 58× over 180 fps (aggregate)   |
+| YOLOv8-N 640×640    | 11,040    | 61× over 180 fps (aggregate)   |
 | ViT-B/16            | 7,815     | 43×                            |
 | BEVFormer-Tiny 6-cam| 616       | 41×                            |
 | LLaMA-7B decode     | 576 tok/s | 19×                            |
@@ -430,10 +437,10 @@ count to **within 1 cycle** across k = 1, 3, 8 (verified via the new
 are therefore cycle-accurate projections, not speculation.
 
 **Fps numbers use DENSE INT8** (no sparsity multipliers in the
-calculation), so the ultra-dense tier numbers (YOLOv8-N 661 fps,
+calculation), so the ultra-dense tier numbers (YOLOv8-N 690 fps,
 ViT-B/16 488 fps, BEVFormer 38.5 fps, LLaMA 36 tok/s) are fully
 backed by RTL-verified arithmetic. The ultra-effective tier (the
-10,581 / 7,815 / 616 / 576 row) multiplies those figures by the
+11,040 / 7,815 / 616 / 576 row) multiplies those figures by the
 full 16× and therefore shares the same 4× realised / 4× pending
 status.
 

@@ -78,8 +78,8 @@ module npu_activation #(
     localparam [2:0] MODE_SIGMOID        = 3'b111;
 
     // INT8 bounds (signed)
-    localparam signed [ACC_W-1:0] INT8_MAX =  32'sd127;
-    localparam signed [ACC_W-1:0] INT8_MIN = -32'sd128;
+    localparam signed [ACC_W-1:0] INT8_CLIP_MAX =  32'sd127;
+    localparam signed [ACC_W-1:0] INT8_CLIP_MIN = -32'sd128;
 
     // =========================================================================
     // Combinational candidate results for each mode
@@ -88,20 +88,20 @@ module npu_activation #(
     wire signed [ACC_W-1:0]      relu_val    = is_neg ? {ACC_W{1'b0}} : in_data;
     wire signed [ACC_W-1:0]      leaky_val   = is_neg ? (in_data >>> 3) : in_data;
 
-    wire                         above_max   = (in_data > INT8_MAX);
-    wire                         below_min   = (in_data < INT8_MIN);
+    wire                         above_max   = (in_data > INT8_CLIP_MAX);
+    wire                         below_min   = (in_data < INT8_CLIP_MIN);
 
     // CLIP_INT8: symmetric saturate into [-128, +127]
-    wire signed [ACC_W-1:0]      clip_val    = above_max ? INT8_MAX
-                                             : below_min ? INT8_MIN
+    wire signed [ACC_W-1:0]      clip_val    = above_max ? INT8_CLIP_MAX
+                                             : below_min ? INT8_CLIP_MIN
                                              : in_data;
     wire                         clip_sat    = above_max | below_min;
 
     // RELU_CLIP_INT8: combine: first ReLU (negatives → 0), then saturate upper
     // bound (lower is already 0).
     wire signed [ACC_W-1:0]      relu_clip_val = is_neg ? {ACC_W{1'b0}}
-                                              : (in_data > INT8_MAX)
-                                                  ? INT8_MAX : in_data;
+                                              : (in_data > INT8_CLIP_MAX)
+                                                  ? INT8_CLIP_MAX : in_data;
     wire                         relu_clip_sat = (~is_neg) & above_max;
 
     // WP-7: LUT input = high-saturated INT8 from the ACC_W accumulator.

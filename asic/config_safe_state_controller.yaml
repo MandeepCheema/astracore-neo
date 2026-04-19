@@ -1,0 +1,35 @@
+# =============================================================================
+# AstraCore Neo - safe_state_controller single-module OpenLane 2 config
+# Target: sky130A | sky130_fd_sc_hd | 50 MHz
+# Sky130 synthesis area: 2551 um^2 (222 cells)
+# Die: 150 x 150 um^2 (tier: tiny)
+# =============================================================================
+
+DESIGN_NAME: safe_state_controller
+VERILOG_FILES: dir::../rtl/safe_state_controller/safe_state_controller.v
+
+CLOCK_PORT: clk
+CLOCK_PERIOD: 20.0   # 50 MHz
+
+PNR_SDC_FILE: dir::scripts/base.sdc
+SIGNOFF_SDC_FILE: dir::scripts/base.sdc
+
+FP_SIZING: absolute
+DIE_AREA: [0, 0, 150, 150]
+FP_CORE_UTIL: 45
+FP_ASPECT_RATIO: 1
+
+PL_TARGET_DENSITY_PCT: 50
+
+SYNTH_STRATEGY: DELAY 0
+MAX_FANOUT_CONSTRAINT: 10
+
+RUN_CTS: true
+
+DRT_THREADS: 4
+
+pdk::sky130*:
+  FP_PDN_VOFFSET: 5
+  FP_PDN_HOFFSET: 5
+  GPL_CELL_PADDING: 4
+  DPL_CELL_PADDING: 4

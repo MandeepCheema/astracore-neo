@@ -1,0 +1,35 @@
+# =============================================================================
+# AstraCore Neo - lidar_interface single-module OpenLane 2 config
+# Target: sky130A | sky130_fd_sc_hd | 50 MHz
+# Sky130 synthesis area: 67639 um^2 (4620 cells)
+# Die: 700 x 700 um^2 (tier: large)
+# =============================================================================
+
+DESIGN_NAME: lidar_interface
+VERILOG_FILES: dir::../rtl/lidar_interface/lidar_interface.v
+
+CLOCK_PORT: clk
+CLOCK_PERIOD: 20.0   # 50 MHz
+
+PNR_SDC_FILE: dir::scripts/base.sdc
+SIGNOFF_SDC_FILE: dir::scripts/base.sdc
+
+FP_SIZING: absolute
+DIE_AREA: [0, 0, 700, 700]
+FP_CORE_UTIL: 40
+FP_ASPECT_RATIO: 1
+
+PL_TARGET_DENSITY_PCT: 45
+
+SYNTH_STRATEGY: DELAY 0
+MAX_FANOUT_CONSTRAINT: 10
+
+RUN_CTS: true
+
+DRT_THREADS: 4
+
+pdk::sky130*:
+  FP_PDN_VOFFSET: 5
+  FP_PDN_HOFFSET: 5
+  GPL_CELL_PADDING: 2
+  DPL_CELL_PADDING: 2

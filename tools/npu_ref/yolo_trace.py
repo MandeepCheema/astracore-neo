@@ -174,21 +174,35 @@ def build_yolov8n() -> List[Layer]:
         "neck.c2f_d2", _w(512) + c, h, w, c, _d(3)))
 
     # --- Detection head (3 feature levels, decoupled cls/box) ------------------
-    nc = 80  # COCO classes
+    # Inner channel widths match Ultralytics' ultralytics/nn/modules/head.py
+    # Detect class (v8.4.38): these are set once from ch[0] (stage-3 channels),
+    # not scaled per level.
+    #   c3 (cls inner) = max(ch[0], min(nc, 100))
+    #   c2 (reg inner) = max(16, ch[0] // 4, reg_max * 4)
+    # Previously this file used c_lvl on both branches, which over-counted
+    # the head by ~1.1 G MACs on YOLOv8-N (reconciled against the real
+    # ultralytics 8.4.38 ONNX export on 2026-04-18).
+    nc = 80          # COCO classes
     reg_max = 16
+    ch0 = _w(256)    # stage-3 feature channels = 64 for YOLOv8-N
+    c3 = max(ch0, min(nc, 100))            # 80
+    c2 = max(16, ch0 // 4, reg_max * 4)    # 64
+
     for lvl, (c_lvl, h_lvl, w_lvl) in enumerate([
         (_w(256), INPUT_H // 8,  INPUT_W // 8),
         (_w(512), INPUT_H // 16, INPUT_W // 16),
         (c,       INPUT_H // 32, INPUT_W // 32),
     ]):
-        # Classification branch: 2x 3x3 conv + 1x1 conv → nc
-        layers.append(_conv(f"head.{lvl}.cls.1", c_lvl, h_lvl, w_lvl, c_lvl, k=3))
-        layers.append(_conv(f"head.{lvl}.cls.2", c_lvl, h_lvl, w_lvl, c_lvl, k=3))
-        layers.append(_conv(f"head.{lvl}.cls.3", c_lvl, h_lvl, w_lvl, nc,    k=1))
-        # Regression branch: 2x 3x3 conv + 1x1 conv → 4*reg_max
-        layers.append(_conv(f"head.{lvl}.reg.1", c_lvl, h_lvl, w_lvl, c_lvl, k=3))
-        layers.append(_conv(f"head.{lvl}.reg.2", c_lvl, h_lvl, w_lvl, c_lvl, k=3))
-        layers.append(_conv(f"head.{lvl}.reg.3", c_lvl, h_lvl, w_lvl, 4 * reg_max, k=1))
+        # Classification branch: Conv(c_lvl→c3, 3x3) → Conv(c3→c3, 3x3)
+        #                        → Conv(c3→nc, 1x1)
+        layers.append(_conv(f"head.{lvl}.cls.1", c_lvl, h_lvl, w_lvl, c3, k=3))
+        layers.append(_conv(f"head.{lvl}.cls.2", c3,    h_lvl, w_lvl, c3, k=3))
+        layers.append(_conv(f"head.{lvl}.cls.3", c3,    h_lvl, w_lvl, nc, k=1))
+        # Regression branch: Conv(c_lvl→c2, 3x3) → Conv(c2→c2, 3x3)
+        #                    → Conv(c2→4*reg_max, 1x1)
+        layers.append(_conv(f"head.{lvl}.reg.1", c_lvl, h_lvl, w_lvl, c2, k=3))
+        layers.append(_conv(f"head.{lvl}.reg.2", c2,    h_lvl, w_lvl, c2, k=3))
+        layers.append(_conv(f"head.{lvl}.reg.3", c2,    h_lvl, w_lvl, 4 * reg_max, k=1))
 
     return layers
 

@@ -1,0 +1,69 @@
+# =============================================================================
+# AstraCore Neo — astracore_fusion_top integration-level OpenLane 2 config
+# Target: sky130A | sky130_fd_sc_hd | 50 MHz
+# 22 submodules + top-level structural glue
+# Vivado aggregate ~9900 cells; sky130 estimate ~14850
+# Die: 1200 x 1200 um^2 (integration tier)
+# =============================================================================
+
+DESIGN_NAME: astracore_fusion_top
+
+VERILOG_FILES:
+  # ── Layer 1: sensor interfaces ──────────────────────────────────────────────
+  - dir::../rtl/mipi_csi2_rx/mipi_csi2_rx.v
+  - dir::../rtl/imu_interface/imu_interface.v
+  - dir::../rtl/gnss_interface/gnss_interface.v
+  - dir::../rtl/canfd_controller/canfd_controller.v
+  - dir::../rtl/can_odometry_decoder/can_odometry_decoder.v
+  - dir::../rtl/radar_interface/radar_interface.v
+  - dir::../rtl/ultrasonic_interface/ultrasonic_interface.v
+  - dir::../rtl/ethernet_controller/ethernet_controller.v
+  - dir::../rtl/lidar_interface/lidar_interface.v
+  - dir::../rtl/cam_detection_receiver/cam_detection_receiver.v
+  # ── Layer 1: timing ────────────────────────────────────────────────────────
+  - dir::../rtl/ptp_clock_sync/ptp_clock_sync.v
+  - dir::../rtl/sensor_sync/sensor_sync.v
+  # ── Layer 2: fusion processing ─────────────────────────────────────────────
+  - dir::../rtl/det_arbiter/det_arbiter.v
+  - dir::../rtl/coord_transform/coord_transform.v
+  - dir::../rtl/ego_motion_estimator/ego_motion_estimator.v
+  - dir::../rtl/object_tracker/object_tracker.v
+  - dir::../rtl/lane_fusion/lane_fusion.v
+  - dir::../rtl/plausibility_checker/plausibility_checker.v
+  # ── Layer 3: decision / output ─────────────────────────────────────────────
+  - dir::../rtl/ttc_calculator/ttc_calculator.v
+  - dir::../rtl/aeb_controller/aeb_controller.v
+  - dir::../rtl/ldw_lka_controller/ldw_lka_controller.v
+  - dir::../rtl/safe_state_controller/safe_state_controller.v
+  # ── Top-level ──────────────────────────────────────────────────────────────
+  - dir::../rtl/astracore_fusion_top/astracore_fusion_top.v
+
+CLOCK_PORT: clk
+CLOCK_PERIOD: 20.0   # 50 MHz
+
+PNR_SDC_FILE: dir::scripts/base.sdc
+SIGNOFF_SDC_FILE: dir::scripts/base.sdc
+
+FP_SIZING: absolute
+DIE_AREA: [0, 0, 1200, 1200]
+FP_CORE_UTIL: 40
+FP_ASPECT_RATIO: 1
+
+PL_TARGET_DENSITY_PCT: 45
+
+SYNTH_STRATEGY: DELAY 1
+MAX_FANOUT_CONSTRAINT: 10
+
+RUN_CTS: true
+CTS_TARGET_SKEW: 200
+
+RUN_HEURISTIC_DIODE_INSERTION: true
+RUN_POST_GRT_RESIZER_TIMING: true
+
+DRT_THREADS: 4
+
+pdk::sky130*:
+  FP_PDN_VOFFSET: 5
+  FP_PDN_HOFFSET: 5
+  GPL_CELL_PADDING: 4
+  DPL_CELL_PADDING: 4

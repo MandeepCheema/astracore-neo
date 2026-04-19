@@ -160,6 +160,16 @@ class Quantizer:
             raise QuantizationError(f"No calibration stats for {name!r} — call calibrate() first")
         return self._stats[name]
 
+    def iter_stats(self):
+        """Yield `(name, CalibStats)` pairs for every calibrated tensor.
+
+        Stable iteration order (dict insertion order). Lets callers that
+        need every calibrated tensor (e.g. activation-scale extraction)
+        avoid reaching into the private `_stats` dict.
+        """
+        for name, s in self._stats.items():
+            yield name, s
+
     # ------------------------------------------------------------------
     # Quantize
     # ------------------------------------------------------------------
