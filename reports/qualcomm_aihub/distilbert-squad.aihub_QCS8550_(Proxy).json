@@ -1,0 +1,12 @@
+{
+  "model": "data\\models\\zoo\\optimum_exports\\distilbert-squad.aihub.onnx",
+  "device": "QCS8550 (Proxy)",
+  "compile_job": "jp1d93e8p",
+  "profile_job": "j5wdkxqmg",
+  "job_url": "https://app.aihub.qualcomm.com/jobs/j5wdkxqmg",
+  "wall_s": 814.2,
+  "generated_at": 1776764070,
+  "inference_ms": 1.739,
+  "peak_memory_mb": 200.45,
+  "raw_profile": "C:\\Users\\mande\\astracore-neo\\reports\\qualcomm_aihub\\distilbert-squad.aihub_QCS8550_(Proxy)_raw.json"
+}

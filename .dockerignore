@@ -1,0 +1,23 @@
+.git
+.github
+.venv
+__pycache__
+**/__pycache__
+*.pyc
+.pytest_cache
+build/
+dist/
+*.egg-info/
+cpp/build/
+cpp/*.so
+cpp/*.pyd
+cpp/*.dylib
+reports/benchmark_sweep/
+reports/zoo_detailed/
+reports/ai_deep_tests/
+reports/realworld_scenarios/
+reports/mlperf/
+data/models/zoo/int8/
+data/models/zoo/*.onnx
+data/models/pruned/
+# Keep yolov8n.onnx + data/calibration/ — needed for CI

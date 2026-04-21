@@ -61,13 +61,16 @@
 //
 //   ext_ao_re is always live — tile_ctrl only WRITES AO, never reads.
 //
-// ── V1 gaps ─────────────────────────────────────────────────────────────────
+// ── Current gaps ────────────────────────────────────────────────────────────
 //   • No DMA integration.  Caller loads weights and activations directly.
 //   • Single-tile-per-start (tile_ctrl V1 limitation).
 //   • No access arbitration: caller must respect busy.
 //   • No ECC, no BIST, no debug mux (those are Phase 2 hardening items).
-//   • LUT-based AFU modes (SiLU/GELU/Sigmoid/Tanh) still reserved —
-//     hardware placeholders only; v2 adds the LUT backends.
+//   • SiLU/GELU/Sigmoid LUTs are live in npu_activation.  Tanh LUT is still
+//     reserved (3-bit mode full; 4-bit mode extension adds Tanh).
+//   • FP16 precision mode (2'b11) falls back to INT8 — full FP datapath
+//     lives in rtl/npu_fp/ but is not yet wired into the main systolic
+//     array (WP F1-A1.1).
 // =============================================================================
 
 module npu_top #(

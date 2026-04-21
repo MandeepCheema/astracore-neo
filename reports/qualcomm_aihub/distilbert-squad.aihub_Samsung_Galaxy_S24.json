@@ -1,0 +1,12 @@
+{
+  "model": "data\\models\\zoo\\optimum_exports\\distilbert-squad.aihub.onnx",
+  "device": "Samsung Galaxy S24",
+  "compile_job": "jgn94x3q5",
+  "profile_job": "jpy4ln6lp",
+  "job_url": "https://app.aihub.qualcomm.com/jobs/jpy4ln6lp",
+  "wall_s": 820.8,
+  "generated_at": 1776764968,
+  "inference_ms": 1.353,
+  "peak_memory_mb": 214.22,
+  "raw_profile": "C:\\Users\\mande\\astracore-neo\\reports\\qualcomm_aihub\\distilbert-squad.aihub_Samsung_Galaxy_S24_raw.json"
+}

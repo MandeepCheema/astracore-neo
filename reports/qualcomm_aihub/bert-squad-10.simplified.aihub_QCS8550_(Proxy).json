@@ -1,0 +1,12 @@
+{
+  "model": "data\\models\\zoo\\bert-squad-10.simplified.aihub.onnx",
+  "device": "QCS8550 (Proxy)",
+  "compile_job": "jgn94r1v5",
+  "profile_job": "jperq4x7g",
+  "job_url": "https://app.aihub.qualcomm.com/jobs/jperq4x7g",
+  "wall_s": 965.9,
+  "generated_at": 1776759807,
+  "status": "profile_failed",
+  "failure_message": "Failed to profile the model: [tflite] Node number 667 (TfLiteQnnDelegate) failed to invoke.",
+  "raw_profile": "C:\\Users\\mande\\astracore-neo\\reports\\qualcomm_aihub\\bert-squad-10.simplified.aihub_QCS8550_(Proxy)_raw.json"
+}

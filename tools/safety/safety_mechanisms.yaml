@@ -1,0 +1,159 @@
+# Safety mechanism catalog for FMEDA.
+#
+# Each mechanism declares a *target* diagnostic coverage (DC) for the
+# single-point fault metric (SPFM) and, optionally, a separate target
+# for the latent-fault metric (LFM). Targets become measured numbers
+# after the fault-injection campaign in docs/safety/fault_injection/.
+#
+# Keep entries traceable to RTL: the `applies_to` list names failure-mode
+# IDs in failure_modes.yaml. The mechanism IDs here are referenced from
+# the SEooC declaration §5.
+
+mechanisms:
+  - id: tmr_voter
+    name: TMR voter (3-of-3 majority)
+    description: >
+      Three independent compute lanes vote per-cycle. Detects single-event
+      upsets and stuck-at faults on voted nets within 1 cycle. Unable to
+      detect common-cause failures across all 3 lanes.
+    target_dc_pct: 99.0
+    target_dc_lf_pct: 95.0
+    applies_to:
+      - dms_fusion.dal_lane.seu
+      - dms_fusion.conf_lane.seu
+      - dms_fusion.dal_lane.stuck
+      - dms_fusion.conf_lane.stuck
+
+  - id: ecc_secded
+    name: SECDED ECC (72,64) on SRAM
+    description: >
+      Single-bit error correct, double-bit error detect on all SRAM
+      banks. Coverage is high for transient bit-flips; latent coverage
+      is provided by background scrubbing.
+
+      ⚠ ECC RTL exists at rtl/ecc_secded/ but is NOT YET WIRED into
+      rtl/npu_sram_bank/ as of npu_top.v current-gaps comment. Until
+      F1-A6 wires it, npu_top SRAM failure modes must use mechanism_id
+      null to honestly reflect coverage today. After integration the
+      npu_top failure_modes rows can re-target this mechanism.
+    target_dc_pct: 99.5
+    target_dc_lf_pct: 99.0
+    applies_to: []  # post-integration: npu_top SRAM rows
+
+  - id: aggregate_safe_state_fault_out
+    name: Aggregate fault flag → safe_state_controller
+    description: >
+      npu_top exposes done / error / busy bits to the licensee
+      supervisor. A subset of compute faults that derail the tile_ctrl
+      FSM cause it to never raise `done`, leading the supervisor's
+      watchdog to time out and assert external_safe_state_request.
+      Coverage is limited (only faults that produce a missing-done are
+      caught; correct-looking-but-wrong outputs are not). Quantified
+      conservatively pending fault-injection data.
+    target_dc_pct: 40.0
+    target_dc_lf_pct: 30.0
+    applies_to: []  # listed per failure-mode row in failure_modes.yaml
+
+  - id: dup_compare_1bit
+    name: Shadow-register duplicate-and-compare on a 1-bit critical flag
+    description: >
+      A second flip-flop is fed by the same combinational expression as
+      the primary flag. A bit-flip in either copy de-synchronises them;
+      the comparator asserts and is OR'd into the module's fault flag.
+      Detection latency is 1 cycle. CCF (simultaneous flip on both
+      copies in the same cycle) is uncovered at this scope and is
+      deferred to Phase D.
+
+      Used by: dms_fusion tmr_valid_r (F4-A-5 fix, 2026-04-20).
+    target_dc_pct: 99.0
+    target_dc_lf_pct: 95.0
+    applies_to:
+      - dms_fusion.tmr_valid.seu
+
+  - id: bit_exact_dev_mirror
+    name: Bit-exact Python mirror (development-time only)
+    description: >
+      tools/npu_ref/ provides a Python mirror that is bit-exact against
+      RTL via cocotb gates (5/5 pass on systolic, 6/6 on npu_top, 10/10
+      on softmax/layernorm). This is a *development-time* check — it
+      runs in CI, not in mission mode. It catches design bugs, not
+      runtime SEUs.
+      ⚠ This is NOT an in-system safety mechanism. Listed here for
+      completeness so reviewers don't double-count it as runtime
+      coverage. target_dc_pct is 0 by design.
+    target_dc_pct: 0.0
+    target_dc_lf_pct: 0.0
+    applies_to: []
+
+  - id: watchdog_sensor
+    name: Per-sensor watchdog
+    description: >
+      Saturating counter that asserts SENSOR_FAIL when no valid pulse
+      arrives within WATCHDOG_CYCLES. Detects stuck-at on the valid
+      input and most stuck-at on upstream sensor data paths.
+    target_dc_pct: 95.0
+    target_dc_lf_pct: 90.0
+    applies_to:
+      - dms_fusion.gaze_input.stuck_lo
+      - dms_fusion.wdog_cnt.seu
+
+  - id: iir_self_correcting
+    name: IIR temporal smoother (self-correcting)
+    description: >
+      The IIR filter (~0.75 prev + 0.25 new) attenuates a single-cycle
+      perturbation of score_filt_x4 by ~75% per cycle. Acts as an
+      implicit transient mitigator on the fused score; not a primary
+      safety mechanism but contributes residual coverage.
+    target_dc_pct: 70.0
+    target_dc_lf_pct: 50.0
+    applies_to:
+      - dms_fusion.score_filt.seu
+
+  - id: priority_encoder_safe
+    name: Priority encoder safe-default
+    description: >
+      Raw-score priority logic defaults to ATTENTIVE when no condition
+      fires and to CRITICAL when sensor_fail is set. Stuck-at on
+      intermediate threshold lines biases towards safer (higher) state
+      because of priority order. Partial structural mitigation only.
+    target_dc_pct: 60.0
+    target_dc_lf_pct: 40.0
+    applies_to:
+      - dms_fusion.raw_score.stuck
+
+  - id: counter_resets_periodically
+    name: Counter periodic reset
+    description: >
+      cont_closed and cont_distracted reset to 0 on any non-matching
+      frame (CLOSED→OPEN or out-of-zone→in-zone). An SEU on the
+      counter is washed out within at most one frame transition.
+      Low coverage during a sustained event; high coverage on average.
+    target_dc_pct: 65.0
+    target_dc_lf_pct: 55.0
+    applies_to:
+      - dms_fusion.cont_closed.seu
+      - dms_fusion.cont_distracted.seu
+
+  - id: blink_window_resamples
+    name: Blink window resampling
+    description: >
+      blink_snapshot is rewritten every BLINK_WINDOW (=30) gaze_valid
+      pulses. An SEU on blink_snapshot or blink_frame_cnt is corrected
+      within one window (~1 s @ 30 fps).
+    target_dc_pct: 70.0
+    target_dc_lf_pct: 60.0
+    applies_to:
+      - dms_fusion.blink_snapshot.seu
+      - dms_fusion.blink_frame_cnt.seu
+      - dms_fusion.blink_elevated.seu
+
+  - id: safe_state_controller
+    name: Safe-state controller (downstream aggregator)
+    description: >
+      Aggregates fault flags across the IP block and drives
+      safe_state_active to the licensee SoC. Provides downstream
+      safety-net coverage for module-level uncovered faults that
+      escalate via fault_detected[] bits.
+    target_dc_pct: 85.0
+    target_dc_lf_pct: 70.0
+    applies_to: []  # used by aggregate FMEDA roll-up

@@ -1,0 +1,12 @@
+{
+  "model": "C:\\Users\\mande\\astracore-neo\\data\\models\\zoo\\int8\\mobilenetv2-7.int8.aihub.onnx",
+  "device": "QCS8550 (Proxy)",
+  "compile_job": "jpx7q7e8g",
+  "profile_job": "jp34d48mg",
+  "job_url": "https://app.aihub.qualcomm.com/jobs/jp34d48mg",
+  "wall_s": 229.2,
+  "generated_at": 1776754041,
+  "inference_ms": 1.762,
+  "peak_memory_mb": 104.91,
+  "raw_profile": "C:\\Users\\mande\\astracore-neo\\reports\\qualcomm_aihub\\mobilenetv2-7.int8.aihub_QCS8550_(Proxy)_raw.json"
+}

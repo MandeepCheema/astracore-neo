@@ -1,0 +1,14 @@
+{
+  "wall_s": 857.6,
+  "devices": [
+    "QCS8550 (Proxy)"
+  ],
+  "rows": [
+    {
+      "model": "bert-squad-10",
+      "device": "QCS8550 (Proxy)",
+      "status": "ok",
+      "result_file": "C:\\Users\\mande\\astracore-neo\\reports\\qualcomm_aihub\\bert-squad-10.aihub_QCS8550_(Proxy).json"
+    }
+  ]
+}

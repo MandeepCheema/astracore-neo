@@ -1,0 +1,2160 @@
+{
+  "host": {
+    "python": "3.12.3",
+    "platform": "win32",
+    "onnxruntime": "1.24.4",
+    "ort_available_providers": [
+      "AzureExecutionProvider",
+      "CPUExecutionProvider"
+    ],
+    "numpy": "2.4.4",
+    "cpu": "Intel64 Family 6 Model 154 Stepping 4, GenuineIntel",
+    "cpu_count": 12
+  },
+  "backend": "onnxruntime",
+  "providers_requested": [],
+  "wall_s_total": 150.18,
+  "n_models": 8,
+  "models": [
+    {
+      "model": "squeezenet-1.1",
+      "family": "vision-classification",
+      "onnx_path": "data\\models\\zoo\\squeezenet-1.1.onnx",
+      "input_name": "data",
+      "input_shape": [
+        1,
+        3,
+        224,
+        224
+      ],
+      "opset": 7,
+      "gmacs": 0.349,
+      "scenarios": [
+        {
+          "scenario": "base",
+          "backend": "onnxruntime",
+          "providers_requested": [],
+          "providers_active": [
+            "AzureExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "batch_size": 1,
+          "intra_op_threads": null,
+          "graph_opt_level": "default",
+          "warmup_ms": 4.202100040856749,
+          "steady": {
+            "n_samples": 20,
+            "mean_ms": 2.2267699969233945,
+            "p50_ms": 2.047849993687123,
+            "p95_ms": 2.8647699888097122,
+            "p99_ms": 3.089273973018862,
+            "p99p9_ms": 3.1397873694659215,
+            "max_ms": 3.14539996907115,
+            "stdev_ms": 0.34190591087206385
+          },
+          "rss_delta_mb": null,
+          "output_fingerprint": "b2b2616eb8983529",
+          "notes": "",
+          "failed": false,
+          "error": ""
+        },
+        {
+          "scenario": "threads=1",
+          "backend": "onnxruntime",
+          "providers_requested": [],
+          "providers_active": [
+            "AzureExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "batch_size": 1,
+          "intra_op_threads": 1,
+          "graph_opt_level": "default",
+          "warmup_ms": 8.895199978724122,
+          "steady": {
+            "n_samples": 20,
+            "mean_ms": 6.61000000545755,
+            "p50_ms": 6.474950030678883,
+            "p95_ms": 7.5727649935288355,
+            "p99_ms": 7.655832962482236,
+            "p99p9_ms": 7.6745232554967515,
+            "max_ms": 7.6765999547205865,
+            "stdev_ms": 0.4073392937893551
+          },
+          "rss_delta_mb": null,
+          "output_fingerprint": "b2b2616eb8983529",
+          "notes": "",
+          "failed": false,
+          "error": ""
+        },
+        {
+          "scenario": "threads=2",
+          "backend": "onnxruntime",
+          "providers_requested": [],
+          "providers_active": [
+            "AzureExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "batch_size": 1,
+          "intra_op_threads": 2,
+          "graph_opt_level": "default",
+          "warmup_ms": 5.209800030570477,
+          "steady": {
+            "n_samples": 20,
+            "mean_ms": 3.946400000131689,
+            "p50_ms": 3.7752999924123287,
+            "p95_ms": 4.5400649920338765,
+            "p99_ms": 4.6641730080591515,
+            "p99p9_ms": 4.692097311664838,
+            "max_ms": 4.69520001206547,
+            "stdev_ms": 0.31017061085295056
+          },
+          "rss_delta_mb": null,
+          "output_fingerprint": "b2b2616eb8983529",
+          "notes": "",
+          "failed": false,
+          "error": ""
+        },
+        {
+          "scenario": "threads=4",
+          "backend": "onnxruntime",
+          "providers_requested": [],
+          "providers_active": [
+            "AzureExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "batch_size": 1,
+          "intra_op_threads": 4,
+          "graph_opt_level": "default",
+          "warmup_ms": 4.37370000872761,
+          "steady": {
+            "n_samples": 20,
+            "mean_ms": 3.0862049985444173,
+            "p50_ms": 3.0371000175364316,
+            "p95_ms": 3.194084970164113,
+            "p99_ms": 3.5905770253157234,
+            "p99p9_ms": 3.679787737724838,
+            "max_ms": 3.689700039103627,
+            "stdev_ms": 0.15373381796234478
+          },
+          "rss_delta_mb": null,
+          "output_fingerprint": "b2b2616eb8983529",
+          "notes": "",
+          "failed": false,
+          "error": ""
+        },
+        {
+          "scenario": "gopt=basic",
+          "backend": "onnxruntime",
+          "providers_requested": [],
+          "providers_active": [
+            "AzureExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "batch_size": 1,
+          "intra_op_threads": null,
+          "graph_opt_level": "basic",
+          "warmup_ms": 5.462400033138692,
+          "steady": {
+            "n_samples": 20,
+            "mean_ms": 4.732094993232749,
+            "p50_ms": 4.362749983556569,
+            "p95_ms": 8.700399973895403,
+            "p99_ms": 10.165679983329026,
+            "p99p9_ms": 10.495367985451598,
+            "max_ms": 10.531999985687435,
+            "stdev_ms": 1.6806728095874612
+          },
+          "rss_delta_mb": null,
+          "output_fingerprint": "ef7e80f5c1c71e9f",
+          "notes": "",
+          "failed": false,
+          "error": ""
+        },
+        {
+          "scenario": "gopt=extended",
+          "backend": "onnxruntime",
+          "providers_requested": [],
+          "providers_active": [
+            "AzureExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "batch_size": 1,
+          "intra_op_threads": null,
+          "graph_opt_level": "extended",
+          "warmup_ms": 5.976499989628792,
+          "steady": {
+            "n_samples": 20,
+            "mean_ms": 3.9739749976433814,
+            "p50_ms": 3.9220500038936734,
+            "p95_ms": 4.405695010791533,
+            "p99_ms": 4.65489900612738,
+            "p99p9_ms": 4.710969905077946,
+            "max_ms": 4.717200004961342,
+            "stdev_ms": 0.27815688316083537
+          },
+          "rss_delta_mb": null,
+          "output_fingerprint": "ef7e80f5c1c71e9f",
+          "notes": "",
+          "failed": false,
+          "error": ""
+        },
+        {
+          "scenario": "gopt=all",
+          "backend": "onnxruntime",
+          "providers_requested": [],
+          "providers_active": [
+            "AzureExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "batch_size": 1,
+          "intra_op_threads": null,
+          "graph_opt_level": "all",
+          "warmup_ms": 3.558299969881773,
+          "steady": {
+            "n_samples": 20,
+            "mean_ms": 2.1649900038028136,
+            "p50_ms": 2.048250025836751,
+            "p95_ms": 2.577989987912588,
+            "p99_ms": 2.6310379937058315,
+            "p99p9_ms": 2.6429737950093113,
+            "max_ms": 2.6442999951541424,
+            "stdev_ms": 0.20884544905187175
+          },
+          "rss_delta_mb": null,
+          "output_fingerprint": "b2b2616eb8983529",
+          "notes": "",
+          "failed": false,
+          "error": ""
+        },
+        {
+          "scenario": "batch=2",
+          "backend": "onnxruntime",
+          "providers_requested": [],
+          "providers_active": [
+            "AzureExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "batch_size": 2,
+          "intra_op_threads": null,
+          "graph_opt_level": "default",
+          "warmup_ms": 3.686700016260147,
+          "steady": {
+            "n_samples": 10,
+            "mean_ms": 2.2582100122235715,
+            "p50_ms": 2.1682000369764864,
+            "p95_ms": 2.7783550001913677,
+            "p99_ms": 2.9389509867178276,
+            "p99p9_ms": 2.9750850836862814,
+            "max_ms": 2.9790999833494425,
+            "stdev_ms": 0.27202314877476236
+          },
+          "rss_delta_mb": null,
+          "output_fingerprint": "b2b2616eb8983529",
+          "notes": "",
+          "failed": false,
+          "error": ""
+        },
+        {
+          "scenario": "batch=4",
+          "backend": "onnxruntime",
+          "providers_requested": [],
+          "providers_active": [
+            "AzureExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "batch_size": 4,
+          "intra_op_threads": null,
+          "graph_opt_level": "default",
+          "warmup_ms": 3.59590002335608,
+          "steady": {
+            "n_samples": 10,
+            "mean_ms": 2.3550900164991617,
+            "p50_ms": 2.131800021743402,
+            "p95_ms": 3.196585000841878,
+            "p99_ms": 3.3991570136277005,
+            "p99p9_ms": 3.4447357165045114,
+            "max_ms": 3.449800016824156,
+            "stdev_ms": 0.4520260311412705
+          },
+          "rss_delta_mb": null,
+          "output_fingerprint": "b2b2616eb8983529",
+          "notes": "",
+          "failed": false,
+          "error": ""
+        }
+      ]
+    },
+    {
+      "model": "mobilenetv2-7",
+      "family": "vision-classification",
+      "onnx_path": "data\\models\\zoo\\mobilenetv2-7.onnx",
+      "input_name": "data",
+      "input_shape": [
+        1,
+        3,
+        224,
+        224
+      ],
+      "opset": 7,
+      "gmacs": 0.429,
+      "scenarios": [
+        {
+          "scenario": "base",
+          "backend": "onnxruntime",
+          "providers_requested": [],
+          "providers_active": [
+            "AzureExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "batch_size": 1,
+          "intra_op_threads": null,
+          "graph_opt_level": "default",
+          "warmup_ms": 7.885799976065755,
+          "steady": {
+            "n_samples": 20,
+            "mean_ms": 3.935879995697178,
+            "p50_ms": 3.6728499981109053,
+            "p95_ms": 4.682284963200803,
+            "p99_ms": 7.373976976959962,
+            "p99p9_ms": 7.979607680055785,
+            "max_ms": 8.046899980399758,
+            "stdev_ms": 1.027812987066264
+          },
+          "rss_delta_mb": null,
+          "output_fingerprint": "ff4ec4c029d2fb39",
+          "notes": "",
+          "failed": false,
+          "error": ""
+        },
+        {
+          "scenario": "threads=1",
+          "backend": "onnxruntime",
+          "providers_requested": [],
+          "providers_active": [
+            "AzureExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "batch_size": 1,
+          "intra_op_threads": 1,
+          "graph_opt_level": "default",
+          "warmup_ms": 12.007600045762956,
+          "steady": {
+            "n_samples": 20,
+            "mean_ms": 9.100944994133897,
+            "p50_ms": 9.05399999464862,
+            "p95_ms": 9.88102002593223,
+            "p99_ms": 10.238523961161263,
+            "p99p9_ms": 10.318962346587796,
+            "max_ms": 10.327899944968522,
+            "stdev_ms": 0.40133506579809575
+          },
+          "rss_delta_mb": null,
+          "output_fingerprint": "ff4ec4c029d2fb39",
+          "notes": "",
+          "failed": false,
+          "error": ""
+        },
+        {
+          "scenario": "threads=2",
+          "backend": "onnxruntime",
+          "providers_requested": [],
+          "providers_active": [
+            "AzureExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "batch_size": 1,
+          "intra_op_threads": 2,
+          "graph_opt_level": "default",
+          "warmup_ms": 8.857600041665137,
+          "steady": {
+            "n_samples": 20,
+            "mean_ms": 5.0302050018217415,
+            "p50_ms": 4.871899989666417,
+            "p95_ms": 5.6188999937148765,
+            "p99_ms": 5.755700017907657,
+            "p99p9_ms": 5.786480023351032,
+            "max_ms": 5.789900023955852,
+            "stdev_ms": 0.3487295084212821
+          },
+          "rss_delta_mb": null,
+          "output_fingerprint": "ff4ec4c029d2fb39",
+          "notes": "",
+          "failed": false,
+          "error": ""
+        },
+        {
+          "scenario": "threads=4",
+          "backend": "onnxruntime",
+          "providers_requested": [],
+          "providers_active": [
+            "AzureExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "batch_size": 1,
+          "intra_op_threads": 4,
+          "graph_opt_level": "default",
+          "warmup_ms": 5.94559998717159,
+          "steady": {
+            "n_samples": 20,
+            "mean_ms": 4.356254998128861,
+            "p50_ms": 4.082199971890077,
+            "p95_ms": 5.201769978157245,
+            "p99_ms": 5.3016339865280315,
+            "p99p9_ms": 5.324103388411459,
+            "max_ms": 5.326599988620728,
+            "stdev_ms": 0.45539352644979003
+          },
+          "rss_delta_mb": null,
+          "output_fingerprint": "ff4ec4c029d2fb39",
+          "notes": "",
+          "failed": false,
+          "error": ""
+        },
+        {
+          "scenario": "gopt=basic",
+          "backend": "onnxruntime",
+          "providers_requested": [],
+          "providers_active": [
+            "AzureExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "batch_size": 1,
+          "intra_op_threads": null,
+          "graph_opt_level": "basic",
+          "warmup_ms": 14.129799965303391,
+          "steady": {
+            "n_samples": 20,
+            "mean_ms": 8.233149998704903,
+            "p50_ms": 8.219749986892566,
+            "p95_ms": 9.226200013654307,
+            "p99_ms": 9.30523999617435,
+            "p99p9_ms": 9.32302399224136,
+            "max_ms": 9.324999991804361,
+            "stdev_ms": 0.657154001432896
+          },
+          "rss_delta_mb": null,
+          "output_fingerprint": "25a51c462ee19efc",
+          "notes": "",
+          "failed": false,
+          "error": ""
+        },
+        {
+          "scenario": "gopt=extended",
+          "backend": "onnxruntime",
+          "providers_requested": [],
+          "providers_active": [
+            "AzureExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "batch_size": 1,
+          "intra_op_threads": null,
+          "graph_opt_level": "extended",
+          "warmup_ms": 10.318299988284707,
+          "steady": {
+            "n_samples": 20,
+            "mean_ms": 7.891684997593984,
+            "p50_ms": 7.635500020114705,
+            "p95_ms": 9.437604990671389,
+            "p99_ms": 9.753840965568088,
+            "p99p9_ms": 9.824994059919845,
+            "max_ms": 9.832899959292263,
+            "stdev_ms": 0.7670702328250004
+          },
+          "rss_delta_mb": null,
+          "output_fingerprint": "25a51c462ee19efc",
+          "notes": "",
+          "failed": false,
+          "error": ""
+        },
+        {
+          "scenario": "gopt=all",
+          "backend": "onnxruntime",
+          "providers_requested": [],
+          "providers_active": [
+            "AzureExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "batch_size": 1,
+          "intra_op_threads": null,
+          "graph_opt_level": "all",
+          "warmup_ms": 5.165099981240928,
+          "steady": {
+            "n_samples": 20,
+            "mean_ms": 3.3827399951405823,
+            "p50_ms": 3.2125999859999865,
+            "p95_ms": 3.8364900101441908,
+            "p99_ms": 5.774337990442287,
+            "p99p9_ms": 6.210353786009368,
+            "max_ms": 6.258799985516816,
+            "stdev_ms": 0.6965591982617297
+          },
+          "rss_delta_mb": null,
+          "output_fingerprint": "ff4ec4c029d2fb39",
+          "notes": "",
+          "failed": false,
+          "error": ""
+        },
+        {
+          "scenario": "batch=2",
+          "backend": "onnxruntime",
+          "providers_requested": [],
+          "providers_active": [
+            "AzureExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "batch_size": 2,
+          "intra_op_threads": null,
+          "graph_opt_level": "default",
+          "warmup_ms": 4.983099992386997,
+          "steady": {
+            "n_samples": 10,
+            "mean_ms": 3.2598000077996403,
+            "p50_ms": 3.255799994803965,
+            "p95_ms": 3.6149000254226844,
+            "p99_ms": 3.780500050052069,
+            "p99p9_ms": 3.817760055593681,
+            "max_ms": 3.821900056209415,
+            "stdev_ms": 0.22415247332626276
+          },
+          "rss_delta_mb": null,
+          "output_fingerprint": "ff4ec4c029d2fb39",
+          "notes": "",
+          "failed": false,
+          "error": ""
+        },
+        {
+          "scenario": "batch=4",
+          "backend": "onnxruntime",
+          "providers_requested": [],
+          "providers_active": [
+            "AzureExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "batch_size": 4,
+          "intra_op_threads": null,
+          "graph_opt_level": "default",
+          "warmup_ms": 4.987799969967455,
+          "steady": {
+            "n_samples": 10,
+            "mean_ms": 3.2373599999118596,
+            "p50_ms": 3.2173999934457242,
+            "p95_ms": 3.6423650104552507,
+            "p99_ms": 3.7151930201798677,
+            "p99p9_ms": 3.731579322367907,
+            "max_ms": 3.733400022611022,
+            "stdev_ms": 0.2424808987406057
+          },
+          "rss_delta_mb": null,
+          "output_fingerprint": "ff4ec4c029d2fb39",
+          "notes": "",
+          "failed": false,
+          "error": ""
+        }
+      ]
+    },
+    {
+      "model": "resnet50-v2-7",
+      "family": "vision-classification",
+      "onnx_path": "data\\models\\zoo\\resnet50-v2-7.onnx",
+      "input_name": "data",
+      "input_shape": [
+        1,
+        3,
+        224,
+        224
+      ],
+      "opset": 7,
+      "gmacs": 4.091,
+      "scenarios": [
+        {
+          "scenario": "base",
+          "backend": "onnxruntime",
+          "providers_requested": [],
+          "providers_active": [
+            "AzureExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "batch_size": 1,
+          "intra_op_threads": null,
+          "graph_opt_level": "default",
+          "warmup_ms": 25.863300019409508,
+          "steady": {
+            "n_samples": 20,
+            "mean_ms": 23.59955499705393,
+            "p50_ms": 23.436299990862608,
+            "p95_ms": 25.13964494864922,
+            "p99_ms": 25.205688964924775,
+            "p99p9_ms": 25.220548868586775,
+            "max_ms": 25.222199968993664,
+            "stdev_ms": 0.8661352592454327
+          },
+          "rss_delta_mb": null,
+          "output_fingerprint": "feee425fbda37992",
+          "notes": "",
+          "failed": false,
+          "error": ""
+        },
+        {
+          "scenario": "threads=1",
+          "backend": "onnxruntime",
+          "providers_requested": [],
+          "providers_active": [
+            "AzureExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "batch_size": 1,
+          "intra_op_threads": 1,
+          "graph_opt_level": "default",
+          "warmup_ms": 76.14530000137165,
+          "steady": {
+            "n_samples": 20,
+            "mean_ms": 73.1698800023878,
+            "p50_ms": 73.09454999631271,
+            "p95_ms": 74.2408799851546,
+            "p99_ms": 74.72393599164207,
+            "p99p9_ms": 74.83262359310174,
+            "max_ms": 74.84469999326393,
+            "stdev_ms": 0.8001239824526285
+          },
+          "rss_delta_mb": null,
+          "output_fingerprint": "feee425fbda37992",
+          "notes": "",
+          "failed": false,
+          "error": ""
+        },
+        {
+          "scenario": "threads=2",
+          "backend": "onnxruntime",
+          "providers_requested": [],
+          "providers_active": [
+            "AzureExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "batch_size": 1,
+          "intra_op_threads": 2,
+          "graph_opt_level": "default",
+          "warmup_ms": 41.6137000429444,
+          "steady": {
+            "n_samples": 20,
+            "mean_ms": 40.02402500482276,
+            "p50_ms": 39.34809999191202,
+            "p95_ms": 44.396115010022186,
+            "p99_ms": 44.45866299967747,
+            "p99p9_ms": 44.47273629734991,
+            "max_ms": 44.47429999709129,
+            "stdev_ms": 2.2368357247065216
+          },
+          "rss_delta_mb": null,
+          "output_fingerprint": "feee425fbda37992",
+          "notes": "",
+          "failed": false,
+          "error": ""
+        },
+        {
+          "scenario": "threads=4",
+          "backend": "onnxruntime",
+          "providers_requested": [],
+          "providers_active": [
+            "AzureExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "batch_size": 1,
+          "intra_op_threads": 4,
+          "graph_opt_level": "default",
+          "warmup_ms": 36.10840003238991,
+          "steady": {
+            "n_samples": 20,
+            "mean_ms": 35.45097000023816,
+            "p50_ms": 34.74285002448596,
+            "p95_ms": 40.01408503681887,
+            "p99_ms": 41.61897700338159,
+            "p99p9_ms": 41.9800776958582,
+            "max_ms": 42.02019999502227,
+            "stdev_ms": 2.7147654927487643
+          },
+          "rss_delta_mb": null,
+          "output_fingerprint": "feee425fbda37992",
+          "notes": "",
+          "failed": false,
+          "error": ""
+        },
+        {
+          "scenario": "gopt=basic",
+          "backend": "onnxruntime",
+          "providers_requested": [],
+          "providers_active": [
+            "AzureExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "batch_size": 1,
+          "intra_op_threads": null,
+          "graph_opt_level": "basic",
+          "warmup_ms": 44.2437999881804,
+          "steady": {
+            "n_samples": 20,
+            "mean_ms": 43.18768499069847,
+            "p50_ms": 43.06954998173751,
+            "p95_ms": 45.96884995989967,
+            "p99_ms": 47.03056994883809,
+            "p99p9_ms": 47.26945694634924,
+            "max_ms": 47.2959999460727,
+            "stdev_ms": 1.6578123234178035
+          },
+          "rss_delta_mb": null,
+          "output_fingerprint": "feee425fbda37992",
+          "notes": "",
+          "failed": false,
+          "error": ""
+        },
+        {
+          "scenario": "gopt=extended",
+          "backend": "onnxruntime",
+          "providers_requested": [],
+          "providers_active": [
+            "AzureExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "batch_size": 1,
+          "intra_op_threads": null,
+          "graph_opt_level": "extended",
+          "warmup_ms": 40.68380000535399,
+          "steady": {
+            "n_samples": 20,
+            "mean_ms": 41.94033500098158,
+            "p50_ms": 41.456950013525784,
+            "p95_ms": 44.73129001853522,
+            "p99_ms": 44.98801798268687,
+            "p99p9_ms": 45.04578177462099,
+            "max_ms": 45.05219997372478,
+            "stdev_ms": 1.537295392343158
+          },
+          "rss_delta_mb": null,
+          "output_fingerprint": "feee425fbda37992",
+          "notes": "",
+          "failed": false,
+          "error": ""
+        },
+        {
+          "scenario": "gopt=all",
+          "backend": "onnxruntime",
+          "providers_requested": [],
+          "providers_active": [
+            "AzureExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "batch_size": 1,
+          "intra_op_threads": null,
+          "graph_opt_level": "all",
+          "warmup_ms": 22.715199971571565,
+          "steady": {
+            "n_samples": 20,
+            "mean_ms": 25.35795000148937,
+            "p50_ms": 24.853000009898096,
+            "p95_ms": 29.262259980896488,
+            "p99_ms": 31.154051964404058,
+            "p99p9_ms": 31.57970516069327,
+            "max_ms": 31.626999960280955,
+            "stdev_ms": 2.2553427847512046
+          },
+          "rss_delta_mb": null,
+          "output_fingerprint": "feee425fbda37992",
+          "notes": "",
+          "failed": false,
+          "error": ""
+        },
+        {
+          "scenario": "batch=2",
+          "backend": "onnxruntime",
+          "providers_requested": [],
+          "providers_active": [
+            "AzureExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "batch_size": 2,
+          "intra_op_threads": null,
+          "graph_opt_level": "default",
+          "warmup_ms": 43.61809999682009,
+          "steady": {
+            "n_samples": 10,
+            "mean_ms": 47.35363000072539,
+            "p50_ms": 46.61449999548495,
+            "p95_ms": 52.10472999024204,
+            "p99_ms": 53.93734598881565,
+            "p99p9_ms": 54.34968458849472,
+            "max_ms": 54.39549998845905,
+            "stdev_ms": 2.6527640335166183
+          },
+          "rss_delta_mb": null,
+          "output_fingerprint": "48663b66e549c2bb",
+          "notes": "",
+          "failed": false,
+          "error": ""
+        },
+        {
+          "scenario": "batch=4",
+          "backend": "onnxruntime",
+          "providers_requested": [],
+          "providers_active": [
+            "AzureExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "batch_size": 4,
+          "intra_op_threads": null,
+          "graph_opt_level": "default",
+          "warmup_ms": 88.86380004696548,
+          "steady": {
+            "n_samples": 10,
+            "mean_ms": 94.6626799996011,
+            "p50_ms": 93.54245002032258,
+            "p95_ms": 98.63804000488017,
+            "p99_ms": 99.62112800974865,
+            "p99p9_ms": 99.84232281084405,
+            "max_ms": 99.86690001096576,
+            "stdev_ms": 2.4247659319589467
+          },
+          "rss_delta_mb": null,
+          "output_fingerprint": "b7fe1cec3a9d911e",
+          "notes": "",
+          "failed": false,
+          "error": ""
+        }
+      ]
+    },
+    {
+      "model": "efficientnet-lite4-11",
+      "family": "vision-classification",
+      "onnx_path": "data\\models\\zoo\\efficientnet-lite4-11.onnx",
+      "input_name": "images:0",
+      "input_shape": [
+        1,
+        224,
+        224,
+        3
+      ],
+      "opset": 11,
+      "gmacs": 1.348,
+      "scenarios": [
+        {
+          "scenario": "base",
+          "backend": "onnxruntime",
+          "providers_requested": [],
+          "providers_active": [
+            "AzureExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "batch_size": 1,
+          "intra_op_threads": null,
+          "graph_opt_level": "default",
+          "warmup_ms": 11.928900028578937,
+          "steady": {
+            "n_samples": 20,
+            "mean_ms": 10.0059349933872,
+            "p50_ms": 9.771449986146763,
+            "p95_ms": 11.033570033032447,
+            "p99_ms": 11.589434018824248,
+            "p99p9_ms": 11.714503415627407,
+            "max_ms": 11.7284000152722,
+            "stdev_ms": 0.8457821071660147
+          },
+          "rss_delta_mb": null,
+          "output_fingerprint": "a9e75ec8e543bff7",
+          "notes": "",
+          "failed": false,
+          "error": ""
+        },
+        {
+          "scenario": "threads=1",
+          "backend": "onnxruntime",
+          "providers_requested": [],
+          "providers_active": [
+            "AzureExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "batch_size": 1,
+          "intra_op_threads": 1,
+          "graph_opt_level": "default",
+          "warmup_ms": 34.20749999349937,
+          "steady": {
+            "n_samples": 20,
+            "mean_ms": 29.68177500006277,
+            "p50_ms": 29.65344997937791,
+            "p95_ms": 30.792650015791878,
+            "p99_ms": 30.895250000758097,
+            "p99p9_ms": 30.918334997375496,
+            "max_ms": 30.92089999699965,
+            "stdev_ms": 0.6846310420103204
+          },
+          "rss_delta_mb": null,
+          "output_fingerprint": "a9e75ec8e543bff7",
+          "notes": "",
+          "failed": false,
+          "error": ""
+        },
+        {
+          "scenario": "threads=2",
+          "backend": "onnxruntime",
+          "providers_requested": [],
+          "providers_active": [
+            "AzureExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "batch_size": 1,
+          "intra_op_threads": 2,
+          "graph_opt_level": "default",
+          "warmup_ms": 17.612399999052286,
+          "steady": {
+            "n_samples": 20,
+            "mean_ms": 16.411824998795055,
+            "p50_ms": 16.04869999573566,
+            "p95_ms": 17.979739999282174,
+            "p99_ms": 19.26322799583431,
+            "p99p9_ms": 19.55201279505855,
+            "max_ms": 19.584099994972348,
+            "stdev_ms": 0.9720095667293372
+          },
+          "rss_delta_mb": null,
+          "output_fingerprint": "a9e75ec8e543bff7",
+          "notes": "",
+          "failed": false,
+          "error": ""
+        },
+        {
+          "scenario": "threads=4",
+          "backend": "onnxruntime",
+          "providers_requested": [],
+          "providers_active": [
+            "AzureExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "batch_size": 1,
+          "intra_op_threads": 4,
+          "graph_opt_level": "default",
+          "warmup_ms": 15.12570003978908,
+          "steady": {
+            "n_samples": 20,
+            "mean_ms": 13.767600001301616,
+            "p50_ms": 13.59874996705912,
+            "p95_ms": 15.153935039415956,
+            "p99_ms": 15.349027020856738,
+            "p99p9_ms": 15.392922716680914,
+            "max_ms": 15.397800016216934,
+            "stdev_ms": 0.724212182572564
+          },
+          "rss_delta_mb": null,
+          "output_fingerprint": "a9e75ec8e543bff7",
+          "notes": "",
+          "failed": false,
+          "error": ""
+        },
+        {
+          "scenario": "gopt=basic",
+          "backend": "onnxruntime",
+          "providers_requested": [],
+          "providers_active": [
+            "AzureExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "batch_size": 1,
+          "intra_op_threads": null,
+          "graph_opt_level": "basic",
+          "warmup_ms": 30.616600008215755,
+          "steady": {
+            "n_samples": 20,
+            "mean_ms": 22.816464997595176,
+            "p50_ms": 22.824449988547713,
+            "p95_ms": 23.884464989532717,
+            "p99_ms": 24.425052991718985,
+            "p99p9_ms": 24.546685292210896,
+            "max_ms": 24.560199992265552,
+            "stdev_ms": 0.8362699658264571
+          },
+          "rss_delta_mb": null,
+          "output_fingerprint": "a9e75ec8e543bff7",
+          "notes": "",
+          "failed": false,
+          "error": ""
+        },
+        {
+          "scenario": "gopt=extended",
+          "backend": "onnxruntime",
+          "providers_requested": [],
+          "providers_active": [
+            "AzureExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "batch_size": 1,
+          "intra_op_threads": null,
+          "graph_opt_level": "extended",
+          "warmup_ms": 23.261499998625368,
+          "steady": {
+            "n_samples": 20,
+            "mean_ms": 23.843339999439195,
+            "p50_ms": 22.920250019524246,
+            "p95_ms": 28.61292499292177,
+            "p99_ms": 38.04034497996325,
+            "p99p9_ms": 40.161514477047625,
+            "max_ms": 40.39719997672364,
+            "stdev_ms": 4.261162915017472
+          },
+          "rss_delta_mb": null,
+          "output_fingerprint": "a9e75ec8e543bff7",
+          "notes": "",
+          "failed": false,
+          "error": ""
+        },
+        {
+          "scenario": "gopt=all",
+          "backend": "onnxruntime",
+          "providers_requested": [],
+          "providers_active": [
+            "AzureExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "batch_size": 1,
+          "intra_op_threads": null,
+          "graph_opt_level": "all",
+          "warmup_ms": 11.360099946614355,
+          "steady": {
+            "n_samples": 20,
+            "mean_ms": 10.813874992891215,
+            "p50_ms": 11.054500006139278,
+            "p95_ms": 12.863375013694167,
+            "p99_ms": 13.14875497482717,
+            "p99p9_ms": 13.212965466082096,
+            "max_ms": 13.220099965110421,
+            "stdev_ms": 1.4509358931509106
+          },
+          "rss_delta_mb": null,
+          "output_fingerprint": "a9e75ec8e543bff7",
+          "notes": "",
+          "failed": false,
+          "error": ""
+        },
+        {
+          "scenario": "batch=2",
+          "backend": "onnxruntime",
+          "providers_requested": [],
+          "providers_active": [
+            "AzureExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "batch_size": 2,
+          "intra_op_threads": null,
+          "graph_opt_level": "default",
+          "warmup_ms": 13.245800044387579,
+          "steady": {
+            "n_samples": 10,
+            "mean_ms": 11.405259993625805,
+            "p50_ms": 11.369549989467487,
+            "p95_ms": 12.57812498952262,
+            "p99_ms": 13.051704991376027,
+            "p99p9_ms": 13.158260491793046,
+            "max_ms": 13.170099991839379,
+            "stdev_ms": 0.7508333219740215
+          },
+          "rss_delta_mb": null,
+          "output_fingerprint": "a9e75ec8e543bff7",
+          "notes": "",
+          "failed": false,
+          "error": ""
+        },
+        {
+          "scenario": "batch=4",
+          "backend": "onnxruntime",
+          "providers_requested": [],
+          "providers_active": [
+            "AzureExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "batch_size": 4,
+          "intra_op_threads": null,
+          "graph_opt_level": "default",
+          "warmup_ms": 12.63049995759502,
+          "steady": {
+            "n_samples": 10,
+            "mean_ms": 11.88504000310786,
+            "p50_ms": 11.232500022742897,
+            "p95_ms": 15.491175008355635,
+            "p99_ms": 17.40871500398498,
+            "p99p9_ms": 17.84016150300159,
+            "max_ms": 17.888100002892315,
+            "stdev_ms": 2.0926993583543965
+          },
+          "rss_delta_mb": null,
+          "output_fingerprint": "a9e75ec8e543bff7",
+          "notes": "",
+          "failed": false,
+          "error": ""
+        }
+      ]
+    },
+    {
+      "model": "shufflenet-v2-10",
+      "family": "vision-classification",
+      "onnx_path": "data\\models\\zoo\\shufflenet-v2-10.onnx",
+      "input_name": "input",
+      "input_shape": [
+        1,
+        3,
+        224,
+        224
+      ],
+      "opset": 10,
+      "gmacs": 0.145,
+      "scenarios": [
+        {
+          "scenario": "base",
+          "backend": "onnxruntime",
+          "providers_requested": [],
+          "providers_active": [
+            "AzureExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "batch_size": 1,
+          "intra_op_threads": null,
+          "graph_opt_level": "default",
+          "warmup_ms": 4.676600045058876,
+          "steady": {
+            "n_samples": 20,
+            "mean_ms": 3.4404049947625026,
+            "p50_ms": 3.245849977247417,
+            "p95_ms": 4.158454990829342,
+            "p99_ms": 5.34185102151241,
+            "p99p9_ms": 5.608115128416105,
+            "max_ms": 5.637700029183179,
+            "stdev_ms": 0.5675027950802313
+          },
+          "rss_delta_mb": null,
+          "output_fingerprint": "c2e83c17f8325d97",
+          "notes": "",
+          "failed": false,
+          "error": ""
+        },
+        {
+          "scenario": "threads=1",
+          "backend": "onnxruntime",
+          "providers_requested": [],
+          "providers_active": [
+            "AzureExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "batch_size": 1,
+          "intra_op_threads": 1,
+          "graph_opt_level": "default",
+          "warmup_ms": 5.977499997243285,
+          "steady": {
+            "n_samples": 20,
+            "mean_ms": 4.853110000840388,
+            "p50_ms": 4.672449984354898,
+            "p95_ms": 5.844720013556071,
+            "p99_ms": 6.114063985296524,
+            "p99p9_ms": 6.174666378938128,
+            "max_ms": 6.181399978231639,
+            "stdev_ms": 0.4472367474411394
+          },
+          "rss_delta_mb": null,
+          "output_fingerprint": "c2e83c17f8325d97",
+          "notes": "",
+          "failed": false,
+          "error": ""
+        },
+        {
+          "scenario": "threads=2",
+          "backend": "onnxruntime",
+          "providers_requested": [],
+          "providers_active": [
+            "AzureExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "batch_size": 1,
+          "intra_op_threads": 2,
+          "graph_opt_level": "default",
+          "warmup_ms": 3.9946999750100076,
+          "steady": {
+            "n_samples": 20,
+            "mean_ms": 3.040890005649999,
+            "p50_ms": 2.9017000051680952,
+            "p95_ms": 3.4972750087035824,
+            "p99_ms": 4.121615029289386,
+            "p99p9_ms": 4.262091533921195,
+            "max_ms": 4.2777000344358385,
+            "stdev_ms": 0.3602071376657636
+          },
+          "rss_delta_mb": null,
+          "output_fingerprint": "c2e83c17f8325d97",
+          "notes": "",
+          "failed": false,
+          "error": ""
+        },
+        {
+          "scenario": "threads=4",
+          "backend": "onnxruntime",
+          "providers_requested": [],
+          "providers_active": [
+            "AzureExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "batch_size": 1,
+          "intra_op_threads": 4,
+          "graph_opt_level": "default",
+          "warmup_ms": 3.5327000077813864,
+          "steady": {
+            "n_samples": 20,
+            "mean_ms": 2.884785004425794,
+            "p50_ms": 2.781900024274364,
+            "p95_ms": 3.5153300501406193,
+            "p99_ms": 3.7377059739083047,
+            "p99p9_ms": 3.787740556756035,
+            "max_ms": 3.7932999548502266,
+            "stdev_ms": 0.3375771895655305
+          },
+          "rss_delta_mb": null,
+          "output_fingerprint": "c2e83c17f8325d97",
+          "notes": "",
+          "failed": false,
+          "error": ""
+        },
+        {
+          "scenario": "gopt=basic",
+          "backend": "onnxruntime",
+          "providers_requested": [],
+          "providers_active": [
+            "AzureExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "batch_size": 1,
+          "intra_op_threads": null,
+          "graph_opt_level": "basic",
+          "warmup_ms": 4.960699996445328,
+          "steady": {
+            "n_samples": 20,
+            "mean_ms": 4.401074998895638,
+            "p50_ms": 4.293649981264025,
+            "p95_ms": 5.429810009081849,
+            "p99_ms": 6.6064419882604835,
+            "p99p9_ms": 6.871184183575681,
+            "max_ms": 6.9005999830551445,
+            "stdev_ms": 0.7401051786915912
+          },
+          "rss_delta_mb": null,
+          "output_fingerprint": "4b5607a03bd0f119",
+          "notes": "",
+          "failed": false,
+          "error": ""
+        },
+        {
+          "scenario": "gopt=extended",
+          "backend": "onnxruntime",
+          "providers_requested": [],
+          "providers_active": [
+            "AzureExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "batch_size": 1,
+          "intra_op_threads": null,
+          "graph_opt_level": "extended",
+          "warmup_ms": 4.030500014778227,
+          "steady": {
+            "n_samples": 20,
+            "mean_ms": 3.9160999964224175,
+            "p50_ms": 3.728849987965077,
+            "p95_ms": 4.8339749919250625,
+            "p99_ms": 6.288235005922613,
+            "p99p9_ms": 6.615443509072069,
+            "max_ms": 6.651800009422004,
+            "stdev_ms": 0.7810359376637267
+          },
+          "rss_delta_mb": null,
+          "output_fingerprint": "4b5607a03bd0f119",
+          "notes": "",
+          "failed": false,
+          "error": ""
+        },
+        {
+          "scenario": "gopt=all",
+          "backend": "onnxruntime",
+          "providers_requested": [],
+          "providers_active": [
+            "AzureExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "batch_size": 1,
+          "intra_op_threads": null,
+          "graph_opt_level": "all",
+          "warmup_ms": 3.6920999991707504,
+          "steady": {
+            "n_samples": 20,
+            "mean_ms": 3.0486949981423095,
+            "p50_ms": 2.871350006898865,
+            "p95_ms": 4.542704985942692,
+            "p99_ms": 4.599020972382277,
+            "p99p9_ms": 4.611692069331184,
+            "max_ms": 4.613099968992174,
+            "stdev_ms": 0.5901758108888365
+          },
+          "rss_delta_mb": null,
+          "output_fingerprint": "c2e83c17f8325d97",
+          "notes": "",
+          "failed": false,
+          "error": ""
+        },
+        {
+          "scenario": "batch=2",
+          "backend": "onnxruntime",
+          "providers_requested": [],
+          "providers_active": [
+            "AzureExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "batch_size": 2,
+          "intra_op_threads": null,
+          "graph_opt_level": "default",
+          "warmup_ms": 5.381900002248585,
+          "steady": {
+            "n_samples": 10,
+            "mean_ms": 2.993839996634051,
+            "p50_ms": 2.9444499814417213,
+            "p95_ms": 3.4108200110495086,
+            "p99_ms": 3.5182439908385277,
+            "p99p9_ms": 3.5424143862910573,
+            "max_ms": 3.5450999857857823,
+            "stdev_ms": 0.264239591689686
+          },
+          "rss_delta_mb": null,
+          "output_fingerprint": "c2e83c17f8325d97",
+          "notes": "",
+          "failed": false,
+          "error": ""
+        },
+        {
+          "scenario": "batch=4",
+          "backend": "onnxruntime",
+          "providers_requested": [],
+          "providers_active": [
+            "AzureExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "batch_size": 4,
+          "intra_op_threads": null,
+          "graph_opt_level": "default",
+          "warmup_ms": 4.642300016712397,
+          "steady": {
+            "n_samples": 10,
+            "mean_ms": 2.9773599933832884,
+            "p50_ms": 2.7883999864570796,
+            "p95_ms": 3.529344996786676,
+            "p99_ms": 3.7107490160269663,
+            "p99p9_ms": 3.7515649203560324,
+            "max_ms": 3.7561000208370388,
+            "stdev_ms": 0.31567248508636714
+          },
+          "rss_delta_mb": null,
+          "output_fingerprint": "c2e83c17f8325d97",
+          "notes": "",
+          "failed": false,
+          "error": ""
+        }
+      ]
+    },
+    {
+      "model": "yolov8n",
+      "family": "vision-detection",
+      "onnx_path": "data\\models\\yolov8n.onnx",
+      "input_name": "images",
+      "input_shape": [
+        1,
+        3,
+        640,
+        640
+      ],
+      "opset": 17,
+      "gmacs": 4.372,
+      "scenarios": [
+        {
+          "scenario": "base",
+          "backend": "onnxruntime",
+          "providers_requested": [],
+          "providers_active": [
+            "AzureExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "batch_size": 1,
+          "intra_op_threads": null,
+          "graph_opt_level": "default",
+          "warmup_ms": 56.88469996675849,
+          "steady": {
+            "n_samples": 20,
+            "mean_ms": 50.16586999990977,
+            "p50_ms": 49.955800001043826,
+            "p95_ms": 53.76688997494057,
+            "p99_ms": 54.9295379803516,
+            "p99p9_ms": 55.19113378156908,
+            "max_ms": 55.220199981704354,
+            "stdev_ms": 2.0395396301467237
+          },
+          "rss_delta_mb": null,
+          "output_fingerprint": "4d0e67ca350be102",
+          "notes": "",
+          "failed": false,
+          "error": ""
+        },
+        {
+          "scenario": "threads=1",
+          "backend": "onnxruntime",
+          "providers_requested": [],
+          "providers_active": [
+            "AzureExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "batch_size": 1,
+          "intra_op_threads": 1,
+          "graph_opt_level": "default",
+          "warmup_ms": 117.715300002601,
+          "steady": {
+            "n_samples": 20,
+            "mean_ms": 102.8511550015537,
+            "p50_ms": 102.49910000129603,
+            "p95_ms": 105.93001496163197,
+            "p99_ms": 106.28288299427368,
+            "p99p9_ms": 106.36227830161806,
+            "max_ms": 106.3711000024341,
+            "stdev_ms": 2.0807628849428257
+          },
+          "rss_delta_mb": null,
+          "output_fingerprint": "4d0e67ca350be102",
+          "notes": "",
+          "failed": false,
+          "error": ""
+        },
+        {
+          "scenario": "threads=2",
+          "backend": "onnxruntime",
+          "providers_requested": [],
+          "providers_active": [
+            "AzureExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "batch_size": 1,
+          "intra_op_threads": 2,
+          "graph_opt_level": "default",
+          "warmup_ms": 63.38200002210215,
+          "steady": {
+            "n_samples": 20,
+            "mean_ms": 66.15284499712288,
+            "p50_ms": 65.66629998269491,
+            "p95_ms": 69.14766997506376,
+            "p99_ms": 70.66569398797583,
+            "p99p9_ms": 71.00724939088104,
+            "max_ms": 71.04519999120384,
+            "stdev_ms": 1.9473655481229073
+          },
+          "rss_delta_mb": null,
+          "output_fingerprint": "4d0e67ca350be102",
+          "notes": "",
+          "failed": false,
+          "error": ""
+        },
+        {
+          "scenario": "threads=4",
+          "backend": "onnxruntime",
+          "providers_requested": [],
+          "providers_active": [
+            "AzureExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "batch_size": 1,
+          "intra_op_threads": 4,
+          "graph_opt_level": "default",
+          "warmup_ms": 56.29999999655411,
+          "steady": {
+            "n_samples": 20,
+            "mean_ms": 63.58151500753593,
+            "p50_ms": 63.20619999314658,
+            "p95_ms": 66.55231502372772,
+            "p99_ms": 67.79742303770036,
+            "p99p9_ms": 68.0775723408442,
+            "max_ms": 68.10870004119352,
+            "stdev_ms": 1.9347253519947658
+          },
+          "rss_delta_mb": null,
+          "output_fingerprint": "4d0e67ca350be102",
+          "notes": "",
+          "failed": false,
+          "error": ""
+        },
+        {
+          "scenario": "gopt=basic",
+          "backend": "onnxruntime",
+          "providers_requested": [],
+          "providers_active": [
+            "AzureExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "batch_size": 1,
+          "intra_op_threads": null,
+          "graph_opt_level": "basic",
+          "warmup_ms": 66.59589998889714,
+          "steady": {
+            "n_samples": 20,
+            "mean_ms": 64.68430000531953,
+            "p50_ms": 64.78970000171103,
+            "p95_ms": 67.69210500351619,
+            "p99_ms": 71.89346101076808,
+            "p99p9_ms": 72.83876611239977,
+            "max_ms": 72.94380001258105,
+            "stdev_ms": 2.5292950360839215
+          },
+          "rss_delta_mb": null,
+          "output_fingerprint": "8ca129e01d864bc9",
+          "notes": "",
+          "failed": false,
+          "error": ""
+        },
+        {
+          "scenario": "gopt=extended",
+          "backend": "onnxruntime",
+          "providers_requested": [],
+          "providers_active": [
+            "AzureExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "batch_size": 1,
+          "intra_op_threads": null,
+          "graph_opt_level": "extended",
+          "warmup_ms": 55.43140001827851,
+          "steady": {
+            "n_samples": 20,
+            "mean_ms": 65.67022999806795,
+            "p50_ms": 61.30919998395257,
+            "p95_ms": 94.90948497550562,
+            "p99_ms": 99.33701697969808,
+            "p99p9_ms": 100.33321168064141,
+            "max_ms": 100.44389998074621,
+            "stdev_ms": 11.678529420310198
+          },
+          "rss_delta_mb": null,
+          "output_fingerprint": "8ca129e01d864bc9",
+          "notes": "",
+          "failed": false,
+          "error": ""
+        },
+        {
+          "scenario": "gopt=all",
+          "backend": "onnxruntime",
+          "providers_requested": [],
+          "providers_active": [
+            "AzureExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "batch_size": 1,
+          "intra_op_threads": null,
+          "graph_opt_level": "all",
+          "warmup_ms": 47.859299986157566,
+          "steady": {
+            "n_samples": 20,
+            "mean_ms": 50.40248999430332,
+            "p50_ms": 50.094450009055436,
+            "p95_ms": 54.19418998644687,
+            "p99_ms": 55.55443799239583,
+            "p99p9_ms": 55.86049379373435,
+            "max_ms": 55.89449999388307,
+            "stdev_ms": 2.0959047474215886
+          },
+          "rss_delta_mb": null,
+          "output_fingerprint": "4d0e67ca350be102",
+          "notes": "",
+          "failed": false,
+          "error": ""
+        },
+        {
+          "scenario": "batch=2",
+          "backend": "onnxruntime",
+          "providers_requested": [],
+          "providers_active": [
+            "AzureExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "batch_size": 2,
+          "intra_op_threads": null,
+          "graph_opt_level": "default",
+          "warmup_ms": 48.83510002400726,
+          "steady": {
+            "n_samples": 10,
+            "mean_ms": 50.15107000363059,
+            "p50_ms": 50.401999993482605,
+            "p95_ms": 52.910199988400564,
+            "p99_ms": 53.39043999905698,
+            "p99p9_ms": 53.498494001454674,
+            "max_ms": 53.510500001721084,
+            "stdev_ms": 2.24966401066771
+          },
+          "rss_delta_mb": null,
+          "output_fingerprint": "4d0e67ca350be102",
+          "notes": "",
+          "failed": false,
+          "error": ""
+        },
+        {
+          "scenario": "batch=4",
+          "backend": "onnxruntime",
+          "providers_requested": [],
+          "providers_active": [
+            "AzureExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "batch_size": 4,
+          "intra_op_threads": null,
+          "graph_opt_level": "default",
+          "warmup_ms": 48.97549998713657,
+          "steady": {
+            "n_samples": 10,
+            "mean_ms": 52.29505999595858,
+            "p50_ms": 50.74159998912364,
+            "p95_ms": 66.18146500550209,
+            "p99_ms": 72.64861300587654,
+            "p99p9_ms": 74.10372130596082,
+            "max_ms": 74.26540000597015,
+            "stdev_ms": 7.9103387126303435
+          },
+          "rss_delta_mb": null,
+          "output_fingerprint": "4d0e67ca350be102",
+          "notes": "",
+          "failed": false,
+          "error": ""
+        }
+      ]
+    },
+    {
+      "model": "bert-squad-10",
+      "family": "nlp-encoder-transformer",
+      "onnx_path": "data\\models\\zoo\\bert-squad-10.onnx",
+      "input_name": "unique_ids_raw_output___9:0",
+      "input_shape": [
+        1
+      ],
+      "opset": 10,
+      "gmacs": 1.293,
+      "scenarios": [
+        {
+          "scenario": "base",
+          "backend": "onnxruntime",
+          "providers_requested": [],
+          "providers_active": [
+            "AzureExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "batch_size": 1,
+          "intra_op_threads": null,
+          "graph_opt_level": "default",
+          "warmup_ms": 185.65529998159036,
+          "steady": {
+            "n_samples": 20,
+            "mean_ms": 229.05497500905767,
+            "p50_ms": 214.45140001014806,
+            "p95_ms": 293.15934000187553,
+            "p99_ms": 310.4605880018789,
+            "p99p9_ms": 314.35336880187975,
+            "max_ms": 314.7859000018798,
+            "stdev_ms": 30.31837840144593
+          },
+          "rss_delta_mb": null,
+          "output_fingerprint": "ad626defe99d70f3",
+          "notes": "",
+          "failed": false,
+          "error": ""
+        },
+        {
+          "scenario": "threads=1",
+          "backend": "onnxruntime",
+          "providers_requested": [],
+          "providers_active": [
+            "AzureExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "batch_size": 1,
+          "intra_op_threads": 1,
+          "graph_opt_level": "default",
+          "warmup_ms": 515.7919000484981,
+          "steady": {
+            "n_samples": 20,
+            "mean_ms": 480.2387249976164,
+            "p50_ms": 478.7873000022955,
+            "p95_ms": 489.98493998951744,
+            "p99_ms": 504.74930800439324,
+            "p99p9_ms": 508.07129080774035,
+            "max_ms": 508.4404000081122,
+            "stdev_ms": 8.591411007025902
+          },
+          "rss_delta_mb": null,
+          "output_fingerprint": "ad626defe99d70f3",
+          "notes": "",
+          "failed": false,
+          "error": ""
+        },
+        {
+          "scenario": "threads=2",
+          "backend": "onnxruntime",
+          "providers_requested": [],
+          "providers_active": [
+            "AzureExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "batch_size": 1,
+          "intra_op_threads": 2,
+          "graph_opt_level": "default",
+          "warmup_ms": 358.6504000122659,
+          "steady": {
+            "n_samples": 20,
+            "mean_ms": 312.7955150033813,
+            "p50_ms": 306.9764999963809,
+            "p95_ms": 345.14397500606725,
+            "p99_ms": 376.4267149876104,
+            "p99p9_ms": 383.46533148345776,
+            "max_ms": 384.2473999829963,
+            "stdev_ms": 21.066640748335697
+          },
+          "rss_delta_mb": null,
+          "output_fingerprint": "ad626defe99d70f3",
+          "notes": "",
+          "failed": false,
+          "error": ""
+        },
+        {
+          "scenario": "threads=4",
+          "backend": "onnxruntime",
+          "providers_requested": [],
+          "providers_active": [
+            "AzureExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "batch_size": 1,
+          "intra_op_threads": 4,
+          "graph_opt_level": "default",
+          "warmup_ms": 273.78539997152984,
+          "steady": {
+            "n_samples": 20,
+            "mean_ms": 282.24774499831256,
+            "p50_ms": 282.04260001075454,
+            "p95_ms": 296.95594500226434,
+            "p99_ms": 297.0174289838178,
+            "p99p9_ms": 297.03126287966734,
+            "max_ms": 297.0327999792062,
+            "stdev_ms": 6.6432818342731865
+          },
+          "rss_delta_mb": null,
+          "output_fingerprint": "ad626defe99d70f3",
+          "notes": "",
+          "failed": false,
+          "error": ""
+        },
+        {
+          "scenario": "gopt=basic",
+          "backend": "onnxruntime",
+          "providers_requested": [],
+          "providers_active": [
+            "AzureExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "batch_size": 1,
+          "intra_op_threads": null,
+          "graph_opt_level": "basic",
+          "warmup_ms": 188.09980002697557,
+          "steady": {
+            "n_samples": 20,
+            "mean_ms": 220.4617400013376,
+            "p50_ms": 214.18105001794174,
+            "p95_ms": 250.22958499321248,
+            "p99_ms": 262.91071698244195,
+            "p99p9_ms": 265.7639716800186,
+            "max_ms": 266.0809999797493,
+            "stdev_ms": 15.833558740398347
+          },
+          "rss_delta_mb": null,
+          "output_fingerprint": "ad626defe99d70f3",
+          "notes": "",
+          "failed": false,
+          "error": ""
+        },
+        {
+          "scenario": "gopt=extended",
+          "backend": "onnxruntime",
+          "providers_requested": [],
+          "providers_active": [
+            "AzureExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "batch_size": 1,
+          "intra_op_threads": null,
+          "graph_opt_level": "extended",
+          "warmup_ms": 191.29160000011325,
+          "steady": {
+            "n_samples": 20,
+            "mean_ms": 226.02850999392103,
+            "p50_ms": 225.38894999888726,
+            "p95_ms": 234.21371501463,
+            "p99_ms": 235.44666298024822,
+            "p99p9_ms": 235.72407627251232,
+            "max_ms": 235.75489997165278,
+            "stdev_ms": 4.25028076371042
+          },
+          "rss_delta_mb": null,
+          "output_fingerprint": "ad626defe99d70f3",
+          "notes": "",
+          "failed": false,
+          "error": ""
+        },
+        {
+          "scenario": "gopt=all",
+          "backend": "onnxruntime",
+          "providers_requested": [],
+          "providers_active": [
+            "AzureExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "batch_size": 1,
+          "intra_op_threads": null,
+          "graph_opt_level": "all",
+          "warmup_ms": 182.58310004603118,
+          "steady": {
+            "n_samples": 20,
+            "mean_ms": 230.72166500496678,
+            "p50_ms": 227.63979999581352,
+            "p95_ms": 258.58497003791854,
+            "p99_ms": 264.20699402457103,
+            "p99p9_ms": 265.47194942156784,
+            "max_ms": 265.61250002123415,
+            "stdev_ms": 11.53713866587264
+          },
+          "rss_delta_mb": null,
+          "output_fingerprint": "ad626defe99d70f3",
+          "notes": "",
+          "failed": false,
+          "error": ""
+        },
+        {
+          "scenario": "batch=2",
+          "backend": "onnxruntime",
+          "providers_requested": [],
+          "providers_active": [
+            "AzureExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "batch_size": 2,
+          "intra_op_threads": null,
+          "graph_opt_level": "default",
+          "warmup_ms": 425.9114000014961,
+          "steady": {
+            "n_samples": 10,
+            "mean_ms": 454.6397799917031,
+            "p50_ms": 450.4818000132218,
+            "p95_ms": 476.88777999719605,
+            "p99_ms": 480.167955996003,
+            "p99p9_ms": 480.90599559573457,
+            "max_ms": 480.98799999570474,
+            "stdev_ms": 14.453971330041234
+          },
+          "rss_delta_mb": null,
+          "output_fingerprint": "ff561000dbf403d4",
+          "notes": "",
+          "failed": false,
+          "error": ""
+        },
+        {
+          "scenario": "batch=4",
+          "backend": "onnxruntime",
+          "providers_requested": [],
+          "providers_active": [
+            "AzureExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "batch_size": 4,
+          "intra_op_threads": null,
+          "graph_opt_level": "default",
+          "warmup_ms": 903.3265000325628,
+          "steady": {
+            "n_samples": 10,
+            "mean_ms": 967.9723399982322,
+            "p50_ms": 951.0160999780055,
+            "p95_ms": 1015.4517250251956,
+            "p99_ms": 1020.4569850419648,
+            "p99p9_ms": 1021.5831685457379,
+            "max_ms": 1021.7083000461571,
+            "stdev_ms": 29.236665992643886
+          },
+          "rss_delta_mb": null,
+          "output_fingerprint": "0392ff694f9d9627",
+          "notes": "",
+          "failed": false,
+          "error": ""
+        }
+      ]
+    },
+    {
+      "model": "gpt-2-10",
+      "family": "nlp-decoder-transformer",
+      "onnx_path": "data\\models\\zoo\\gpt-2-10.onnx",
+      "input_name": "input1",
+      "input_shape": [
+        1,
+        1,
+        8
+      ],
+      "opset": 10,
+      "gmacs": 0.085,
+      "scenarios": [
+        {
+          "scenario": "base",
+          "backend": "onnxruntime",
+          "providers_requested": [],
+          "providers_active": [
+            "AzureExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "batch_size": 1,
+          "intra_op_threads": null,
+          "graph_opt_level": "default",
+          "warmup_ms": 55.59529998572543,
+          "steady": {
+            "n_samples": 20,
+            "mean_ms": 33.4175350057194,
+            "p50_ms": 33.71230000630021,
+            "p95_ms": 40.65933000820223,
+            "p99_ms": 40.74186597310472,
+            "p99p9_ms": 40.76043656520778,
+            "max_ms": 40.762499964330345,
+            "stdev_ms": 5.048264462601362
+          },
+          "rss_delta_mb": null,
+          "output_fingerprint": "fb6f6da263ea651e",
+          "notes": "",
+          "failed": false,
+          "error": ""
+        },
+        {
+          "scenario": "threads=1",
+          "backend": "onnxruntime",
+          "providers_requested": [],
+          "providers_active": [
+            "AzureExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "batch_size": 1,
+          "intra_op_threads": 1,
+          "graph_opt_level": "default",
+          "warmup_ms": 61.76700000651181,
+          "steady": {
+            "n_samples": 20,
+            "mean_ms": 35.12448499968741,
+            "p50_ms": 35.21155001362786,
+            "p95_ms": 38.07473999040667,
+            "p99_ms": 38.8839880033629,
+            "p99p9_ms": 39.066068806278054,
+            "max_ms": 39.08630000660196,
+            "stdev_ms": 2.1757001793142026
+          },
+          "rss_delta_mb": null,
+          "output_fingerprint": "fb6f6da263ea651e",
+          "notes": "",
+          "failed": false,
+          "error": ""
+        },
+        {
+          "scenario": "threads=2",
+          "backend": "onnxruntime",
+          "providers_requested": [],
+          "providers_active": [
+            "AzureExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "batch_size": 1,
+          "intra_op_threads": 2,
+          "graph_opt_level": "default",
+          "warmup_ms": 33.56730000814423,
+          "steady": {
+            "n_samples": 20,
+            "mean_ms": 25.634850008646026,
+            "p50_ms": 24.856949981767684,
+            "p95_ms": 31.821410011616535,
+            "p99_ms": 33.16524202527944,
+            "p99p9_ms": 33.46760422835359,
+            "max_ms": 33.501200028695166,
+            "stdev_ms": 2.9320631707225306
+          },
+          "rss_delta_mb": null,
+          "output_fingerprint": "fb6f6da263ea651e",
+          "notes": "",
+          "failed": false,
+          "error": ""
+        },
+        {
+          "scenario": "threads=4",
+          "backend": "onnxruntime",
+          "providers_requested": [],
+          "providers_active": [
+            "AzureExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "batch_size": 1,
+          "intra_op_threads": 4,
+          "graph_opt_level": "default",
+          "warmup_ms": 31.27060004044324,
+          "steady": {
+            "n_samples": 20,
+            "mean_ms": 27.968329991563223,
+            "p50_ms": 28.005800006212667,
+            "p95_ms": 31.628834988805465,
+            "p99_ms": 32.0610469620442,
+            "p99p9_ms": 32.15829465602292,
+            "max_ms": 32.169099955353886,
+            "stdev_ms": 2.2946364996713893
+          },
+          "rss_delta_mb": null,
+          "output_fingerprint": "fb6f6da263ea651e",
+          "notes": "",
+          "failed": false,
+          "error": ""
+        },
+        {
+          "scenario": "gopt=basic",
+          "backend": "onnxruntime",
+          "providers_requested": [],
+          "providers_active": [
+            "AzureExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "batch_size": 1,
+          "intra_op_threads": null,
+          "graph_opt_level": "basic",
+          "warmup_ms": 26.23459999449551,
+          "steady": {
+            "n_samples": 20,
+            "mean_ms": 28.42852999456227,
+            "p50_ms": 28.73784996336326,
+            "p95_ms": 32.09708499198314,
+            "p99_ms": 32.44189700752031,
+            "p99p9_ms": 32.519479711016174,
+            "max_ms": 32.528100011404604,
+            "stdev_ms": 2.2135658707707155
+          },
+          "rss_delta_mb": null,
+          "output_fingerprint": "ca197ca5c0c82917",
+          "notes": "",
+          "failed": false,
+          "error": ""
+        },
+        {
+          "scenario": "gopt=extended",
+          "backend": "onnxruntime",
+          "providers_requested": [],
+          "providers_active": [
+            "AzureExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "batch_size": 1,
+          "intra_op_threads": null,
+          "graph_opt_level": "extended",
+          "warmup_ms": 32.29800000553951,
+          "steady": {
+            "n_samples": 20,
+            "mean_ms": 27.21469499520026,
+            "p50_ms": 26.73529999447055,
+            "p95_ms": 31.27272501878906,
+            "p99_ms": 32.16078501252923,
+            "p99p9_ms": 32.36059851112077,
+            "max_ms": 32.382800010964274,
+            "stdev_ms": 2.607162503663714
+          },
+          "rss_delta_mb": null,
+          "output_fingerprint": "fb6f6da263ea651e",
+          "notes": "",
+          "failed": false,
+          "error": ""
+        },
+        {
+          "scenario": "gopt=all",
+          "backend": "onnxruntime",
+          "providers_requested": [],
+          "providers_active": [
+            "AzureExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "batch_size": 1,
+          "intra_op_threads": null,
+          "graph_opt_level": "all",
+          "warmup_ms": 26.904799975454807,
+          "steady": {
+            "n_samples": 20,
+            "mean_ms": 30.48304500116501,
+            "p50_ms": 30.36079998128116,
+            "p95_ms": 34.62367495230865,
+            "p99_ms": 36.73761499056127,
+            "p99p9_ms": 37.213251499168116,
+            "max_ms": 37.266100000124425,
+            "stdev_ms": 2.8986574140874675
+          },
+          "rss_delta_mb": null,
+          "output_fingerprint": "fb6f6da263ea651e",
+          "notes": "",
+          "failed": false,
+          "error": ""
+        },
+        {
+          "scenario": "batch=2",
+          "backend": "onnxruntime",
+          "providers_requested": [],
+          "providers_active": [
+            "AzureExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "batch_size": 2,
+          "intra_op_threads": null,
+          "graph_opt_level": "default",
+          "warmup_ms": 31.256199989002198,
+          "steady": {
+            "n_samples": 10,
+            "mean_ms": 33.64798000548035,
+            "p50_ms": 32.81629999401048,
+            "p95_ms": 41.133315017214045,
+            "p99_ms": 42.10146301309578,
+            "p99p9_ms": 42.31929631216918,
+            "max_ms": 42.343500012066215,
+            "stdev_ms": 4.669872988586347
+          },
+          "rss_delta_mb": null,
+          "output_fingerprint": "cbaad62b60605ef1",
+          "notes": "",
+          "failed": false,
+          "error": ""
+        },
+        {
+          "scenario": "batch=4",
+          "backend": "onnxruntime",
+          "providers_requested": [],
+          "providers_active": [
+            "AzureExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "batch_size": 4,
+          "intra_op_threads": null,
+          "graph_opt_level": "default",
+          "warmup_ms": 38.13020000234246,
+          "steady": {
+            "n_samples": 10,
+            "mean_ms": 42.07027000375092,
+            "p50_ms": 42.10314998636022,
+            "p95_ms": 44.978175035794266,
+            "p99_ms": 45.624915036023594,
+            "p99p9_ms": 45.77043153607519,
+            "max_ms": 45.78660003608093,
+            "stdev_ms": 2.0334101788150245
+          },
+          "rss_delta_mb": null,
+          "output_fingerprint": "dd07988ebac17973",
+          "notes": "",
+          "failed": false,
+          "error": ""
+        }
+      ]
+    }
+  ]
+}

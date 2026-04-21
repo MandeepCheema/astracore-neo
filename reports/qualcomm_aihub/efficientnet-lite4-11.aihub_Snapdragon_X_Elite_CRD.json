@@ -1,0 +1,12 @@
+{
+  "model": "C:\\Users\\mande\\astracore-neo\\data\\models\\zoo\\efficientnet-lite4-11.aihub.onnx",
+  "device": "Snapdragon X Elite CRD",
+  "compile_job": "jgj090dvp",
+  "profile_job": "jp1d9d28p",
+  "job_url": "https://app.aihub.qualcomm.com/jobs/jp1d9d28p",
+  "wall_s": 428.6,
+  "generated_at": 1776752729,
+  "inference_ms": 1.378,
+  "peak_memory_mb": 68.82,
+  "raw_profile": "C:\\Users\\mande\\astracore-neo\\reports\\qualcomm_aihub\\efficientnet-lite4-11.aihub_Snapdragon_X_Elite_CRD_raw.json"
+}

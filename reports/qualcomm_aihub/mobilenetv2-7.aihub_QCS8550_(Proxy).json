@@ -1,0 +1,12 @@
+{
+  "model": "data\\models\\zoo\\mobilenetv2-7.modern.onnx",
+  "device": "QCS8550 (Proxy)",
+  "compile_job": "jgdrkvr6p",
+  "profile_job": "jp4x7wx25",
+  "job_url": "https://app.aihub.qualcomm.com/jobs/jp4x7wx25",
+  "wall_s": 267.3,
+  "generated_at": 1776746910,
+  "inference_ms": 0.529,
+  "peak_memory_mb": 106.36,
+  "raw_profile": "C:\\Users\\mande\\astracore-neo\\reports\\qualcomm_aihub\\mobilenetv2-7.modern_QCS8550_(Proxy)_raw.json"
+}

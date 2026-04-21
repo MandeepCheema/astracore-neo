@@ -1,0 +1,66 @@
+{
+  "bert-squad-10": {
+    "download_s": 45.35,
+    "name": "bert-squad-10",
+    "path": "data\\models\\zoo\\bert-squad-10.onnx",
+    "sha256": "5945dee6478abdab2d5e4ce3868b4d969741e3dad2134cc669da65a4f092755b",
+    "size_bytes": 435852734,
+    "url": "https://github.com/onnx/models/raw/main/validated/text/machine_comprehension/bert-squad/model/bertsquad-10.onnx"
+  },
+  "efficientnet-lite4-11": {
+    "download_s": 6.09,
+    "name": "efficientnet-lite4-11",
+    "path": "data\\models\\zoo\\efficientnet-lite4-11.onnx",
+    "sha256": "d111689907c06eea7c82e4833ddef758da6453b9d4cf60b7e99ca05c7cbd9c12",
+    "size_bytes": 51946641,
+    "url": "https://github.com/onnx/models/raw/main/validated/vision/classification/efficientnet-lite4/model/efficientnet-lite4-11.onnx"
+  },
+  "gpt-2-10": {
+    "download_s": 58.9,
+    "name": "gpt-2-10",
+    "path": "data\\models\\zoo\\gpt-2-10.onnx",
+    "sha256": "a4b41071a9fd8fd5591d74d6c7e3a850feaf161f7289148a3b845c84f75c55e0",
+    "size_bytes": 548227537,
+    "url": "https://github.com/onnx/models/raw/main/validated/text/machine_comprehension/gpt-2/model/gpt2-10.onnx"
+  },
+  "mobilenetv2-7": {
+    "download_s": 2.87,
+    "name": "mobilenetv2-7",
+    "path": "data\\models\\zoo\\mobilenetv2-7.onnx",
+    "sha256": "c1c513582d56afceff8516c73804e484c81c6a830712ab6d682253f4a3cd042f",
+    "size_bytes": 14246826,
+    "url": "https://github.com/onnx/models/raw/main/validated/vision/classification/mobilenet/model/mobilenetv2-7.onnx"
+  },
+  "resnet50-v2-7": {
+    "download_s": 10.14,
+    "name": "resnet50-v2-7",
+    "path": "data\\models\\zoo\\resnet50-v2-7.onnx",
+    "sha256": "79102261eb6e5fd7af5d27f41316293e388c5cb691e5d25bfb035c4f64fefe31",
+    "size_bytes": 102442452,
+    "url": "https://github.com/onnx/models/raw/main/validated/vision/classification/resnet/model/resnet50-v2-7.onnx"
+  },
+  "shufflenet-v2-10": {
+    "download_s": 2.54,
+    "name": "shufflenet-v2-10",
+    "path": "data\\models\\zoo\\shufflenet-v2-10.onnx",
+    "sha256": "8b85e969a0a5518b554c99548379d1ba54d973733a6a12012138d91852308584",
+    "size_bytes": 9218554,
+    "url": "https://github.com/onnx/models/raw/main/validated/vision/classification/shufflenet/model/shufflenet-v2-10.onnx"
+  },
+  "squeezenet-1.1": {
+    "download_s": 1.13,
+    "name": "squeezenet-1.1",
+    "path": "data\\models\\zoo\\squeezenet-1.1.onnx",
+    "sha256": "1eeff551a67ae8d565ca33b572fc4b66e3ef357b0eb2863bb9ff47a918cc4088",
+    "size_bytes": 4956208,
+    "url": "https://github.com/onnx/models/raw/main/validated/vision/classification/squeezenet/model/squeezenet1.1-7.onnx"
+  },
+  "yolov8n": {
+    "in_repo": true,
+    "name": "yolov8n",
+    "path": "data\\models\\yolov8n.onnx",
+    "sha256": "9c2d68d5424392d038e0ab7a72f3f02d98828401e9bab38f4266523b9387889d",
+    "size_bytes": 12851047,
+    "url": null
+  }
+}

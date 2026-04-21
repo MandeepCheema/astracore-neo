@@ -57,18 +57,44 @@ module ecc_secded (
     // -------------------------------------------------------------------------
     // Combinational Hamming parity computation
     // -------------------------------------------------------------------------
-    // h[i] = XOR of data[j] where ((j+1) >> i) & 1 is set, for j in 0..63
-    integer i_h, j_h;
-    reg [6:0] h_comb;
-    always @(*) begin
-        h_comb = 7'h0;
-        for (i_h = 0; i_h < 7; i_h = i_h + 1) begin
-            for (j_h = 0; j_h < 64; j_h = j_h + 1) begin
-                if (((j_h + 1) >> i_h) & 1)
-                    h_comb[i_h] = h_comb[i_h] ^ data_in[j_h];
-            end
-        end
-    end
+    // h[i] = XOR of data[j] where ((j+1) >> i) & 1 is set, for j in 0..63.
+    //
+    // Refactored 2026-04-21 from a nested-for-loop in always_comb to
+    // explicit XOR-reduce over precomputed bit-masks per parity bit.
+    // The original nested-for produced ~448 conditional XORs that
+    // g++ 11 -Os spent 10+ minutes optimising on the generated
+    // Vtop__ALL.cpp — a real pathological case.  XOR-reduce of
+    // (data & mask) compiles to a single x86 popcnt-parity instruction
+    // via __builtin_parityll, so g++ closes -Os in ms.
+    //
+    // Bit-exact equivalence vs the original nested loop verified by
+    // tools/_verify_ecc_masks.py (100/100 random 64-bit data words
+    // round-trip identical); see the masks' provenance in that script.
+    //
+    // Mask coverage per parity bit (1-indexed, j=0..63 → codeword pos j+1):
+    //   H_MASK_0 (bit 0 of pos): every odd position    → 0x5555_5555_5555_5555
+    //   H_MASK_1 (bit 1 of pos): pos mod 4 in {2,3}    → 0x6666_6666_6666_6666
+    //   H_MASK_2 (bit 2 of pos): pos mod 8 in {4..7}   → 0x7878_7878_7878_7878
+    //   H_MASK_3 (bit 3 of pos): pos mod 16 in {8..15} → 0x7F80_7F80_7F80_7F80
+    //   H_MASK_4 (bit 4 of pos): pos mod 32 in {16..31}→ 0x7FFF_8000_7FFF_8000
+    //   H_MASK_5 (bit 5 of pos): pos mod 64 in {32..63}→ 0x7FFF_FFFF_8000_0000
+    //   H_MASK_6 (bit 6 of pos): pos == 64             → 0x8000_0000_0000_0000
+    localparam [63:0] H_MASK_0 = 64'h5555_5555_5555_5555;
+    localparam [63:0] H_MASK_1 = 64'h6666_6666_6666_6666;
+    localparam [63:0] H_MASK_2 = 64'h7878_7878_7878_7878;
+    localparam [63:0] H_MASK_3 = 64'h7F80_7F80_7F80_7F80;
+    localparam [63:0] H_MASK_4 = 64'h7FFF_8000_7FFF_8000;
+    localparam [63:0] H_MASK_5 = 64'h7FFF_FFFF_8000_0000;
+    localparam [63:0] H_MASK_6 = 64'h8000_0000_0000_0000;
+
+    wire [6:0] h_comb;
+    assign h_comb[0] = ^(data_in & H_MASK_0);
+    assign h_comb[1] = ^(data_in & H_MASK_1);
+    assign h_comb[2] = ^(data_in & H_MASK_2);
+    assign h_comb[3] = ^(data_in & H_MASK_3);
+    assign h_comb[4] = ^(data_in & H_MASK_4);
+    assign h_comb[5] = ^(data_in & H_MASK_5);
+    assign h_comb[6] = ^(data_in & H_MASK_6);
 
     // Overall parity of data bits (used in encode and decode)
     wire data_parity = ^data_in;    // XOR reduction of all 64 data bits
@@ -79,16 +105,12 @@ module ecc_secded (
     wire [6:0] h_parity_bits = total_h_parity;
     wire overall_parity_enc;
 
-    // Total 1-bits in data + h[6:0] → must be even; p7 set to fix
-    // overall_parity_enc = XOR of data bits ^ XOR of h bits
-    // If result is 1, total is odd, set p7=1 to make even
-    reg [6:0] total_h_parity;
-    always @(*) begin
-        total_h_parity = h_comb;
-    end
-
-    wire h_xor = ^h_comb;                          // XOR of 7 Hamming bits
-    assign overall_parity_enc = data_parity ^ h_xor; // = 0 if even, 1 if odd
+    // Total 1-bits in data + h[6:0] → must be even; p7 set to fix.
+    // overall_parity_enc = XOR of data bits ^ XOR of h bits;
+    // if 1, total is odd, set p7 to make even.
+    wire [6:0] total_h_parity = h_comb;
+    wire h_xor               = ^h_comb;
+    assign overall_parity_enc = data_parity ^ h_xor;
     wire [7:0] parity_computed = {overall_parity_enc, h_comb};
 
     // -------------------------------------------------------------------------
@@ -111,18 +133,20 @@ module ecc_secded (
     wire [6:0] error_position = h_syndrome;   // 1-indexed, 0 if parity bit err
     wire data_bit_err = single_error && (error_position >= 7'd1) && (error_position <= 7'd64);
 
-    // Corrected data word
-    reg [63:0] data_corrected;
-    integer cp;
-    always @(*) begin
-        data_corrected = data_in;
-        if (data_bit_err) begin
-            for (cp = 0; cp < 64; cp = cp + 1) begin
-                if (error_position == (cp + 1))
-                    data_corrected[cp] = data_in[cp] ^ 1'b1;
-            end
-        end
-    end
+    // Corrected data word. error_position is 1-indexed; flip bit
+    // (error_position - 1) when data_bit_err is asserted.
+    //
+    // Refactored 2026-04-21 from a 64-iteration for-loop with
+    // per-iteration equality compare to a single shift-and-XOR.
+    // The simulator emits a 64-bit shift expression that g++ -Os
+    // compiles trivially (bit-exact equivalent — verified against
+    // the prior loop semantics by inspection: only the bit at
+    // position (error_position - 1) is XOR-flipped, exactly matching
+    // the loop's per-iteration condition).
+    wire [63:0] correction_mask = data_bit_err
+                                  ? (64'd1 << (error_position - 7'd1))
+                                  : 64'd0;
+    wire [63:0] data_corrected  = data_in ^ correction_mask;
 
     // -------------------------------------------------------------------------
     // Sequential output register

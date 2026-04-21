@@ -1,0 +1,1163 @@
+{
+  "execution_summary": {
+    "estimated_inference_time": 1503,
+    "estimated_inference_peak_memory": 103292928,
+    "first_load_time": 221235,
+    "first_load_peak_memory": 98426880,
+    "warm_load_time": 178163,
+    "warm_load_peak_memory": 99475456,
+    "compile_time": 0,
+    "compile_peak_memory": 0,
+    "compile_memory_increase_range": [
+      0,
+      0
+    ],
+    "compile_memory_peak_range": [
+      0,
+      0
+    ],
+    "first_load_memory_increase_range": [
+      0,
+      1325088
+    ],
+    "first_load_memory_peak_range": [
+      774144,
+      8365520
+    ],
+    "warm_load_memory_increase_range": [
+      0,
+      1526928
+    ],
+    "warm_load_memory_peak_range": [
+      577536,
+      8412592
+    ],
+    "inference_memory_increase_range": [
+      0,
+      626736
+    ],
+    "inference_memory_peak_range": [
+      0,
+      7114048
+    ],
+    "all_compile_times": [],
+    "all_first_load_times": [
+      221235
+    ],
+    "all_warm_load_times": [
+      178163
+    ],
+    "all_inference_times": [
+      2138,
+      1607,
+      1538,
+      1535,
+      1551,
+      1518,
+      1534,
+      1534,
+      1536,
+      1536,
+      1536,
+      1747,
+      1573,
+      1556,
+      1540,
+      1547,
+      1530,
+      1562,
+      1524,
+      1549,
+      1522,
+      1517,
+      1521,
+      1509,
+      1523,
+      1534,
+      1541,
+      1558,
+      1550,
+      1563,
+      1546,
+      1529,
+      1524,
+      1520,
+      1534,
+      1524,
+      1542,
+      1583,
+      1511,
+      1514,
+      1510,
+      1512,
+      1509,
+      1511,
+      1513,
+      1507,
+      1505,
+      1510,
+      1509,
+      1506,
+      1519,
+      1529,
+      1511,
+      1508,
+      1506,
+      1512,
+      1556,
+      1510,
+      1507,
+      1510,
+      1509,
+      1523,
+      1506,
+      1508,
+      1512,
+      1505,
+      1515,
+      1508,
+      1510,
+      1517,
+      1511,
+      1509,
+      1514,
+      1506,
+      1504,
+      1518,
+      1507,
+      1503,
+      1507,
+      1510,
+      1505,
+      1507,
+      1505,
+      1506,
+      1505,
+      1508,
+      1515,
+      1510,
+      1506,
+      1519,
+      1506,
+      1507,
+      1506,
+      1507,
+      1514,
+      1509,
+      1506,
+      1507,
+      1506,
+      1513
+    ]
+  },
+  "execution_detail": [
+    {
+      "name": "Input",
+      "type": "Input",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 3097
+    },
+    {
+      "name": "data_0231",
+      "type": "data",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 278207
+    },
+    {
+      "name": "resnetv24_batchnorm0_fwd",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 328728
+    },
+    {
+      "name": "node_Conv_0",
+      "type": "node",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "resnetv24_relu0_fwd",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 784024
+    },
+    {
+      "name": "resnetv24_pool0_fwd",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 419605
+    },
+    {
+      "name": "resnetv24_stage1_batchnorm0_fwd",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 51169
+    },
+    {
+      "name": "resnetv24_stage1_activation0",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 19325
+    },
+    {
+      "name": "node_Conv_1",
+      "type": "node",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "resnetv24_stage1_activation1",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 10823
+    },
+    {
+      "name": "node_Conv_2",
+      "type": "node",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "resnetv24_stage1_activation2",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 29647
+    },
+    {
+      "name": "resnetv24_stage1_conv2_fwd",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 17041
+    },
+    {
+      "name": "resnetv24_stage1_conv3_fwd",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 15617
+    },
+    {
+      "name": "resnetv24_stage1__plus0",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 20445
+    },
+    {
+      "name": "resnetv24_stage1_batchnorm3_fwd",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 181937
+    },
+    {
+      "name": "resnetv24_stage1_activation3",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 36770
+    },
+    {
+      "name": "node_Conv_3",
+      "type": "node",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "resnetv24_stage1_activation4",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 17481
+    },
+    {
+      "name": "node_Conv_4",
+      "type": "node",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "resnetv24_stage1_activation5",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 27368
+    },
+    {
+      "name": "resnetv24_stage1_conv6_fwd",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 15553
+    },
+    {
+      "name": "resnetv24_stage1__plus1",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 17040
+    },
+    {
+      "name": "resnetv24_stage1_batchnorm6_fwd",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 152652
+    },
+    {
+      "name": "resnetv24_stage1_activation6",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 36391
+    },
+    {
+      "name": "node_Conv_5",
+      "type": "node",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "resnetv24_stage1_activation7",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 14903
+    },
+    {
+      "name": "node_Conv_6",
+      "type": "node",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "resnetv24_stage1_activation8",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 26999
+    },
+    {
+      "name": "resnetv24_stage1_conv9_fwd",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 16429
+    },
+    {
+      "name": "resnetv24_stage1__plus2",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 18487
+    },
+    {
+      "name": "resnetv24_stage2_batchnorm0_fwd",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 155693
+    },
+    {
+      "name": "resnetv24_stage2_activation0",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 39930
+    },
+    {
+      "name": "node_Conv_7",
+      "type": "node",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "resnetv24_stage2_activation1",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 26677
+    },
+    {
+      "name": "node_Conv_8",
+      "type": "node",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "resnetv24_stage2_activation2",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 125412
+    },
+    {
+      "name": "resnetv24_stage2_conv2_fwd",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 16734
+    },
+    {
+      "name": "resnetv24_stage2_conv3_fwd",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 61661
+    },
+    {
+      "name": "resnetv24_stage2__plus0",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 11999
+    },
+    {
+      "name": "resnetv24_stage2_batchnorm3_fwd",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 80448
+    },
+    {
+      "name": "resnetv24_stage2_activation3",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 22041
+    },
+    {
+      "name": "node_Conv_9",
+      "type": "node",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "resnetv24_stage2_activation4",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 15287
+    },
+    {
+      "name": "node_Conv_10",
+      "type": "node",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "resnetv24_stage2_activation5",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 34635
+    },
+    {
+      "name": "resnetv24_stage2_conv6_fwd",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 17792
+    },
+    {
+      "name": "resnetv24_stage2__plus1",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 12036
+    },
+    {
+      "name": "resnetv24_stage2_batchnorm6_fwd",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 86687
+    },
+    {
+      "name": "resnetv24_stage2_activation6",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 22242
+    },
+    {
+      "name": "node_Conv_11",
+      "type": "node",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "resnetv24_stage2_activation7",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 15205
+    },
+    {
+      "name": "node_Conv_12",
+      "type": "node",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "resnetv24_stage2_activation8",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 32245
+    },
+    {
+      "name": "resnetv24_stage2_conv9_fwd",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 18024
+    },
+    {
+      "name": "resnetv24_stage2__plus2",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 12039
+    },
+    {
+      "name": "resnetv24_stage2_batchnorm9_fwd",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 84028
+    },
+    {
+      "name": "resnetv24_stage2_activation9",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 22783
+    },
+    {
+      "name": "node_Conv_13",
+      "type": "node",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "resnetv24_stage2_activation10",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 15415
+    },
+    {
+      "name": "node_Conv_14",
+      "type": "node",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "resnetv24_stage2_activation11",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 32286
+    },
+    {
+      "name": "resnetv24_stage2_conv12_fwd",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 17430
+    },
+    {
+      "name": "resnetv24_stage2__plus3",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 12078
+    },
+    {
+      "name": "resnetv24_stage3_batchnorm0_fwd",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 83048
+    },
+    {
+      "name": "resnetv24_stage3_activation0",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 23431
+    },
+    {
+      "name": "node_Conv_15",
+      "type": "node",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "resnetv24_stage3_activation1",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 29664
+    },
+    {
+      "name": "node_Conv_16",
+      "type": "node",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "resnetv24_stage3_activation2",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 95780
+    },
+    {
+      "name": "resnetv24_stage3_conv2_fwd",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 20197
+    },
+    {
+      "name": "resnetv24_stage3_conv3_fwd",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 50381
+    },
+    {
+      "name": "resnetv24_stage3__plus0",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 9411
+    },
+    {
+      "name": "resnetv24_stage3_batchnorm3_fwd",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 47720
+    },
+    {
+      "name": "resnetv24_stage3_activation3",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 14819
+    },
+    {
+      "name": "node_Conv_17",
+      "type": "node",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "resnetv24_stage3_activation4",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 18271
+    },
+    {
+      "name": "node_Conv_18",
+      "type": "node",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "resnetv24_stage3_activation5",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 44693
+    },
+    {
+      "name": "resnetv24_stage3_conv6_fwd",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 18502
+    },
+    {
+      "name": "resnetv24_stage3__plus1",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 9553
+    },
+    {
+      "name": "resnetv24_stage3_batchnorm6_fwd",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 50452
+    },
+    {
+      "name": "resnetv24_stage3_activation6",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 12622
+    },
+    {
+      "name": "node_Conv_19",
+      "type": "node",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "resnetv24_stage3_activation7",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 18410
+    },
+    {
+      "name": "node_Conv_20",
+      "type": "node",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "resnetv24_stage3_activation8",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 38493
+    },
+    {
+      "name": "resnetv24_stage3_conv9_fwd",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 18659
+    },
+    {
+      "name": "resnetv24_stage3__plus2",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 10004
+    },
+    {
+      "name": "resnetv24_stage3_batchnorm9_fwd",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 50727
+    },
+    {
+      "name": "resnetv24_stage3_activation9",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 13121
+    },
+    {
+      "name": "node_Conv_21",
+      "type": "node",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "resnetv24_stage3_activation10",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 18028
+    },
+    {
+      "name": "node_Conv_22",
+      "type": "node",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "resnetv24_stage3_activation11",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 38379
+    },
+    {
+      "name": "resnetv24_stage3_conv12_fwd",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 18531
+    },
+    {
+      "name": "resnetv24_stage3__plus3",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 10528
+    },
+    {
+      "name": "resnetv24_stage3_batchnorm12_fwd",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 50037
+    },
+    {
+      "name": "resnetv24_stage3_activation12",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 12871
+    },
+    {
+      "name": "node_Conv_23",
+      "type": "node",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "resnetv24_stage3_activation13",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 18210
+    },
+    {
+      "name": "node_Conv_24",
+      "type": "node",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "resnetv24_stage3_activation14",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 38412
+    },
+    {
+      "name": "resnetv24_stage3_conv15_fwd",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 18376
+    },
+    {
+      "name": "resnetv24_stage3__plus4",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 9792
+    },
+    {
+      "name": "resnetv24_stage3_batchnorm15_fwd",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 50880
+    },
+    {
+      "name": "resnetv24_stage3_activation15",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 14439
+    },
+    {
+      "name": "node_Conv_25",
+      "type": "node",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "resnetv24_stage3_activation16",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 18076
+    },
+    {
+      "name": "node_Conv_26",
+      "type": "node",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "resnetv24_stage3_activation17",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 38514
+    },
+    {
+      "name": "resnetv24_stage3_conv18_fwd",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 18453
+    },
+    {
+      "name": "resnetv24_stage3__plus5",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 9579
+    },
+    {
+      "name": "resnetv24_stage4_batchnorm0_fwd",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 50686
+    },
+    {
+      "name": "resnetv24_stage4_activation0",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 12743
+    },
+    {
+      "name": "node_Conv_27",
+      "type": "node",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "resnetv24_stage4_activation1",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 36855
+    },
+    {
+      "name": "node_Conv_28",
+      "type": "node",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "resnetv24_stage4_activation2",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 205343
+    },
+    {
+      "name": "resnetv24_stage4_conv2_fwd",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 64296
+    },
+    {
+      "name": "resnetv24_stage4_conv3_fwd",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 52707
+    },
+    {
+      "name": "resnetv24_stage4__plus0",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 7677
+    },
+    {
+      "name": "resnetv24_stage4_batchnorm3_fwd",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 33240
+    },
+    {
+      "name": "resnetv24_stage4_activation3",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 7223
+    },
+    {
+      "name": "node_Conv_29",
+      "type": "node",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "resnetv24_stage4_activation4",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 23388
+    },
+    {
+      "name": "node_Conv_30",
+      "type": "node",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 1530
+    },
+    {
+      "name": "resnetv24_stage4_activation5",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 152367
+    },
+    {
+      "name": "resnetv24_stage4_conv6_fwd",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 18797
+    },
+    {
+      "name": "resnetv24_stage4__plus1",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 7669
+    },
+    {
+      "name": "resnetv24_stage4_batchnorm6_fwd",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 56644
+    },
+    {
+      "name": "resnetv24_stage4_activation6",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 8306
+    },
+    {
+      "name": "node_Conv_31",
+      "type": "node",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "resnetv24_stage4_activation7",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 42930
+    },
+    {
+      "name": "node_Conv_32",
+      "type": "node",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 1421
+    },
+    {
+      "name": "resnetv24_stage4_activation8",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 151556
+    },
+    {
+      "name": "resnetv24_stage4_conv9_fwd",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 18812
+    },
+    {
+      "name": "resnetv24_stage4__plus2",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 7676
+    },
+    {
+      "name": "resnetv24_batchnorm2_fwd",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 57562
+    },
+    {
+      "name": "resnetv24_relu1_fwd",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 7464
+    },
+    {
+      "name": "resnetv24_pool1_fwd",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 94493
+    },
+    {
+      "name": "resnetv24_pool1_fwd_0123",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "resnetv24_dense0_fwd",
+      "type": "resnetv24",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 82544
+    },
+    {
+      "name": "Output",
+      "type": "Output",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 6469
+    }
+  ]
+}

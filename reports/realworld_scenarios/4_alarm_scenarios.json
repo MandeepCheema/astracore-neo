@@ -1,0 +1,67 @@
+{
+  "scenario": "fusion_alarm_scenarios",
+  "subscenarios": [
+    {
+      "subscenario": "parking_crawl_5_to_0p5_kph",
+      "description": "Decelerating 5->0.5 kph, 4 injected obstacles.",
+      "n_samples": 10,
+      "histogram": {
+        "OFF": 6,
+        "CAUTION": 2,
+        "WARNING": 1,
+        "CRITICAL": 1
+      },
+      "min_us_m": 0.2,
+      "min_lidar_m": 0.040718838572502136,
+      "first_critical": "synthetic-s000-n006"
+    },
+    {
+      "subscenario": "highway_cruise_100_kph_clear_road",
+      "description": "10 samples at 100 kph, no obstacles \u2014 alarm must stay OFF.",
+      "n_samples": 10,
+      "histogram": {
+        "OFF": 10,
+        "CAUTION": 0,
+        "WARNING": 0,
+        "CRITICAL": 0
+      },
+      "min_us_m": Infinity,
+      "min_lidar_m": Infinity,
+      "first_critical": null,
+      "pass_criterion": "CRITICAL == 0 and WARNING == 0",
+      "passed": true
+    },
+    {
+      "subscenario": "emergency_brake_60_kph_to_35_kph",
+      "description": "60->35 kph cruise; obstacle appears at sample 2 at 0.25m.",
+      "n_samples": 6,
+      "histogram": {
+        "OFF": 4,
+        "CAUTION": 0,
+        "WARNING": 0,
+        "CRITICAL": 2
+      },
+      "min_us_m": 0.25,
+      "min_lidar_m": 0.07277807593345642,
+      "first_critical": "synthetic-s000-n002",
+      "pass_criterion": "CRITICAL >= 1 AND first_critical at sample 2 or 3",
+      "passed": true
+    },
+    {
+      "subscenario": "us_dropout_lidar_only_detection",
+      "description": "Every US sensor reports no-echo; lidar alone sees the 0.5m obstacle at sample 3.",
+      "n_samples": 8,
+      "histogram": {
+        "OFF": 7,
+        "CAUTION": 1,
+        "WARNING": 0,
+        "CRITICAL": 0
+      },
+      "min_us_m": Infinity,
+      "min_lidar_m": 0.31383076310157776,
+      "first_critical": null,
+      "pass_criterion": "CAUTION >= 1 (US dead \u2192 alarm degrades to CAUTION)",
+      "passed": true
+    }
+  ]
+}

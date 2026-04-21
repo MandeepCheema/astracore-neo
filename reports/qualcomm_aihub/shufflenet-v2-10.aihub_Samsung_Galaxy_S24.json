@@ -1,0 +1,12 @@
+{
+  "model": "C:\\Users\\mande\\astracore-neo\\data\\models\\zoo\\shufflenet-v2-10.aihub.onnx",
+  "device": "Samsung Galaxy S24",
+  "compile_job": "jpx7q1v1g",
+  "profile_job": "j563x1605",
+  "job_url": "https://app.aihub.qualcomm.com/jobs/j563x1605",
+  "wall_s": 291.5,
+  "generated_at": 1776751644,
+  "inference_ms": 0.309,
+  "peak_memory_mb": 172.68,
+  "raw_profile": "C:\\Users\\mande\\astracore-neo\\reports\\qualcomm_aihub\\shufflenet-v2-10.aihub_Samsung_Galaxy_S24_raw.json"
+}

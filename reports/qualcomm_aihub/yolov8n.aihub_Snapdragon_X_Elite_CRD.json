@@ -1,0 +1,12 @@
+{
+  "model": "data\\models\\yolov8n.cleaned.onnx",
+  "device": "Snapdragon X Elite CRD",
+  "compile_job": "jgkl1yqn5",
+  "profile_job": "j563x1ny5",
+  "job_url": "https://app.aihub.qualcomm.com/jobs/j563x1ny5",
+  "wall_s": 412.5,
+  "generated_at": 1776744750,
+  "inference_ms": 6.442,
+  "peak_memory_mb": 52.51,
+  "raw_profile": "C:\\Users\\mande\\astracore-neo\\reports\\qualcomm_aihub\\yolov8n.cleaned_Snapdragon_X_Elite_CRD_raw.json"
+}

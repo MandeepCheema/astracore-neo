@@ -1,0 +1,17 @@
+{
+  "dataset": "synthetic",
+  "scene_id": "synthetic-scene-000",
+  "scene_name": "Synthetic drive #0",
+  "n_samples": 20,
+  "backend": "onnxruntime",
+  "wall_s_total": 2.287,
+  "summary": {
+    "mean_camera_det": 3.0,
+    "mean_lidar_clust": 13.55,
+    "mean_radar_det": 20.95,
+    "mean_fused_obj": 13.55,
+    "mean_gt_per_frame": 2.85,
+    "mean_ms_per_frame": 114.3327399957343,
+    "p50_ms_per_frame": 121.52045000402723
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "model": "C:\\Users\\mande\\astracore-neo\\data\\models\\zoo\\efficientnet-lite4-11.aihub.onnx",
+  "device": "Samsung Galaxy S24",
+  "compile_job": "jp2717yr5",
+  "profile_job": "j563x3465",
+  "job_url": "https://app.aihub.qualcomm.com/jobs/j563x3465",
+  "wall_s": 291.5,
+  "generated_at": 1776752299,
+  "inference_ms": 0.936,
+  "peak_memory_mb": 230.62,
+  "raw_profile": "C:\\Users\\mande\\astracore-neo\\reports\\qualcomm_aihub\\efficientnet-lite4-11.aihub_Samsung_Galaxy_S24_raw.json"
+}

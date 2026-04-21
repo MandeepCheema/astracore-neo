@@ -1,0 +1,87 @@
+AstraCore Neo — Dual Licence (DRAFT, subject to formal review)
+=================================================================
+
+Copyright (c) 2025-2026 Astracore AI Technologies Private Limited.
+
+The AstraCore Neo repository contains two bodies of work with two different
+licences. A single file's licence is determined by its top-level directory.
+
+-------------------------------------------------------------------------------
+1. Apache License 2.0  — Python SDK, compiler, tools, scripts, documentation
+-------------------------------------------------------------------------------
+
+Scope (Apache-2.0 licensed):
+
+    src/           Python platform SDK (hal, memory, compute, safety,
+                   security, telemetry, dms, connectivity, models)
+    tools/         Compiler, quantiser, reference runtime, frontends,
+                   build scripts, Verilator runners
+    tests/         Test suites (both for tools/ and rtl/ cocotb glue)
+    docs/          Architecture documents, spec-sheet provenance,
+                   audit findings, markdown guides
+    scripts/       Data-prep, export, and utility scripts
+    PLAN.md        Project plan
+    README.md      Repository README
+
+These files are licensed under the Apache License, Version 2.0 ("the
+License"); you may not use these files except in compliance with the
+License. You may obtain a copy of the License at:
+
+    https://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+-------------------------------------------------------------------------------
+2. Source-Available Evaluation Licence — Hardware RTL and silicon artefacts
+-------------------------------------------------------------------------------
+
+Scope (Evaluation-licence only — NOT open source):
+
+    rtl/              SystemVerilog RTL (all modules)
+    sim/              cocotb testbenches that exercise rtl/
+    constraints/      FPGA timing / IO constraints
+    fpga/             FPGA bring-up packages (AWS F1, Arty A7, etc.)
+    asic/             OpenLane / synthesis configuration and run outputs
+    data/models/      Reference model artefacts
+    data/calibration/ Pre-processed calibration/evaluation tensors
+
+Permitted uses (no separate agreement needed):
+
+    a. Non-commercial evaluation — reading, building, simulating, modifying
+       locally for the purpose of technical evaluation of AstraCore Neo
+       IP and publishing evaluation results.
+    b. Academic research and classroom use, with attribution.
+    c. Reproducing this repository for audit, due-diligence, or
+       standards-certification review.
+
+Prohibited uses (without a separate written licence from Astracore AI
+Technologies Private Limited):
+
+    a. Fabricating or selling silicon derived from these files.
+    b. Sub-licensing, redistributing, or publishing modified copies of
+       these files as a competing open-source project.
+    c. Incorporating these files into a commercial product.
+    d. Filing patents on derived inventions.
+
+Commercial licensing: contact <licensing@astracore.example> (placeholder —
+formal contact address to be confirmed).
+
+-------------------------------------------------------------------------------
+3. Notices
+-------------------------------------------------------------------------------
+
+* This file is a DRAFT intended to establish a license posture in the
+  repository. Both licence texts should be reviewed by counsel before
+  external publication. The prohibited-uses list above is intentionally
+  conservative and may be broadened in a final version.
+
+* Third-party packages vendored under `.venv/` and `.venv-export/` carry
+  their own licences (see the per-package LICENSE files therein).
+
+* The "Partially Open-Source SDK" phrase used in the AstraCore Neo spec
+  sheet refers specifically to the Apache-2.0 licensed Python tools and
+  documentation above, not to the RTL.

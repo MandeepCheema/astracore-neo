@@ -1,0 +1,33 @@
+{
+  "model": "yolov8n.onnx",
+  "backend": "onnxruntime",
+  "mac_ops_per_inference": 4371993600,
+  "warmup_s": 0.3,
+  "duration_s_per_slice": 1.0,
+  "slices": [
+    {
+      "n_streams": 1,
+      "n_inferences_total": 24,
+      "wall_s": 1.015744900010759,
+      "throughput_ips": 23.627979820273563,
+      "aggregate_tops": 0.10330137655516516,
+      "mean_latency_ms": 42.2875875022631,
+      "p50_latency_ms": 40.12435000913683,
+      "p99_latency_ms": 54.657653002941515,
+      "scaling_vs_single": 1.0,
+      "util_vs_single": 1.0
+    },
+    {
+      "n_streams": 2,
+      "n_inferences_total": 30,
+      "wall_s": 1.0549706000019796,
+      "throughput_ips": 28.43681141440691,
+      "aggregate_tops": 0.12432555750819395,
+      "mean_latency_ms": 69.1481333313277,
+      "p50_latency_ms": 69.07474999024998,
+      "p99_latency_ms": 77.20386201515794,
+      "scaling_vs_single": 1.2035227569479816,
+      "util_vs_single": 1.2035227569479814
+    }
+  ]
+}

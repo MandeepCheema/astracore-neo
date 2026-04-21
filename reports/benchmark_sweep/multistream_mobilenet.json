@@ -1,0 +1,57 @@
+{
+  "model": "mobilenetv2-7.onnx",
+  "backend": "onnxruntime",
+  "mac_ops_per_inference": 429111936,
+  "warmup_s": 1.0,
+  "duration_s_per_slice": 2.0,
+  "slices": [
+    {
+      "n_streams": 1,
+      "n_inferences_total": 280,
+      "wall_s": 2.0119740999944042,
+      "throughput_ips": 139.1668014020552,
+      "aggregate_tops": 0.05971813557656342,
+      "mean_latency_ms": 7.178013569188936,
+      "p50_latency_ms": 5.747000002884306,
+      "p99_latency_ms": 25.17192098341182,
+      "scaling_vs_single": 1.0,
+      "util_vs_single": 1.0
+    },
+    {
+      "n_streams": 2,
+      "n_inferences_total": 415,
+      "wall_s": 2.0237727999920025,
+      "throughput_ips": 205.06254457103088,
+      "aggregate_tops": 0.08799478550196135,
+      "mean_latency_ms": 9.70433108390769,
+      "p50_latency_ms": 9.220500010997057,
+      "p99_latency_ms": 19.330942008527934,
+      "scaling_vs_single": 1.473501887699508,
+      "util_vs_single": 1.473501887699508
+    },
+    {
+      "n_streams": 4,
+      "n_inferences_total": 467,
+      "wall_s": 2.136200499982806,
+      "throughput_ips": 218.61243830050543,
+      "aggregate_tops": 0.09380920663281044,
+      "mean_latency_ms": 17.88899550326338,
+      "p50_latency_ms": 11.308099987218156,
+      "p99_latency_ms": 63.77097600430707,
+      "scaling_vs_single": 1.570866299275863,
+      "util_vs_single": 1.570866299275863
+    },
+    {
+      "n_streams": 8,
+      "n_inferences_total": 496,
+      "wall_s": 2.266973900026642,
+      "throughput_ips": 218.79387318670538,
+      "aggregate_tops": 0.09388706250808564,
+      "mean_latency_ms": 35.13935625056958,
+      "p50_latency_ms": 32.6259500143351,
+      "p99_latency_ms": 93.97732998477295,
+      "scaling_vs_single": 1.5721700217468264,
+      "util_vs_single": 1.5721700217468264
+    }
+  ]
+}

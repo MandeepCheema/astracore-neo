@@ -1,0 +1,158 @@
+# ---------------------------------------------------------------------------
+# Tier-1 ADAS integration — realistic L2+ / L4 automotive configuration.
+# Covers every sensor kind AstraCore supports today.
+#
+# Validate:
+#   astracore configure --validate examples/tier1_adas.yaml
+#
+# Round-trip:
+#   astracore configure --dump examples/tier1_adas.yaml
+# ---------------------------------------------------------------------------
+
+version: 1
+name: Tier-1 reference ADAS rig
+description: >
+  Four perception cameras + one roof-mounted lidar + six radars + twelve
+  ultrasonics + in-cabin mic array + 1 thermal + 1 event camera + 1 ToF
+  depth for driver monitoring. Target silicon: Qualcomm SA8650P.
+
+sensors:
+  cameras:
+    - name: CAM_FRONT
+      resolution: [1920, 1080]
+      format: RGB888
+      role: perception
+      extrinsics: { x: 1.5, y: 0.0, z: 1.25, yaw: 0.0, pitch: 0.0, roll: 0.0 }
+    - name: CAM_FRONT_LEFT
+      resolution: [1920, 1080]
+      format: RGB888
+      extrinsics: { x: 1.3, y: 0.7, z: 1.25, yaw: 0.52 }
+    - name: CAM_FRONT_RIGHT
+      resolution: [1920, 1080]
+      format: RGB888
+      extrinsics: { x: 1.3, y: -0.7, z: 1.25, yaw: -0.52 }
+    - name: CAM_BACK
+      resolution: [1920, 1080]
+      format: RGB888
+      extrinsics: { x: -0.2, y: 0.0, z: 1.25, yaw: 3.14 }
+
+  lidars:
+    - name: LIDAR_TOP
+      model: velodyne-vls-128
+      max_range_m: 120.0
+      rotation_hz: 10.0
+      extrinsics: { x: 1.5, y: 0.0, z: 1.7 }
+
+  radars:
+    - name: RADAR_FRONT
+      position: front
+      max_range_m: 200.0
+    - name: RADAR_FRONT_LEFT
+      position: corner-front-left
+    - name: RADAR_FRONT_RIGHT
+      position: corner-front-right
+    - name: RADAR_BACK_LEFT
+      position: corner-rear-left
+    - name: RADAR_BACK_RIGHT
+      position: corner-rear-right
+    - name: RADAR_REAR
+      position: rear
+      max_range_m: 80.0
+
+  ultrasonics:
+    - { name: US_FL_CORNER,  position: front-left-corner,  max_range_m: 3.0 }
+    - { name: US_FL,         position: front-left,         max_range_m: 3.0 }
+    - { name: US_FC,         position: front-center,       max_range_m: 3.0 }
+    - { name: US_FR,         position: front-right,        max_range_m: 3.0 }
+    - { name: US_FR_CORNER,  position: front-right-corner, max_range_m: 3.0 }
+    - { name: US_SIDE_L,     position: side-left,          max_range_m: 3.0 }
+    - { name: US_SIDE_R,     position: side-right,         max_range_m: 3.0 }
+    - { name: US_RL_CORNER,  position: rear-left-corner,   max_range_m: 3.0 }
+    - { name: US_RL,         position: rear-left,          max_range_m: 3.0 }
+    - { name: US_RC,         position: rear-center,        max_range_m: 3.0 }
+    - { name: US_RR,         position: rear-right,         max_range_m: 3.0 }
+    - { name: US_RR_CORNER,  position: rear-right-corner,  max_range_m: 3.0 }
+
+  microphones:
+    - name: MIC_CABIN_ARRAY
+      sample_rate_hz: 16000
+      channels: 4
+      role: cabin
+
+  thermals:
+    - name: THERMAL_FRONT
+      resolution: [640, 480]
+      band: LWIR
+
+  events:
+    - name: EVT_FRONT
+      resolution: [1280, 720]
+      integration_window_us: 5000
+
+  depths:
+    - name: TOF_DRIVER_MONITOR
+      resolution: [640, 480]
+      modality: ToF
+
+  can:
+    - name: CAN_VEHICLE
+      dbc_path: /opt/oem/dbc/vehicle_signals.dbc
+      bitrate_kbps: 500
+    - name: CAN_CHASSIS
+      dbc_path: /opt/oem/dbc/chassis.dbc
+      bitrate_kbps: 500
+
+  gnss:
+    name: GNSS_PRIMARY
+    rtk: true
+    update_hz: 10.0
+
+  imu:
+    name: IMU_PRIMARY
+    update_hz: 200.0
+    axes: 9
+
+models:
+  - id: front_perception
+    path: data/models/yolov8n.onnx
+    family: vision-detection
+    precision: INT8
+    sparsity: dense
+    input_sensor: CAM_FRONT
+    notes: Primary forward-facing detector
+  - id: side_perception
+    path: data/models/yolov8n.onnx
+    family: vision-detection
+    precision: INT8
+    sparsity: "2:4"
+    input_sensor: CAM_FRONT_LEFT
+  - id: cabin_dms
+    path: data/models/yolov8n.onnx       # placeholder — OEM swaps for their DMS model
+    family: vision-detection
+    precision: INT8
+    input_sensor: TOF_DRIVER_MONITOR
+    notes: Driver attention + gaze inference on ToF depth
+
+backend:
+  name: onnxruntime                        # swap to "qualcomm-sa8650" in production
+  options:
+    providers: [CPUExecutionProvider]
+
+safety_policies:
+  - type: min_pedestrian_distance_m
+    value: 0.5
+    description: Reject pedestrian detections < 0.5m — bumper sensor handles these
+  - type: max_fused_object_velocity_m_per_s
+    value: 55
+    description: Motorway cap — anything faster is a radar ghost
+  - type: require_lidar_confirmation_for_emergency_brake
+    value: true
+    description: ASIL-D policy — camera alone must not trigger AEB
+
+multistream:
+  enabled: true
+  streams_per_model: 4
+
+dataset:
+  connector: synthetic
+  preset: robotaxi                         # exercise full sensor rig

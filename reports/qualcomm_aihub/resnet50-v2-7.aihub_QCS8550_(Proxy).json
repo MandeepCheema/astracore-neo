@@ -1,0 +1,12 @@
+{
+  "model": "C:\\Users\\mande\\astracore-neo\\data\\models\\zoo\\resnet50-v2-7.aihub.onnx",
+  "device": "QCS8550 (Proxy)",
+  "compile_job": "jgn94exj5",
+  "profile_job": "jpr4ry9kg",
+  "job_url": "https://app.aihub.qualcomm.com/jobs/jpr4ry9kg",
+  "wall_s": 359.1,
+  "generated_at": 1776747924,
+  "inference_ms": 2.097,
+  "peak_memory_mb": 123.83,
+  "raw_profile": "C:\\Users\\mande\\astracore-neo\\reports\\qualcomm_aihub\\resnet50-v2-7.aihub_QCS8550_(Proxy)_raw.json"
+}

@@ -1,0 +1,12 @@
+{
+  "model": "data\\models\\zoo\\mobilenetv2-7.aihub.onnx",
+  "device": "Samsung Galaxy S24",
+  "compile_job": "jpr4ro20g",
+  "profile_job": "jpy4lqj8p",
+  "job_url": "https://app.aihub.qualcomm.com/jobs/jpy4lqj8p",
+  "wall_s": 303.9,
+  "generated_at": 1776775230,
+  "inference_ms": 0.389,
+  "peak_memory_mb": 95.49,
+  "raw_profile": "reports\\qualcomm_aihub\\qnn_bin\\mobilenetv2-7.aihub_Samsung_Galaxy_S24_raw.json"
+}

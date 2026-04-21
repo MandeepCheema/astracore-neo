@@ -1,0 +1,45 @@
+{
+  "config_name": "gpu-request-smoke",
+  "config_description": "",
+  "backend": "onnxruntime",
+  "dataset_connector": "synthetic",
+  "dataset_preset": "tiny",
+  "sensor_counts": {
+    "cameras": 0,
+    "lidars": 0,
+    "radars": 0,
+    "ultrasonics": 0,
+    "microphones": 0,
+    "thermals": 0,
+    "events": 0,
+    "depths": 0,
+    "can": 0,
+    "gnss": 0,
+    "imu": 0
+  },
+  "replay": null,
+  "models": [
+    {
+      "id": "m1",
+      "path": "data\\models\\yolov8n.onnx",
+      "family": "vision-detection",
+      "precision": "INT8",
+      "sparsity": "dense",
+      "input_sensor": null,
+      "bench_ok": true,
+      "bench_error": "",
+      "wall_ms_per_inference": 60.3016,
+      "gmacs": 4.372,
+      "delivered_tops": 0.0671,
+      "active_providers": [
+        "CPUExecutionProvider"
+      ],
+      "multistream_slices": []
+    }
+  ],
+  "safety_policies": [],
+  "multistream_enabled": false,
+  "streams_per_model": 4,
+  "wall_s_total": 1.475,
+  "notes": []
+}

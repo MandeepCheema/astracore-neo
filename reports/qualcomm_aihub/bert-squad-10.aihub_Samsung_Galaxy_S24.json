@@ -1,0 +1,12 @@
+{
+  "model": "C:\\Users\\mande\\astracore-neo\\data\\models\\zoo\\bert-squad-10.aihub.onnx",
+  "device": "Samsung Galaxy S24",
+  "compile_job": "jgdrk726p",
+  "profile_job": "jpy4lvxrp",
+  "job_url": "https://app.aihub.qualcomm.com/jobs/jpy4lvxrp",
+  "wall_s": 949.9,
+  "generated_at": 1776758789,
+  "status": "profile_failed",
+  "failure_message": "Failed to profile the model: [tflite] Node number 667 (TfLiteQnnDelegate) failed to invoke.",
+  "raw_profile": "C:\\Users\\mande\\astracore-neo\\reports\\qualcomm_aihub\\bert-squad-10.aihub_Samsung_Galaxy_S24_raw.json"
+}

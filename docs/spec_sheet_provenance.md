@@ -56,7 +56,7 @@ not diverge on the caveat text.
 | Precision: INT4 | 🟡 WP-tracked | F1-B2 for quantiser; RTL INT4 path partially present (needs F1-A3 for sparse-INT4). |
 | Precision: INT8 | ✅ RTL-backed | Datapath + quantiser + compiler tested on yolov8n end-to-end. Production quant recipe (100-image COCO-128 calibration, per-channel weights, per-tensor percentile-99.9999 activations, NPU-side decode threshold 0.20) measured at **98.4% / 96.0% / 91.2% detection match @ IoU≥0.5/0.7/0.9** vs FP32 on 28 held-out eval images — competitive with TensorRT / OpenVINO INT8 PTQ. Full report: `reports/yolov8n_eval.json`. |
 | Precision: INT2 | ✅ RTL-backed | Plumbed in `npu_top.v:111`. |
-| Precision: FP4 / FP8 (E4M3/E5M2) / FP16 | 🟡 WP-tracked | F1-A1. Today FP16 is a "placeholder, falls back to INT8". |
+| Precision: FP4 / FP8 (E4M3/E5M2) / FP16 | 🟡 WP-tracked | FP8/FP16 synthesizable RTL = F1-A1.1 (sim-gate PASS; main systolic array still falls back to INT8 on FP16). FP4 datapath = F1-A1.2. |
 | Precision: BF16 / TF32 / FP32 | 🟡 WP-tracked | F1-A2 (blocked by F1-A1). |
 | Transformer Engine: 8×MHSA | 🟡 WP-tracked | F1-A5 (blocked by F1-A4). |
 | Transformer Engine: rotary PE | 🟡 WP-tracked | F1-A5. |

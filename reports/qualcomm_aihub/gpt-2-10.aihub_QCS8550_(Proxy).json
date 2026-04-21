@@ -1,0 +1,12 @@
+{
+  "model": "data\\models\\zoo\\gpt-2-10.simplified.aihub.onnx",
+  "device": "QCS8550 (Proxy)",
+  "compile_job": "jp4x7j925",
+  "profile_job": "jgkl1r8v5",
+  "job_url": "https://app.aihub.qualcomm.com/jobs/jgkl1r8v5",
+  "wall_s": 1049.6,
+  "generated_at": 1776758371,
+  "inference_ms": 3.708,
+  "peak_memory_mb": 555.28,
+  "raw_profile": "C:\\Users\\mande\\astracore-neo\\reports\\qualcomm_aihub\\gpt-2-10.simplified.aihub_QCS8550_(Proxy)_raw.json"
+}

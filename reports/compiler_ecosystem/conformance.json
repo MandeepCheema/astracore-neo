@@ -1,0 +1,629 @@
+{
+  "generated_at": "2026-04-21T10:01:29Z",
+  "host": {
+    "platform": "win32",
+    "python": "3.12.3",
+    "machine": "AMD64"
+  },
+  "suite_size": 15,
+  "adapters": [
+    "mlir-stablehlo",
+    "tvm-relay",
+    "jax-xla"
+  ],
+  "summary": {
+    "total": 45,
+    "passed": 45,
+    "failed": 0
+  },
+  "cases": [
+    {
+      "case": "add",
+      "op_group": "arith",
+      "adapter": "mlir-stablehlo",
+      "passed": true,
+      "wall_ms": 129.6359000261873,
+      "ops_seen": [
+        "add"
+      ],
+      "error": null
+    },
+    {
+      "case": "add",
+      "op_group": "arith",
+      "adapter": "tvm-relay",
+      "passed": true,
+      "wall_ms": 3.733399964403361,
+      "ops_seen": [
+        "add"
+      ],
+      "error": null
+    },
+    {
+      "case": "add",
+      "op_group": "arith",
+      "adapter": "jax-xla",
+      "passed": true,
+      "wall_ms": 3.5437000333331525,
+      "ops_seen": [
+        "add"
+      ],
+      "error": null
+    },
+    {
+      "case": "mul",
+      "op_group": "arith",
+      "adapter": "mlir-stablehlo",
+      "passed": true,
+      "wall_ms": 3.102299990132451,
+      "ops_seen": [
+        "mul"
+      ],
+      "error": null
+    },
+    {
+      "case": "mul",
+      "op_group": "arith",
+      "adapter": "tvm-relay",
+      "passed": true,
+      "wall_ms": 2.8613999602384865,
+      "ops_seen": [
+        "mul"
+      ],
+      "error": null
+    },
+    {
+      "case": "mul",
+      "op_group": "arith",
+      "adapter": "jax-xla",
+      "passed": true,
+      "wall_ms": 2.612599986605346,
+      "ops_seen": [
+        "mul"
+      ],
+      "error": null
+    },
+    {
+      "case": "matmul",
+      "op_group": "linalg",
+      "adapter": "mlir-stablehlo",
+      "passed": true,
+      "wall_ms": 2.9418999911285937,
+      "ops_seen": [
+        "matmul"
+      ],
+      "error": null
+    },
+    {
+      "case": "matmul",
+      "op_group": "linalg",
+      "adapter": "tvm-relay",
+      "passed": true,
+      "wall_ms": 3.1584000098519027,
+      "ops_seen": [
+        "matmul"
+      ],
+      "error": null
+    },
+    {
+      "case": "matmul",
+      "op_group": "linalg",
+      "adapter": "jax-xla",
+      "passed": true,
+      "wall_ms": 3.1352999503724277,
+      "ops_seen": [
+        "matmul"
+      ],
+      "error": null
+    },
+    {
+      "case": "gemm",
+      "op_group": "linalg",
+      "adapter": "mlir-stablehlo",
+      "passed": true,
+      "wall_ms": 2.9155000229366124,
+      "ops_seen": [
+        "gemm"
+      ],
+      "error": null
+    },
+    {
+      "case": "gemm",
+      "op_group": "linalg",
+      "adapter": "tvm-relay",
+      "passed": true,
+      "wall_ms": 2.593600016552955,
+      "ops_seen": [
+        "gemm"
+      ],
+      "error": null
+    },
+    {
+      "case": "gemm",
+      "op_group": "linalg",
+      "adapter": "jax-xla",
+      "passed": true,
+      "wall_ms": 2.870999975129962,
+      "ops_seen": [
+        "gemm"
+      ],
+      "error": null
+    },
+    {
+      "case": "conv",
+      "op_group": "linalg",
+      "adapter": "mlir-stablehlo",
+      "passed": true,
+      "wall_ms": 2.8061000048182905,
+      "ops_seen": [
+        "conv"
+      ],
+      "error": null
+    },
+    {
+      "case": "conv",
+      "op_group": "linalg",
+      "adapter": "tvm-relay",
+      "passed": true,
+      "wall_ms": 2.908000024035573,
+      "ops_seen": [
+        "conv"
+      ],
+      "error": null
+    },
+    {
+      "case": "conv",
+      "op_group": "linalg",
+      "adapter": "jax-xla",
+      "passed": true,
+      "wall_ms": 3.407499985769391,
+      "ops_seen": [
+        "conv"
+      ],
+      "error": null
+    },
+    {
+      "case": "relu",
+      "op_group": "act",
+      "adapter": "mlir-stablehlo",
+      "passed": true,
+      "wall_ms": 2.802400034852326,
+      "ops_seen": [
+        "relu"
+      ],
+      "error": null
+    },
+    {
+      "case": "relu",
+      "op_group": "act",
+      "adapter": "tvm-relay",
+      "passed": true,
+      "wall_ms": 2.865999995265156,
+      "ops_seen": [
+        "relu"
+      ],
+      "error": null
+    },
+    {
+      "case": "relu",
+      "op_group": "act",
+      "adapter": "jax-xla",
+      "passed": true,
+      "wall_ms": 2.7786000282503664,
+      "ops_seen": [
+        "relu"
+      ],
+      "error": null
+    },
+    {
+      "case": "sigmoid",
+      "op_group": "act",
+      "adapter": "mlir-stablehlo",
+      "passed": true,
+      "wall_ms": 2.649499976541847,
+      "ops_seen": [
+        "sigmoid"
+      ],
+      "error": null
+    },
+    {
+      "case": "sigmoid",
+      "op_group": "act",
+      "adapter": "tvm-relay",
+      "passed": true,
+      "wall_ms": 2.472700027283281,
+      "ops_seen": [
+        "sigmoid"
+      ],
+      "error": null
+    },
+    {
+      "case": "sigmoid",
+      "op_group": "act",
+      "adapter": "jax-xla",
+      "passed": true,
+      "wall_ms": 4.616999998688698,
+      "ops_seen": [
+        "sigmoid"
+      ],
+      "error": null
+    },
+    {
+      "case": "softmax",
+      "op_group": "act",
+      "adapter": "mlir-stablehlo",
+      "passed": true,
+      "wall_ms": 3.318500006571412,
+      "ops_seen": [
+        "softmax"
+      ],
+      "error": null
+    },
+    {
+      "case": "softmax",
+      "op_group": "act",
+      "adapter": "tvm-relay",
+      "passed": true,
+      "wall_ms": 3.2214000239036977,
+      "ops_seen": [
+        "softmax"
+      ],
+      "error": null
+    },
+    {
+      "case": "softmax",
+      "op_group": "act",
+      "adapter": "jax-xla",
+      "passed": true,
+      "wall_ms": 2.550699980929494,
+      "ops_seen": [
+        "softmax"
+      ],
+      "error": null
+    },
+    {
+      "case": "gelu",
+      "op_group": "act",
+      "adapter": "mlir-stablehlo",
+      "passed": true,
+      "wall_ms": 2.522900002077222,
+      "ops_seen": [
+        "gelu"
+      ],
+      "error": null
+    },
+    {
+      "case": "gelu",
+      "op_group": "act",
+      "adapter": "tvm-relay",
+      "passed": true,
+      "wall_ms": 3.3318999921903014,
+      "ops_seen": [
+        "gelu"
+      ],
+      "error": null
+    },
+    {
+      "case": "gelu",
+      "op_group": "act",
+      "adapter": "jax-xla",
+      "passed": true,
+      "wall_ms": 2.5141999940387905,
+      "ops_seen": [
+        "gelu"
+      ],
+      "error": null
+    },
+    {
+      "case": "layernorm",
+      "op_group": "norm",
+      "adapter": "mlir-stablehlo",
+      "passed": true,
+      "wall_ms": 2.6224000030197203,
+      "ops_seen": [
+        "layernorm"
+      ],
+      "error": null
+    },
+    {
+      "case": "layernorm",
+      "op_group": "norm",
+      "adapter": "tvm-relay",
+      "passed": true,
+      "wall_ms": 2.565800037700683,
+      "ops_seen": [
+        "layernorm"
+      ],
+      "error": null
+    },
+    {
+      "case": "layernorm",
+      "op_group": "norm",
+      "adapter": "jax-xla",
+      "passed": true,
+      "wall_ms": 2.5167999556288123,
+      "ops_seen": [
+        "layernorm"
+      ],
+      "error": null
+    },
+    {
+      "case": "reshape",
+      "op_group": "shape",
+      "adapter": "mlir-stablehlo",
+      "passed": true,
+      "wall_ms": 2.3741000331938267,
+      "ops_seen": [
+        "reshape"
+      ],
+      "error": null
+    },
+    {
+      "case": "reshape",
+      "op_group": "shape",
+      "adapter": "tvm-relay",
+      "passed": true,
+      "wall_ms": 3.5362999769859016,
+      "ops_seen": [
+        "reshape"
+      ],
+      "error": null
+    },
+    {
+      "case": "reshape",
+      "op_group": "shape",
+      "adapter": "jax-xla",
+      "passed": true,
+      "wall_ms": 2.365600026678294,
+      "ops_seen": [
+        "reshape"
+      ],
+      "error": null
+    },
+    {
+      "case": "transpose",
+      "op_group": "shape",
+      "adapter": "mlir-stablehlo",
+      "passed": true,
+      "wall_ms": 2.3443999816663563,
+      "ops_seen": [
+        "transpose"
+      ],
+      "error": null
+    },
+    {
+      "case": "transpose",
+      "op_group": "shape",
+      "adapter": "tvm-relay",
+      "passed": true,
+      "wall_ms": 2.4611999979242682,
+      "ops_seen": [
+        "transpose"
+      ],
+      "error": null
+    },
+    {
+      "case": "transpose",
+      "op_group": "shape",
+      "adapter": "jax-xla",
+      "passed": true,
+      "wall_ms": 2.4222999927587807,
+      "ops_seen": [
+        "transpose"
+      ],
+      "error": null
+    },
+    {
+      "case": "concat",
+      "op_group": "shape",
+      "adapter": "mlir-stablehlo",
+      "passed": true,
+      "wall_ms": 2.7528000064194202,
+      "ops_seen": [
+        "concat"
+      ],
+      "error": null
+    },
+    {
+      "case": "concat",
+      "op_group": "shape",
+      "adapter": "tvm-relay",
+      "passed": true,
+      "wall_ms": 3.380000009201467,
+      "ops_seen": [
+        "concat"
+      ],
+      "error": null
+    },
+    {
+      "case": "concat",
+      "op_group": "shape",
+      "adapter": "jax-xla",
+      "passed": true,
+      "wall_ms": 2.5951999705284834,
+      "ops_seen": [
+        "concat"
+      ],
+      "error": null
+    },
+    {
+      "case": "maxpool",
+      "op_group": "pool",
+      "adapter": "mlir-stablehlo",
+      "passed": true,
+      "wall_ms": 2.948200039099902,
+      "ops_seen": [
+        "maxpool"
+      ],
+      "error": null
+    },
+    {
+      "case": "maxpool",
+      "op_group": "pool",
+      "adapter": "tvm-relay",
+      "passed": true,
+      "wall_ms": 2.515600004699081,
+      "ops_seen": [
+        "maxpool"
+      ],
+      "error": null
+    },
+    {
+      "case": "maxpool",
+      "op_group": "pool",
+      "adapter": "jax-xla",
+      "passed": true,
+      "wall_ms": 2.4908000486902893,
+      "ops_seen": [
+        "maxpool"
+      ],
+      "error": null
+    },
+    {
+      "case": "globalavgpool",
+      "op_group": "pool",
+      "adapter": "mlir-stablehlo",
+      "passed": true,
+      "wall_ms": 2.3866999545134604,
+      "ops_seen": [
+        "avgpool"
+      ],
+      "error": null
+    },
+    {
+      "case": "globalavgpool",
+      "op_group": "pool",
+      "adapter": "tvm-relay",
+      "passed": true,
+      "wall_ms": 3.653899999335408,
+      "ops_seen": [
+        "avgpool"
+      ],
+      "error": null
+    },
+    {
+      "case": "globalavgpool",
+      "op_group": "pool",
+      "adapter": "jax-xla",
+      "passed": true,
+      "wall_ms": 3.146999981254339,
+      "ops_seen": [
+        "avgpool"
+      ],
+      "error": null
+    }
+  ],
+  "tvm_byoc_patterns": [
+    {
+      "relay_op": "nn.conv2d",
+      "composite": "astracore.conv2d",
+      "attrs": {
+        "min_kernel": 3,
+        "layout": [
+          "NCHW",
+          "NHWC"
+        ]
+      }
+    },
+    {
+      "relay_op": "nn.dense",
+      "composite": "astracore.dense",
+      "attrs": {}
+    },
+    {
+      "relay_op": "nn.batch_matmul",
+      "composite": "astracore.matmul",
+      "attrs": {}
+    },
+    {
+      "relay_op": "add",
+      "composite": "astracore.add",
+      "attrs": {}
+    },
+    {
+      "relay_op": "multiply",
+      "composite": "astracore.mul",
+      "attrs": {}
+    },
+    {
+      "relay_op": "nn.relu",
+      "composite": "astracore.relu",
+      "attrs": {}
+    },
+    {
+      "relay_op": "sigmoid",
+      "composite": "astracore.sigmoid",
+      "attrs": {}
+    },
+    {
+      "relay_op": "nn.softmax",
+      "composite": "astracore.softmax",
+      "attrs": {}
+    },
+    {
+      "relay_op": "nn.layer_norm",
+      "composite": "astracore.layernorm",
+      "attrs": {}
+    },
+    {
+      "relay_op": "nn.max_pool2d",
+      "composite": "astracore.maxpool",
+      "attrs": {}
+    },
+    {
+      "relay_op": "nn.avg_pool2d",
+      "composite": "astracore.avgpool",
+      "attrs": {}
+    },
+    {
+      "relay_op": "nn.global_avg_pool2d",
+      "composite": "astracore.global_avgpool",
+      "attrs": {}
+    },
+    {
+      "relay_op": "reshape",
+      "composite": "astracore.reshape",
+      "attrs": {}
+    },
+    {
+      "relay_op": "transpose",
+      "composite": "astracore.transpose",
+      "attrs": {}
+    },
+    {
+      "relay_op": "concatenate",
+      "composite": "astracore.concat",
+      "attrs": {}
+    },
+    {
+      "relay_op": "split",
+      "composite": "astracore.split",
+      "attrs": {}
+    },
+    {
+      "relay_op": "resize",
+      "composite": "astracore.resize",
+      "attrs": {}
+    },
+    {
+      "relay_op": "gelu",
+      "composite": "astracore.gelu",
+      "attrs": {
+        "approx": [
+          "tanh",
+          "erf"
+        ]
+      }
+    },
+    {
+      "relay_op": "silu",
+      "composite": "astracore.silu",
+      "attrs": {}
+    },
+    {
+      "relay_op": "rms_norm",
+      "composite": "astracore.rmsnorm",
+      "attrs": {}
+    }
+  ]
+}

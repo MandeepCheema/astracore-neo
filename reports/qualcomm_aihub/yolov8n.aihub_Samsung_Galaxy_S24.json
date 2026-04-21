@@ -1,0 +1,12 @@
+{
+  "model": "data\\models\\yolov8n.cleaned.onnx",
+  "device": "Samsung Galaxy S24",
+  "compile_job": "jp4x7wd15",
+  "profile_job": "jp01wr2ng",
+  "job_url": "https://app.aihub.qualcomm.com/jobs/jp01wr2ng",
+  "wall_s": 295.1,
+  "generated_at": 1776744331,
+  "inference_ms": 4.309,
+  "peak_memory_mb": 204.64,
+  "raw_profile": "C:\\Users\\mande\\astracore-neo\\reports\\qualcomm_aihub\\yolov8n.cleaned_Samsung_Galaxy_S24_raw.json"
+}

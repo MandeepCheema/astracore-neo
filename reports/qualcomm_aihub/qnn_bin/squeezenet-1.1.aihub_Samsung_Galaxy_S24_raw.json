@@ -1,0 +1,638 @@
+{
+  "execution_summary": {
+    "estimated_inference_time": 216,
+    "estimated_inference_peak_memory": 101457920,
+    "first_load_time": 149704,
+    "first_load_peak_memory": 96587776,
+    "warm_load_time": 141416,
+    "warm_load_peak_memory": 99602432,
+    "compile_time": 0,
+    "compile_peak_memory": 0,
+    "compile_memory_increase_range": [
+      0,
+      0
+    ],
+    "compile_memory_peak_range": [
+      0,
+      0
+    ],
+    "first_load_memory_increase_range": [
+      5200752,
+      12512176
+    ],
+    "first_load_memory_peak_range": [
+      12070912,
+      19382336
+    ],
+    "warm_load_memory_increase_range": [
+      3047792,
+      10718528
+    ],
+    "warm_load_memory_peak_range": [
+      10031104,
+      17701840
+    ],
+    "inference_memory_increase_range": [
+      0,
+      626736
+    ],
+    "inference_memory_peak_range": [
+      0,
+      7763680
+    ],
+    "all_compile_times": [],
+    "all_first_load_times": [
+      149704
+    ],
+    "all_warm_load_times": [
+      141416
+    ],
+    "all_inference_times": [
+      795,
+      255,
+      225,
+      219,
+      223,
+      221,
+      224,
+      227,
+      223,
+      224,
+      219,
+      416,
+      228,
+      217,
+      220,
+      222,
+      222,
+      225,
+      220,
+      221,
+      223,
+      223,
+      221,
+      224,
+      223,
+      220,
+      230,
+      224,
+      225,
+      224,
+      226,
+      216,
+      220,
+      230,
+      220,
+      226,
+      224,
+      223,
+      223,
+      222,
+      224,
+      223,
+      223,
+      220,
+      224,
+      223,
+      224,
+      221,
+      224,
+      222,
+      224,
+      223,
+      250,
+      221,
+      223,
+      222,
+      223,
+      226,
+      222,
+      222,
+      223,
+      223,
+      223,
+      223,
+      223,
+      222,
+      224,
+      221,
+      222,
+      221,
+      266,
+      232,
+      220,
+      221,
+      222,
+      223,
+      221,
+      222,
+      222,
+      222,
+      222,
+      223,
+      221,
+      222,
+      222,
+      222,
+      221,
+      221,
+      221,
+      221,
+      222,
+      221,
+      221,
+      222,
+      220,
+      220,
+      221,
+      221,
+      221,
+      220
+    ]
+  },
+  "execution_detail": [
+    {
+      "name": "Input",
+      "type": "Input",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 13369
+    },
+    {
+      "name": "data_0231",
+      "type": "data",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 231365
+    },
+    {
+      "name": "squeezenet0_conv0_fwd",
+      "type": "squeezenet0",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "squeezenet0_relu0_fwd",
+      "type": "squeezenet0",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 192905
+    },
+    {
+      "name": "squeezenet0_pool0_fwd",
+      "type": "squeezenet0",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 46707
+    },
+    {
+      "name": "squeezenet0_conv1_fwd",
+      "type": "squeezenet0",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "squeezenet0_relu1_fwd",
+      "type": "squeezenet0",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 6432
+    },
+    {
+      "name": "squeezenet0_conv2_fwd",
+      "type": "squeezenet0",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "squeezenet0_relu2_fwd",
+      "type": "squeezenet0",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 3410
+    },
+    {
+      "name": "squeezenet0_conv3_fwd",
+      "type": "squeezenet0",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "squeezenet0_relu3_fwd",
+      "type": "squeezenet0",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 11725
+    },
+    {
+      "name": "squeezenet0_concat0",
+      "type": "squeezenet0",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "squeezenet0_conv4_fwd",
+      "type": "squeezenet0",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "squeezenet0_relu4_fwd",
+      "type": "squeezenet0",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 4443
+    },
+    {
+      "name": "squeezenet0_conv5_fwd",
+      "type": "squeezenet0",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "squeezenet0_relu5_fwd",
+      "type": "squeezenet0",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 3436
+    },
+    {
+      "name": "squeezenet0_conv6_fwd",
+      "type": "squeezenet0",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "squeezenet0_relu6_fwd",
+      "type": "squeezenet0",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 11969
+    },
+    {
+      "name": "squeezenet0_concat1",
+      "type": "squeezenet0",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "squeezenet0_pool1_fwd",
+      "type": "squeezenet0",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 20620
+    },
+    {
+      "name": "squeezenet0_conv7_fwd",
+      "type": "squeezenet0",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "squeezenet0_relu7_fwd",
+      "type": "squeezenet0",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 2025
+    },
+    {
+      "name": "squeezenet0_conv8_fwd",
+      "type": "squeezenet0",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "squeezenet0_relu8_fwd",
+      "type": "squeezenet0",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 2300
+    },
+    {
+      "name": "squeezenet0_conv9_fwd",
+      "type": "squeezenet0",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "squeezenet0_relu9_fwd",
+      "type": "squeezenet0",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 10000
+    },
+    {
+      "name": "squeezenet0_concat2",
+      "type": "squeezenet0",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "squeezenet0_conv10_fwd",
+      "type": "squeezenet0",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "squeezenet0_relu10_fwd",
+      "type": "squeezenet0",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 3345
+    },
+    {
+      "name": "squeezenet0_conv11_fwd",
+      "type": "squeezenet0",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "squeezenet0_relu11_fwd",
+      "type": "squeezenet0",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 2395
+    },
+    {
+      "name": "squeezenet0_conv12_fwd",
+      "type": "squeezenet0",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "squeezenet0_relu12_fwd",
+      "type": "squeezenet0",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 10671
+    },
+    {
+      "name": "squeezenet0_concat3",
+      "type": "squeezenet0",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "squeezenet0_pool2_fwd",
+      "type": "squeezenet0",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 14714
+    },
+    {
+      "name": "squeezenet0_conv13_fwd",
+      "type": "squeezenet0",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "squeezenet0_relu13_fwd",
+      "type": "squeezenet0",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 1726
+    },
+    {
+      "name": "squeezenet0_conv14_fwd",
+      "type": "squeezenet0",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "squeezenet0_relu14_fwd",
+      "type": "squeezenet0",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 1546
+    },
+    {
+      "name": "squeezenet0_conv15_fwd",
+      "type": "squeezenet0",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "squeezenet0_relu15_fwd",
+      "type": "squeezenet0",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 7533
+    },
+    {
+      "name": "squeezenet0_concat4",
+      "type": "squeezenet0",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "squeezenet0_conv16_fwd",
+      "type": "squeezenet0",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "squeezenet0_relu16_fwd",
+      "type": "squeezenet0",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 2823
+    },
+    {
+      "name": "squeezenet0_conv17_fwd",
+      "type": "squeezenet0",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "squeezenet0_relu17_fwd",
+      "type": "squeezenet0",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 1746
+    },
+    {
+      "name": "squeezenet0_conv18_fwd",
+      "type": "squeezenet0",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "squeezenet0_relu18_fwd",
+      "type": "squeezenet0",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 7471
+    },
+    {
+      "name": "squeezenet0_concat5",
+      "type": "squeezenet0",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "squeezenet0_conv19_fwd",
+      "type": "squeezenet0",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "squeezenet0_relu19_fwd",
+      "type": "squeezenet0",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 2779
+    },
+    {
+      "name": "squeezenet0_conv20_fwd",
+      "type": "squeezenet0",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "squeezenet0_relu20_fwd",
+      "type": "squeezenet0",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 1906
+    },
+    {
+      "name": "squeezenet0_conv21_fwd",
+      "type": "squeezenet0",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "squeezenet0_relu21_fwd",
+      "type": "squeezenet0",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 9999
+    },
+    {
+      "name": "squeezenet0_concat6",
+      "type": "squeezenet0",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "squeezenet0_conv22_fwd",
+      "type": "squeezenet0",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "squeezenet0_relu22_fwd",
+      "type": "squeezenet0",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 3401
+    },
+    {
+      "name": "squeezenet0_conv23_fwd",
+      "type": "squeezenet0",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "squeezenet0_relu23_fwd",
+      "type": "squeezenet0",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 1726
+    },
+    {
+      "name": "squeezenet0_conv24_fwd",
+      "type": "squeezenet0",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "squeezenet0_relu24_fwd",
+      "type": "squeezenet0",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 10260
+    },
+    {
+      "name": "squeezenet0_concat7",
+      "type": "squeezenet0",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "squeezenet0_conv25_fwd",
+      "type": "squeezenet0",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "squeezenet0_relu25_fwd",
+      "type": "squeezenet0",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 35139
+    },
+    {
+      "name": "squeezenet0_pool3_fwd",
+      "type": "squeezenet0",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 50936
+    },
+    {
+      "name": "squeezenet0_pool3_fwd_0123",
+      "type": "squeezenet0",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "squeezenet0_flatten0_reshape0",
+      "type": "squeezenet0",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "Output",
+      "type": "Output",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 1269
+    }
+  ]
+}

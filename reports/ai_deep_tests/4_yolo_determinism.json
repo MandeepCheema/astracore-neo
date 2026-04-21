@@ -1,0 +1,286 @@
+{
+  "per_image": [
+    {
+      "image_idx": 0,
+      "stable": true,
+      "runs_unique": 1,
+      "top3": [
+        4,
+        -1,
+        -1
+      ]
+    },
+    {
+      "image_idx": 1,
+      "stable": true,
+      "runs_unique": 1,
+      "top3": [
+        0,
+        4,
+        -1
+      ]
+    },
+    {
+      "image_idx": 2,
+      "stable": true,
+      "runs_unique": 1,
+      "top3": [
+        0,
+        35,
+        34
+      ]
+    },
+    {
+      "image_idx": 3,
+      "stable": true,
+      "runs_unique": 1,
+      "top3": [
+        71,
+        58,
+        -1
+      ]
+    },
+    {
+      "image_idx": 4,
+      "stable": true,
+      "runs_unique": 1,
+      "top3": [
+        79,
+        -1,
+        -1
+      ]
+    },
+    {
+      "image_idx": 5,
+      "stable": true,
+      "runs_unique": 1,
+      "top3": [
+        56,
+        0,
+        -1
+      ]
+    },
+    {
+      "image_idx": 6,
+      "stable": true,
+      "runs_unique": 1,
+      "top3": [
+        0,
+        -1,
+        -1
+      ]
+    },
+    {
+      "image_idx": 7,
+      "stable": true,
+      "runs_unique": 1,
+      "top3": [
+        0,
+        28,
+        -1
+      ]
+    },
+    {
+      "image_idx": 8,
+      "stable": true,
+      "runs_unique": 1,
+      "top3": [
+        15,
+        -1,
+        -1
+      ]
+    },
+    {
+      "image_idx": 9,
+      "stable": true,
+      "runs_unique": 1,
+      "top3": [
+        16,
+        -1,
+        -1
+      ]
+    },
+    {
+      "image_idx": 10,
+      "stable": true,
+      "runs_unique": 1,
+      "top3": [
+        51,
+        45,
+        44
+      ]
+    },
+    {
+      "image_idx": 11,
+      "stable": true,
+      "runs_unique": 1,
+      "top3": [
+        0,
+        -1,
+        -1
+      ]
+    },
+    {
+      "image_idx": 12,
+      "stable": true,
+      "runs_unique": 1,
+      "top3": [
+        71,
+        -1,
+        -1
+      ]
+    },
+    {
+      "image_idx": 13,
+      "stable": true,
+      "runs_unique": 1,
+      "top3": [
+        -1,
+        -1,
+        -1
+      ]
+    },
+    {
+      "image_idx": 14,
+      "stable": true,
+      "runs_unique": 1,
+      "top3": [
+        20,
+        -1,
+        -1
+      ]
+    },
+    {
+      "image_idx": 15,
+      "stable": true,
+      "runs_unique": 1,
+      "top3": [
+        65,
+        57,
+        58
+      ]
+    },
+    {
+      "image_idx": 16,
+      "stable": true,
+      "runs_unique": 1,
+      "top3": [
+        41,
+        60,
+        44
+      ]
+    },
+    {
+      "image_idx": 17,
+      "stable": true,
+      "runs_unique": 1,
+      "top3": [
+        77,
+        75,
+        60
+      ]
+    },
+    {
+      "image_idx": 18,
+      "stable": true,
+      "runs_unique": 1,
+      "top3": [
+        53,
+        -1,
+        -1
+      ]
+    },
+    {
+      "image_idx": 19,
+      "stable": true,
+      "runs_unique": 1,
+      "top3": [
+        0,
+        77,
+        -1
+      ]
+    },
+    {
+      "image_idx": 20,
+      "stable": true,
+      "runs_unique": 1,
+      "top3": [
+        0,
+        29,
+        -1
+      ]
+    },
+    {
+      "image_idx": 21,
+      "stable": true,
+      "runs_unique": 1,
+      "top3": [
+        74,
+        -1,
+        -1
+      ]
+    },
+    {
+      "image_idx": 22,
+      "stable": true,
+      "runs_unique": 1,
+      "top3": [
+        3,
+        -1,
+        -1
+      ]
+    },
+    {
+      "image_idx": 23,
+      "stable": true,
+      "runs_unique": 1,
+      "top3": [
+        0,
+        36,
+        -1
+      ]
+    },
+    {
+      "image_idx": 24,
+      "stable": true,
+      "runs_unique": 1,
+      "top3": [
+        61,
+        -1,
+        -1
+      ]
+    },
+    {
+      "image_idx": 25,
+      "stable": true,
+      "runs_unique": 1,
+      "top3": [
+        5,
+        0,
+        -1
+      ]
+    },
+    {
+      "image_idx": 26,
+      "stable": true,
+      "runs_unique": 1,
+      "top3": [
+        39,
+        62,
+        45
+      ]
+    },
+    {
+      "image_idx": 27,
+      "stable": true,
+      "runs_unique": 1,
+      "top3": [
+        2,
+        15,
+        -1
+      ]
+    }
+  ],
+  "all_stable": true,
+  "n_unstable": 0
+}

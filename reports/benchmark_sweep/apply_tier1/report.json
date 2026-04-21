@@ -1,0 +1,177 @@
+{
+  "config_name": "Tier-1 reference ADAS rig",
+  "config_description": "Four perception cameras + one roof-mounted lidar + six radars + twelve ultrasonics + in-cabin mic array + 1 thermal + 1 event camera + 1 ToF depth for driver monitoring. Target silicon: Qualcomm SA8650P.\n",
+  "backend": "onnxruntime",
+  "dataset_connector": "synthetic",
+  "dataset_preset": "robotaxi",
+  "sensor_counts": {
+    "cameras": 4,
+    "lidars": 1,
+    "radars": 6,
+    "ultrasonics": 12,
+    "microphones": 1,
+    "thermals": 1,
+    "events": 1,
+    "depths": 1,
+    "can": 2,
+    "gnss": 1,
+    "imu": 1
+  },
+  "replay": {
+    "scene_id": "synthetic-scene-000",
+    "scene_name": "Synthetic drive #0",
+    "n_samples": 10,
+    "wall_s_total": 1.0248,
+    "summary": {
+      "mean_camera_det": 0.0,
+      "mean_lidar_clust": 3.3,
+      "mean_radar_det": 21.2,
+      "mean_fused_obj": 3.3,
+      "mean_gt_per_frame": 3.2,
+      "mean_ms_per_frame": 102.47,
+      "p50_ms_per_frame": 102.863
+    }
+  },
+  "models": [
+    {
+      "id": "front_perception",
+      "path": "data\\models\\yolov8n.onnx",
+      "family": "vision-detection",
+      "precision": "INT8",
+      "sparsity": "dense",
+      "input_sensor": "CAM_FRONT",
+      "bench_ok": true,
+      "bench_error": "",
+      "wall_ms_per_inference": 52.5217,
+      "gmacs": 4.372,
+      "delivered_tops": 0.081,
+      "multistream_slices": [
+        {
+          "n_streams": 1,
+          "throughput_ips": 17.69,
+          "aggregate_tops": 0.0773,
+          "p50_ms": 55.709,
+          "p99_ms": 65.278,
+          "scale_vs_1x": 1.0
+        },
+        {
+          "n_streams": 2,
+          "throughput_ips": 21.14,
+          "aggregate_tops": 0.0924,
+          "p50_ms": 92.916,
+          "p99_ms": 113.91,
+          "scale_vs_1x": 1.195
+        },
+        {
+          "n_streams": 4,
+          "throughput_ips": 20.98,
+          "aggregate_tops": 0.0917,
+          "p50_ms": 184.43,
+          "p99_ms": 256.334,
+          "scale_vs_1x": 1.186
+        }
+      ]
+    },
+    {
+      "id": "side_perception",
+      "path": "data\\models\\yolov8n.onnx",
+      "family": "vision-detection",
+      "precision": "INT8",
+      "sparsity": "2:4",
+      "input_sensor": "CAM_FRONT_LEFT",
+      "bench_ok": true,
+      "bench_error": "",
+      "wall_ms_per_inference": 58.0893,
+      "gmacs": 4.372,
+      "delivered_tops": 0.0763,
+      "multistream_slices": [
+        {
+          "n_streams": 1,
+          "throughput_ips": 16.21,
+          "aggregate_tops": 0.0709,
+          "p50_ms": 59.726,
+          "p99_ms": 92.277,
+          "scale_vs_1x": 1.0
+        },
+        {
+          "n_streams": 2,
+          "throughput_ips": 18.83,
+          "aggregate_tops": 0.0823,
+          "p50_ms": 101.882,
+          "p99_ms": 160.84,
+          "scale_vs_1x": 1.162
+        },
+        {
+          "n_streams": 4,
+          "throughput_ips": 19.92,
+          "aggregate_tops": 0.0871,
+          "p50_ms": 183.148,
+          "p99_ms": 293.478,
+          "scale_vs_1x": 1.229
+        }
+      ]
+    },
+    {
+      "id": "cabin_dms",
+      "path": "data\\models\\yolov8n.onnx",
+      "family": "vision-detection",
+      "precision": "INT8",
+      "sparsity": "dense",
+      "input_sensor": "TOF_DRIVER_MONITOR",
+      "bench_ok": true,
+      "bench_error": "",
+      "wall_ms_per_inference": 51.4007,
+      "gmacs": 4.372,
+      "delivered_tops": 0.0858,
+      "multistream_slices": [
+        {
+          "n_streams": 1,
+          "throughput_ips": 17.04,
+          "aggregate_tops": 0.0745,
+          "p50_ms": 57.792,
+          "p99_ms": 73.537,
+          "scale_vs_1x": 1.0
+        },
+        {
+          "n_streams": 2,
+          "throughput_ips": 17.76,
+          "aggregate_tops": 0.0777,
+          "p50_ms": 104.618,
+          "p99_ms": 162.641,
+          "scale_vs_1x": 1.043
+        },
+        {
+          "n_streams": 4,
+          "throughput_ips": 21.43,
+          "aggregate_tops": 0.0937,
+          "p50_ms": 177.79,
+          "p99_ms": 282.346,
+          "scale_vs_1x": 1.258
+        }
+      ]
+    }
+  ],
+  "safety_policies": [
+    {
+      "type": "min_pedestrian_distance_m",
+      "value": 0.5,
+      "description": "Reject pedestrian detections < 0.5m \u00e2\u20ac\u201d bumper sensor handles these"
+    },
+    {
+      "type": "max_fused_object_velocity_m_per_s",
+      "value": 55,
+      "description": "Motorway cap \u00e2\u20ac\u201d anything faster is a radar ghost"
+    },
+    {
+      "type": "require_lidar_confirmation_for_emergency_brake",
+      "value": true,
+      "description": "ASIL-D policy \u00e2\u20ac\u201d camera alone must not trigger AEB"
+    }
+  ],
+  "multistream_enabled": true,
+  "streams_per_model": 4,
+  "wall_s_total": 24.408,
+  "notes": [
+    "replay preset downsized from 'robotaxi' to 'extended-sensors' to keep --apply tractable (use `astracore replay --preset robotaxi` for the full rig)"
+  ]
+}

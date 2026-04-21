@@ -1,0 +1,9 @@
+{"spec_index": 0, "target_path": "tb_safe_state_controller_fi.u_dut.safe_state", "detected": false, "detection_cycle": null, "perturbed_outputs": false}
+{"spec_index": 1, "target_path": "tb_safe_state_controller_fi.u_dut.safe_state", "detected": false, "detection_cycle": null, "perturbed_outputs": false}
+{"spec_index": 2, "target_path": "tb_safe_state_controller_fi.u_dut.safe_state", "detected": false, "detection_cycle": null, "perturbed_outputs": false}
+{"spec_index": 3, "target_path": "tb_safe_state_controller_fi.u_dut.safe_state", "detected": false, "detection_cycle": null, "perturbed_outputs": false}
+{"spec_index": 4, "target_path": "tb_safe_state_controller_fi.u_dut.max_speed_kmh", "detected": false, "detection_cycle": null, "perturbed_outputs": false}
+{"spec_index": 5, "target_path": "tb_safe_state_controller_fi.u_dut.max_speed_kmh", "detected": false, "detection_cycle": null, "perturbed_outputs": false}
+{"spec_index": 6, "target_path": "tb_safe_state_controller_fi.u_dut.latched_faults", "detected": false, "detection_cycle": null, "perturbed_outputs": false}
+{"spec_index": 7, "target_path": "tb_safe_state_controller_fi.u_dut.latched_faults", "detected": false, "detection_cycle": null, "perturbed_outputs": false}
+{"spec_index": 8, "target_path": "tb_safe_state_controller_fi.critical_faults_reg", "detected": false, "detection_cycle": null, "perturbed_outputs": false}

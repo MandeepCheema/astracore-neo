@@ -1,0 +1,53 @@
+{
+  "rows": [
+    {
+      "model": "squeezenet-1.1",
+      "family": "vision-classification",
+      "gmacs": 0.3492,
+      "p50_ms": 2.654
+    },
+    {
+      "model": "mobilenetv2-7",
+      "family": "vision-classification",
+      "gmacs": 0.4291,
+      "p50_ms": 4.387
+    },
+    {
+      "model": "resnet50-v2-7",
+      "family": "vision-classification",
+      "gmacs": 4.0913,
+      "p50_ms": 30.765
+    },
+    {
+      "model": "efficientnet-lite4-11",
+      "family": "vision-classification",
+      "gmacs": 1.3477,
+      "p50_ms": 12.826
+    },
+    {
+      "model": "shufflenet-v2-10",
+      "family": "vision-classification",
+      "gmacs": 0.1449,
+      "p50_ms": 3.651
+    },
+    {
+      "model": "yolov8n",
+      "family": "vision-detection",
+      "gmacs": 4.372,
+      "p50_ms": 50.447
+    },
+    {
+      "model": "bert-squad-10",
+      "family": "nlp-encoder-transformer",
+      "gmacs": 1.2929,
+      "p50_ms": 208.452
+    },
+    {
+      "model": "gpt-2-10",
+      "family": "nlp-decoder-transformer",
+      "gmacs": 0.085,
+      "p50_ms": 24.922
+    }
+  ],
+  "pearson_r": 0.15
+}

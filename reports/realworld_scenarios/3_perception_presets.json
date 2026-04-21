@@ -1,0 +1,65 @@
+{
+  "scenario": "perception_pipeline_presets",
+  "rows": [
+    {
+      "preset": "tiny",
+      "scene_id": "synthetic-scene-000",
+      "n_samples": 10,
+      "wall_s": 0.85,
+      "summary": {
+        "mean_camera_det": 0.0,
+        "mean_lidar_clust": 2.9,
+        "mean_radar_det": 5.7,
+        "mean_fused_obj": 2.9,
+        "mean_gt_per_frame": 3.2,
+        "mean_ms_per_frame": 83.581,
+        "p50_ms_per_frame": 80.421
+      }
+    },
+    {
+      "preset": "standard",
+      "scene_id": "synthetic-scene-000",
+      "n_samples": 15,
+      "wall_s": 1.827,
+      "summary": {
+        "mean_camera_det": 3.0,
+        "mean_lidar_clust": 13.2,
+        "mean_radar_det": 20.333,
+        "mean_fused_obj": 13.2,
+        "mean_gt_per_frame": 2.867,
+        "mean_ms_per_frame": 121.783,
+        "p50_ms_per_frame": 129.095
+      }
+    },
+    {
+      "preset": "extended-sensors",
+      "scene_id": "synthetic-scene-000",
+      "n_samples": 10,
+      "wall_s": 0.862,
+      "summary": {
+        "mean_camera_det": 0.0,
+        "mean_lidar_clust": 3.3,
+        "mean_radar_det": 21.2,
+        "mean_fused_obj": 3.3,
+        "mean_gt_per_frame": 3.2,
+        "mean_ms_per_frame": 86.204,
+        "p50_ms_per_frame": 86.836
+      }
+    },
+    {
+      "preset": "vlp32",
+      "scene_id": "synthetic-scene-000",
+      "n_samples": 10,
+      "wall_s": 20.263,
+      "summary": {
+        "mean_camera_det": 80.0,
+        "mean_lidar_clust": 1.0,
+        "mean_radar_det": 341.0,
+        "mean_fused_obj": 1.0,
+        "mean_gt_per_frame": 2.6,
+        "mean_ms_per_frame": 2026.291,
+        "p50_ms_per_frame": 2061.346
+      }
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "scenario": "yolo_resolution_sweep",
+  "baseline_640_static": {
+    "n": 30,
+    "mean_ms": 50.81863000717325,
+    "p50_ms": 49.93775000912137,
+    "p95_ms": 56.573130015749484,
+    "p99_ms": 58.16369402746204,
+    "max_ms": 58.68900002678856,
+    "stdev_ms": 2.5401678826499574
+  },
+  "note": "YOLOv8n ONNX has static 640\u00d7640 input. Full resolution sweep requires re-export; captured only the static-640 baseline. Extending would add ~\u00bd day of Ultralytics export work."
+}

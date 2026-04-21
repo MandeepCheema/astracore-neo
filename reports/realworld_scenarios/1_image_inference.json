@@ -1,0 +1,345 @@
+{
+  "scenario": "image_inference_cross_model",
+  "rows": [
+    {
+      "image": "bus",
+      "model": "squeezenet-1.1",
+      "display_name": "SqueezeNet 1.1",
+      "top1_label": "minibus",
+      "top1_prob": 0.08481897413730621,
+      "top5_labels": [
+        "minibus",
+        "waste container",
+        "shopping cart",
+        "stretcher",
+        "police van"
+      ],
+      "top5_probs": [
+        0.0848,
+        0.0832,
+        0.0579,
+        0.0533,
+        0.0462
+      ],
+      "demo_cold_ms": 928.8,
+      "inference_steady": {
+        "n": 20,
+        "mean_ms": 2.4537499994039536,
+        "p50_ms": 2.206250006565824,
+        "p95_ms": 3.2107800157973543,
+        "p99_ms": 3.2940759864868596,
+        "max_ms": 3.314899979159236,
+        "stdev_ms": 0.39707058687271457
+      }
+    },
+    {
+      "image": "bus",
+      "model": "mobilenetv2-7",
+      "display_name": "MobileNet V2",
+      "top1_label": "minibus",
+      "top1_prob": 0.7695223093032837,
+      "top5_labels": [
+        "minibus",
+        "police van",
+        "trolleybus",
+        "tram",
+        "amphibious vehicle"
+      ],
+      "top5_probs": [
+        0.7695,
+        0.1961,
+        0.0112,
+        0.0051,
+        0.0034
+      ],
+      "demo_cold_ms": 402.21,
+      "inference_steady": {
+        "n": 20,
+        "mean_ms": 3.3422349981265143,
+        "p50_ms": 3.3232499845325947,
+        "p95_ms": 3.611405025003478,
+        "p99_ms": 3.7254810088779777,
+        "max_ms": 3.7540000048466027,
+        "stdev_ms": 0.19940994535298182
+      }
+    },
+    {
+      "image": "bus",
+      "model": "resnet50-v2-7",
+      "display_name": "ResNet-50 v2",
+      "top1_label": "minibus",
+      "top1_prob": 0.741642951965332,
+      "top5_labels": [
+        "minibus",
+        "police van",
+        "trolleybus",
+        "minivan",
+        "tram"
+      ],
+      "top5_probs": [
+        0.7416,
+        0.2175,
+        0.0213,
+        0.0081,
+        0.0041
+      ],
+      "demo_cold_ms": 1413.73,
+      "inference_steady": {
+        "n": 20,
+        "mean_ms": 25.28378500137478,
+        "p50_ms": 24.666399986017495,
+        "p95_ms": 28.70540497242473,
+        "p99_ms": 30.169240970863026,
+        "max_ms": 30.535199970472604,
+        "stdev_ms": 2.085902599259654
+      }
+    },
+    {
+      "image": "bus",
+      "model": "efficientnet-lite4-11",
+      "display_name": "EfficientNet-Lite4",
+      "top1_label": "minibus",
+      "top1_prob": 0.00271073286421597,
+      "top5_labels": [
+        "minibus",
+        "police van",
+        "trolleybus",
+        "minivan",
+        "passenger car"
+      ],
+      "top5_probs": [
+        0.0027,
+        0.001,
+        0.001,
+        0.001,
+        0.001
+      ],
+      "demo_cold_ms": 470.82,
+      "inference_steady": {
+        "n": 20,
+        "mean_ms": 9.62871499650646,
+        "p50_ms": 9.381049982039258,
+        "p95_ms": 11.28240501275286,
+        "p99_ms": 12.062241022940723,
+        "max_ms": 12.257200025487691,
+        "stdev_ms": 0.86840165349464
+      }
+    },
+    {
+      "image": "bus",
+      "model": "shufflenet-v2-10",
+      "display_name": "ShuffleNet V2",
+      "top1_label": "minibus",
+      "top1_prob": 0.4393760859966278,
+      "top5_labels": [
+        "minibus",
+        "jeep",
+        "police van",
+        "recreational vehicle",
+        "minivan"
+      ],
+      "top5_probs": [
+        0.4394,
+        0.2639,
+        0.1976,
+        0.0465,
+        0.0131
+      ],
+      "demo_cold_ms": 245.64,
+      "inference_steady": {
+        "n": 20,
+        "mean_ms": 2.8681299998424947,
+        "p50_ms": 2.8292000060901046,
+        "p95_ms": 3.6788049997994676,
+        "p99_ms": 3.824801005539484,
+        "max_ms": 3.8613000069744885,
+        "stdev_ms": 0.453700000974118
+      }
+    },
+    {
+      "image": "bus",
+      "_agreement": true,
+      "plurality_label": "minibus",
+      "n_models": 5,
+      "n_agree": 5,
+      "agreement_frac": 1.0,
+      "per_model_top1": {
+        "squeezenet-1.1": "minibus",
+        "mobilenetv2-7": "minibus",
+        "resnet50-v2-7": "minibus",
+        "efficientnet-lite4-11": "minibus",
+        "shufflenet-v2-10": "minibus"
+      }
+    },
+    {
+      "image": "zidane",
+      "model": "squeezenet-1.1",
+      "display_name": "SqueezeNet 1.1",
+      "top1_label": "saxophone",
+      "top1_prob": 0.13429662585258484,
+      "top5_labels": [
+        "saxophone",
+        "oboe",
+        "bassoon",
+        "flute",
+        "stage"
+      ],
+      "top5_probs": [
+        0.1343,
+        0.1286,
+        0.114,
+        0.1137,
+        0.0397
+      ],
+      "demo_cold_ms": 118.28,
+      "inference_steady": {
+        "n": 20,
+        "mean_ms": 2.719214992248453,
+        "p50_ms": 2.3918499937281013,
+        "p95_ms": 4.020334998494946,
+        "p99_ms": 5.173026972333899,
+        "max_ms": 5.461199965793639,
+        "stdev_ms": 0.7656908261598482
+      }
+    },
+    {
+      "image": "zidane",
+      "model": "mobilenetv2-7",
+      "display_name": "MobileNet V2",
+      "top1_label": "bow tie",
+      "top1_prob": 0.375283420085907,
+      "top5_labels": [
+        "bow tie",
+        "flute",
+        "stage",
+        "banjo",
+        "saxophone"
+      ],
+      "top5_probs": [
+        0.3753,
+        0.0878,
+        0.0671,
+        0.0485,
+        0.0485
+      ],
+      "demo_cold_ms": 409.85,
+      "inference_steady": {
+        "n": 20,
+        "mean_ms": 4.183410003315657,
+        "p50_ms": 4.084299987880513,
+        "p95_ms": 5.368285000440665,
+        "p99_ms": 5.513977003865875,
+        "max_ms": 5.550400004722178,
+        "stdev_ms": 0.6354736922144361
+      }
+    },
+    {
+      "image": "zidane",
+      "model": "resnet50-v2-7",
+      "display_name": "ResNet-50 v2",
+      "top1_label": "bow tie",
+      "top1_prob": 0.5008405447006226,
+      "top5_labels": [
+        "bow tie",
+        "suit",
+        "bridegroom",
+        "mobile phone",
+        "television"
+      ],
+      "top5_probs": [
+        0.5008,
+        0.1639,
+        0.0606,
+        0.0233,
+        0.0137
+      ],
+      "demo_cold_ms": 1361.29,
+      "inference_steady": {
+        "n": 20,
+        "mean_ms": 24.69268500281032,
+        "p50_ms": 23.490849998779595,
+        "p95_ms": 30.16102495312225,
+        "p99_ms": 31.25276499369647,
+        "max_ms": 31.52570000384003,
+        "stdev_ms": 2.4702417209503977
+      }
+    },
+    {
+      "image": "zidane",
+      "model": "efficientnet-lite4-11",
+      "display_name": "EfficientNet-Lite4",
+      "top1_label": "oboe",
+      "top1_prob": 0.0012652149889618158,
+      "top5_labels": [
+        "oboe",
+        "flute",
+        "cello",
+        "suit",
+        "violin"
+      ],
+      "top5_probs": [
+        0.0013,
+        0.0011,
+        0.0011,
+        0.0011,
+        0.0011
+      ],
+      "demo_cold_ms": 524.62,
+      "inference_steady": {
+        "n": 20,
+        "mean_ms": 10.041559999808669,
+        "p50_ms": 9.844049985986203,
+        "p95_ms": 11.665694986004382,
+        "p99_ms": 12.05321901710704,
+        "max_ms": 12.150100024882704,
+        "stdev_ms": 0.8520864415422992
+      }
+    },
+    {
+      "image": "zidane",
+      "model": "shufflenet-v2-10",
+      "display_name": "ShuffleNet V2",
+      "top1_label": "saxophone",
+      "top1_prob": 0.6846008896827698,
+      "top5_labels": [
+        "saxophone",
+        "trombone",
+        "oboe",
+        "cornet",
+        "stage"
+      ],
+      "top5_probs": [
+        0.6846,
+        0.1128,
+        0.0733,
+        0.0606,
+        0.0075
+      ],
+      "demo_cold_ms": 193.55,
+      "inference_steady": {
+        "n": 20,
+        "mean_ms": 3.073505003703758,
+        "p50_ms": 3.0294000171124935,
+        "p95_ms": 3.8535449537448594,
+        "p99_ms": 4.6598289883695525,
+        "max_ms": 4.861399997025728,
+        "stdev_ms": 0.5616097022666031
+      }
+    },
+    {
+      "image": "zidane",
+      "_agreement": true,
+      "plurality_label": "saxophone",
+      "n_models": 5,
+      "n_agree": 2,
+      "agreement_frac": 0.4,
+      "per_model_top1": {
+        "squeezenet-1.1": "saxophone",
+        "mobilenetv2-7": "bow tie",
+        "resnet50-v2-7": "bow tie",
+        "efficientnet-lite4-11": "oboe",
+        "shufflenet-v2-10": "saxophone"
+      }
+    }
+  ]
+}

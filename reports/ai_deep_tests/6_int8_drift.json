@@ -1,0 +1,12 @@
+{
+  "output_tensor": "output0",
+  "fp32_shape": [
+    1,
+    84,
+    8400
+  ],
+  "snr_db": 29.7,
+  "cosine": 0.999469,
+  "max_abs_error": 201.1427,
+  "calibration_samples": 1
+}

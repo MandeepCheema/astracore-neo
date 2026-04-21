@@ -1,0 +1,89 @@
+# AstraCore Neo — Software Development Kit
+#
+# Tier-1 automotive suppliers install this as `astracore-sdk` and run the
+# compiler, quantiser, runtime, benchmark harness, and sensor-fusion
+# reference algorithms on top of their own silicon.
+#
+# OEM integration:
+#     pip install astracore-sdk
+#     astracore bench --model my_model.onnx
+#     astracore replay --dataset nuscenes --scene scene-0061
+
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "astracore-sdk"
+version = "0.1.0"
+description = "AstraCore Neo — Automotive AI inference SDK (compiler, quantiser, runtime, sensor fusion)"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { file = "LICENSE" }
+authors = [
+    { name = "Astracore AI Technologies Private Limited" },
+]
+keywords = ["automotive", "npu", "ai", "adas", "onnx", "quantisation", "inference"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Manufacturing",
+    "Operating System :: POSIX :: Linux",
+    "Operating System :: Microsoft :: Windows",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Software Development :: Embedded Systems",
+]
+dependencies = [
+    "numpy>=1.26",
+    "onnx>=1.14",
+    "onnxruntime>=1.16",
+    "pyyaml>=6.0",          # astracore.config — customer-facing YAML layer
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=7.4", "pytest-cov>=4.1"]
+pytorch = ["torch>=2.0"]
+tvm = ["apache-tvm>=0.14"]
+nuscenes = ["nuscenes-devkit>=1.1"]
+all = [
+    "astracore-sdk[dev,pytorch,nuscenes]",
+]
+
+[project.scripts]
+astracore = "astracore.cli:main"
+
+[project.entry-points."astracore.ops"]
+# Example: built-in op handlers are registered via the loader module itself.
+# External packages register additional ops here, e.g.:
+#     [project.entry-points."astracore.ops"]
+#     MyCustomOp = "my_package.ops:handle_my_custom_op"
+
+[project.entry-points."astracore.quantisers"]
+# External packages register calibration strategies here, e.g.:
+#     [project.entry-points."astracore.quantisers"]
+#     percentile_98 = "my_package.quant:Percentile98Calibrator"
+
+[project.entry-points."astracore.backends"]
+# External packages register target-silicon backends here, e.g.:
+#     [project.entry-points."astracore.backends"]
+#     tensorrt = "my_package.backends.tensorrt:TensorRTBackend"
+#     snpe     = "my_package.backends.snpe:SNPEBackend"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = [
+    "astracore*",
+    "src*",
+    "tools*",
+]
+exclude = ["tests*", "sim*", "rtl*", "asic*", "fpga*", "data*", "reports*", "build*", "logs*"]
+
+[tool.setuptools.package-dir]
+"" = "."
+
+# NOTE: pytest configuration lives in the top-level `pytest.ini`. That file
+# wins over any `[tool.pytest.ini_options]` section here, so we keep the
+# config in one place and avoid the "ignoring pytest config" warning.

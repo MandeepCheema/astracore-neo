@@ -1,0 +1,735 @@
+# Failure-mode catalog for FMEDA.
+#
+# Failure-rate baselines (FIT) are PLACEHOLDERS sourced from IEC 62380
+# and SN29500 norms scaled to 7 nm digital-logic assumptions:
+#   * Per-flip-flop SEU rate at 7 nm finFET: ~0.0005 FIT (~5e-4)
+#   * Per-flip-flop stuck-at over mission profile: ~0.0001 FIT
+#   * Combinational logic per gate: ~0.00005 FIT
+# These will be replaced with measured values from the AstraCore SER
+# analysis (Track 2 W10 deliverable) and silicon characterization at
+# the licensee's tape-out.
+#
+# Convention used in this file
+# ----------------------------
+# Each entry is one failure-mode row. We use a per-mode lambda model
+# (rather than a per-sub-part lambda × distribution split): each row's
+# `lambda_fit` is the *failure rate already attributed to that specific
+# mode and sub-part*, and `distribution` is a within-mode multiplier
+# (≤ 1.0) reserved for cases where one mode subdivides further (e.g.
+# stuck-low vs stuck-high on a boundary input split into two rows).
+#
+# When a sub-part hosts multiple distinct mode classes (e.g. SEU and
+# stuck-at on the same FF), each is one row with its own lambda_fit
+# already pre-allocated from the sub-part's gate population × the
+# IEC 62380 mode-class weight (SEU ≈ 5/6, stuck-at ≈ 1/6 for
+# digital FFs at advanced nodes). This avoids a second normalisation
+# step in the tool.
+#
+# Distribution: fraction of the sub-part's lambda_fit attributable to
+# this specific failure mode (after the per-mode-class pre-allocation
+# above). Sum across rows for one sub-part may be < 1.0; the remainder
+# is "no failure mode considered" (typically benign or merged into a
+# coarser mode).
+#
+# Classification:
+#   safe       — does not violate any safety goal
+#   dangerous  — can violate a safety goal (drives the metric)
+#   no-effect  — output unaffected
+#
+# rationale: short justification (one line ideal) for the classification
+# + mechanism choice. Reviewable line-by-line in safety case audit.
+
+failure_modes:
+  # --------------------------------------------------------------------
+  # dms_fusion — Driver Monitoring Fusion
+  # ASIL-D capable item-level (DMS+driver-attention).
+  # Sub-parts catalogued below correspond to the FFs / counters / muxes
+  # in rtl/dms_fusion/dms_fusion.v.
+  # --------------------------------------------------------------------
+
+  - id: dms_fusion.wdog_cnt.seu
+    module: dms_fusion
+    subpart: wdog_cnt (24-bit watchdog counter)
+    mode: SEU on counter bit → premature/late SENSOR_FAIL
+    lambda_fit: 0.012   # 24 FFs * 5e-4 FIT/FF
+    distribution: 0.85
+    classification: dangerous
+    mechanism_id: watchdog_sensor
+    rationale: >
+      A bit-flip on wdog_cnt could falsely trigger SENSOR_FAIL (safe-side
+      false alarm) or delay it (dangerous-side missed fault). The
+      watchdog mechanism itself self-corrects on next gaze_valid pulse,
+      providing partial coverage; remainder escalates to safe_state.
+
+  - id: dms_fusion.sensor_fail.seu
+    module: dms_fusion
+    subpart: sensor_fail (1-bit flag)
+    mode: SEU sets/clears sensor_fail spuriously
+    lambda_fit: 0.0005
+    distribution: 0.90
+    classification: dangerous
+    mechanism_id: tmr_voter
+    rationale: >
+      A 0→1 flip causes false SENSOR_FAIL (driver alerted unnecessarily,
+      safe-side); a 1→0 flip drops a real SENSOR_FAIL (dangerous).
+      Output is voted via TMR on dal/conf, providing high coverage for
+      the dangerous direction.
+
+  - id: dms_fusion.cont_closed.seu
+    module: dms_fusion
+    subpart: cont_closed (7-bit saturating counter)
+    mode: SEU on counter bit → spurious CRITICAL or missed CRITICAL
+    lambda_fit: 0.0035
+    distribution: 0.85
+    classification: dangerous
+    mechanism_id: counter_resets_periodically
+    rationale: >
+      Counter resets on any non-CLOSED frame, washing out SEUs over
+      typical eye-state distribution. During sustained closed-eye
+      events the SEU window is small relative to CLOSED_CRIT_FRAMES.
+
+  - id: dms_fusion.cont_distracted.seu
+    module: dms_fusion
+    subpart: cont_distracted (7-bit saturating counter)
+    mode: SEU on counter bit → spurious DISTRACTED or missed DISTRACTED
+    lambda_fit: 0.0035
+    distribution: 0.85
+    classification: dangerous
+    mechanism_id: counter_resets_periodically
+    rationale: >
+      Symmetric to cont_closed; resets when driver returns to in-zone.
+
+  - id: dms_fusion.blink_frame_cnt.seu
+    module: dms_fusion
+    subpart: blink_frame_cnt (6-bit window counter)
+    mode: SEU shortens or lengthens the blink-rate measurement window
+    lambda_fit: 0.003
+    distribution: 0.80
+    classification: dangerous
+    mechanism_id: blink_window_resamples
+    rationale: >
+      Counter increments every gaze_valid; window resets on rollover.
+      An SEU is corrected within at most one BLINK_WINDOW (~1 s).
+
+  - id: dms_fusion.blink_snapshot.seu
+    module: dms_fusion
+    subpart: blink_snapshot (16-bit snapshot of blink_count)
+    mode: SEU corrupts snapshot used for delta calculation
+    lambda_fit: 0.008
+    distribution: 0.85
+    classification: dangerous
+    mechanism_id: blink_window_resamples
+    rationale: >
+      Snapshot is overwritten every BLINK_WINDOW; SEU effect is bounded
+      to one window. Delta calculation could spuriously trip
+      blink_elevated.
+
+  - id: dms_fusion.blink_elevated.seu
+    module: dms_fusion
+    subpart: blink_elevated (1-bit flag)
+    mode: SEU sets blink_elevated spuriously (or clears it)
+    lambda_fit: 0.0005
+    distribution: 0.90
+    classification: dangerous
+    mechanism_id: blink_window_resamples
+    rationale: >
+      Flag is rewritten every BLINK_WINDOW pulse; bounded persistence.
+
+  - id: dms_fusion.score_filt.seu
+    module: dms_fusion
+    subpart: score_filt_x4 (9-bit IIR accumulator)
+    mode: SEU on filtered score bit
+    lambda_fit: 0.0045
+    distribution: 0.85
+    classification: dangerous
+    mechanism_id: iir_self_correcting
+    rationale: >
+      The 0.75/0.25 IIR attenuates a single-cycle perturbation by ~75%
+      per gaze_valid/pose_valid pulse. After ~3 pulses the SEU is
+      washed below 1 LSB. Bounded duration of mis-classification.
+
+  - id: dms_fusion.raw_score.stuck
+    module: dms_fusion
+    subpart: raw_score combinational priority encoder
+    mode: stuck-at on intermediate threshold comparators
+    lambda_fit: 0.002
+    distribution: 0.70
+    classification: dangerous
+    mechanism_id: priority_encoder_safe
+    rationale: >
+      Stuck-at biases priority logic. Order is CRITICAL → DROWSY →
+      DISTRACTED → ATTENTIVE; stuck-high on a higher-priority line is
+      safe-side (over-warns), stuck-low could drop a real warning.
+      Asymmetric coverage; flagged for fault-injection.
+
+  - id: dms_fusion.dal_lane.seu
+    module: dms_fusion
+    subpart: dal_a/b/c (3 × 3-bit TMR lanes for driver_attention_level)
+    mode: SEU on one of three TMR lanes
+    lambda_fit: 0.0045   # 9 FFs * 5e-4 FIT/FF
+    distribution: 0.95
+    classification: dangerous
+    mechanism_id: tmr_voter
+    rationale: >
+      Single-lane SEU is masked by majority vote. tmr_voter raises
+      tmr_fault for the affected lane (diagnostic) and tmr_disagree_count
+      increments for licensee monitoring.
+
+  - id: dms_fusion.conf_lane.seu
+    module: dms_fusion
+    subpart: conf_a/b/c (3 × 8-bit TMR lanes for dms_confidence)
+    mode: SEU on one of three TMR lanes
+    lambda_fit: 0.012    # 24 FFs * 5e-4 FIT/FF
+    distribution: 0.95
+    classification: dangerous
+    mechanism_id: tmr_voter
+    rationale: >
+      Same as dal_lane.seu; voted output preserves correctness.
+
+  - id: dms_fusion.dal_lane.stuck
+    module: dms_fusion
+    subpart: dal_a/b/c (TMR lanes)
+    mode: stuck-at on single TMR lane
+    lambda_fit: 0.0009
+    distribution: 0.95
+    classification: dangerous
+    mechanism_id: tmr_voter
+    rationale: >
+      Persistent single-lane stuck-at is masked by vote; tmr_fault flag
+      remains asserted, providing diagnostic to licensee.
+
+  - id: dms_fusion.conf_lane.stuck
+    module: dms_fusion
+    subpart: conf_a/b/c (TMR lanes)
+    mode: stuck-at on single TMR lane
+    lambda_fit: 0.0024
+    distribution: 0.95
+    classification: dangerous
+    mechanism_id: tmr_voter
+    rationale: >
+      Same as dal_lane.stuck.
+
+  - id: dms_fusion.tmr_valid.seu
+    module: dms_fusion
+    subpart: tmr_valid_r (1-bit valid flag to voter; shadow added F4-A-5)
+    mode: SEU sets/clears voter valid input
+    lambda_fit: 0.0005
+    distribution: 0.85
+    classification: dangerous
+    mechanism_id: dup_compare_1bit  # F4-A-5 fix 2026-04-20
+    rationale: >
+      Closed by F4-A-5 (rtl/dms_fusion/dms_fusion.v, see comment block):
+      shadow register tmr_valid_r_shadow is fed by the same expression
+      and a comparator (tmr_valid_seu) OR's any disagreement into the
+      tmr_fault output. Detection latency: 1 cycle. CCF on both
+      copies remains uncovered (Phase D scope).
+
+  - id: dms_fusion.gaze_input.stuck_lo
+    module: dms_fusion
+    subpart: gaze_valid input (boundary)
+    mode: stuck-low → no valid pulses ever arrive
+    lambda_fit: 0.001
+    distribution: 0.50
+    classification: dangerous
+    mechanism_id: watchdog_sensor
+    rationale: >
+      Watchdog asserts SENSOR_FAIL within WATCHDOG_CYCLES (200 ms @
+      50 MHz). Bounded latency; covered.
+
+  # Safe-side (or no-effect) failure modes catalogued for completeness:
+  - id: dms_fusion.gaze_input.stuck_hi
+    module: dms_fusion
+    subpart: gaze_valid input (boundary)
+    mode: stuck-high → continuous "valid" pulses
+    lambda_fit: 0.001
+    distribution: 0.50
+    classification: safe
+    mechanism_id: null
+    rationale: >
+      Excessive valid pulses cause spurious recomputation but no
+      semantic violation: cont_closed reset by non-CLOSED eye_state,
+      filter still smooths. Classified safe-side.
+
+  # --------------------------------------------------------------------
+  # npu_top — NPU compute datapath (4×4 default, scales to 48×512)
+  # ASIL-B intended item-level (perception fed into ASIL-D fusion goals).
+  # Sub-parts catalogued for the 4×4 default; full-scale FMEDA (24,576
+  # MACs) re-runs with scaled lambda_fit per the same mode classification.
+  #
+  # IMPORTANT ground truth as of 2026-04-20:
+  # rtl/npu_top/npu_top.v explicitly documents in its "Current gaps"
+  # comment block: "No ECC, no BIST, no debug mux (those are Phase 2
+  # hardening items)". Therefore SRAM mechanism_id is null today
+  # (ecc_secded RTL exists standalone but is not wired into
+  # npu_sram_bank). Compute-path PE internals (weight_reg, acc,
+  # a_out) have no module-level mechanism today; they rely on the
+  # weak aggregate_safe_state_fault_out and on bit-exact dev-time
+  # mirror (which is NOT a runtime mechanism).
+  # --------------------------------------------------------------------
+
+  - id: npu_top.pe_weight_reg.seu
+    module: npu_top
+    subpart: npu_pe.weight_reg (16 PEs × 8-bit weight register)
+    mode: SEU on held weight → wrong MACs until next load_w
+    lambda_fit: 0.064   # 16 PEs * 8 FFs * 5e-4 FIT/FF
+    distribution: 0.83  # SEU class
+    classification: dangerous
+    mechanism_id: null
+    rationale: >
+      No module-level coverage today. Weight load happens once per tile
+      (PRELOAD phase); SEU between loads silently corrupts every MAC
+      in that tile. Bit-exact mirror does not run in mission mode.
+      Closure: parity per weight_reg (1 FF + 1 XOR tree per PE) or
+      shadow weight reload at tile boundary.
+
+  - id: npu_top.pe_weight_reg.stuck
+    module: npu_top
+    subpart: npu_pe.weight_reg
+    mode: stuck-at on weight bit → systematic MAC error
+    lambda_fit: 0.064
+    distribution: 0.17  # stuck-at class
+    classification: dangerous
+    mechanism_id: null
+    rationale: >
+      Permanent stuck-at; produces consistent wrong outputs that may
+      escape during routine processing (no comparison reference at
+      runtime). Closure: periodic LBIST or weight-checksum on reload.
+
+  - id: npu_top.pe_acc.seu
+    module: npu_top
+    subpart: npu_pe.acc (16 PEs × 32-bit accumulator)
+    mode: SEU on partial sum → wrong tile output
+    lambda_fit: 0.256   # 16 PEs * 32 FFs * 5e-4 FIT/FF
+    distribution: 0.83
+    classification: dangerous
+    mechanism_id: null
+    rationale: >
+      Largest single FF population. SEU corrupts the active tile result;
+      cleared at next clear_acc (once per tile). Closure: parity per
+      accumulator or duplicate-and-compare every Nth tile.
+
+  - id: npu_top.pe_acc.stuck
+    module: npu_top
+    subpart: npu_pe.acc
+    mode: stuck-at on accumulator bit
+    lambda_fit: 0.256
+    distribution: 0.17
+    classification: dangerous
+    mechanism_id: null
+    rationale: >
+      Same as pe_weight_reg.stuck. Closure: LBIST or output checksum
+      vs reference vector at boot.
+
+  - id: npu_top.pe_dataflow.seu
+    module: npu_top
+    subpart: npu_pe.{a_out, a_valid_out, sparse_skip_out} pass-through (16 PEs × 10 bits)
+    mode: SEU on inter-PE activation flow
+    lambda_fit: 0.080   # 16 PEs * 10 FFs * 5e-4 FIT/FF
+    distribution: 0.85
+    classification: dangerous
+    mechanism_id: null
+    rationale: >
+      Affects one tile's MAC for ≤ 1 cycle (data is registered, then
+      flows on). Magnitude small; persistence small. Could escape
+      detection on long sequences. Closure: parity on activation bus.
+
+  - id: npu_top.pe_mul_tree.stuck
+    module: npu_top
+    subpart: combinational multiplier (INT8 + INT4 + INT2 trees, all 16 PEs)
+    mode: stuck-at on multiplier partial product
+    lambda_fit: 0.024   # ~480 gates * 5e-5 FIT/gate (rough)
+    distribution: 0.90
+    classification: dangerous
+    mechanism_id: null
+    rationale: >
+      Permanent stuck-at in adder tree; same wrong product every cycle
+      for that operand pair. Closure: LBIST + occasional reference-vector
+      check at boot.
+
+  - id: npu_top.systolic_drain.seu
+    module: npu_top
+    subpart: systolic_array drain mux + c_valid strobe
+    mode: SEU on output capture → spurious or missed c_valid
+    lambda_fit: 0.010
+    distribution: 0.85
+    classification: dangerous
+    mechanism_id: aggregate_safe_state_fault_out
+    rationale: >
+      A missed c_valid stalls the tile_ctrl FSM (no DRAIN advance) →
+      eventual missing-done → supervisor watchdog. A spurious c_valid
+      writes garbage to AO. Aggregate fault-out partially covers the
+      stalled-pipeline path.
+
+  - id: npu_top.tile_ctrl_fsm.seu
+    module: npu_top
+    subpart: npu_tile_ctrl state register (FSM, ~5 states)
+    mode: SEU jumps FSM to wrong state
+    lambda_fit: 0.0015   # ~3 FFs * 5e-4 FIT/FF
+    distribution: 0.85
+    classification: dangerous
+    mechanism_id: aggregate_safe_state_fault_out
+    rationale: >
+      Wrong state typically derails tile sequencing (no DRAIN, no
+      STORE) → tile never produces `done` → supervisor watchdog. Some
+      transitions land in valid-looking states that produce wrong
+      output without raising done — uncovered. Closure: one-hot encoded
+      FSM with safe-default trap or duplicated FSM with comparator.
+
+  - id: npu_top.tile_ctrl_cfg.seu
+    module: npu_top
+    subpart: latched config (cfg_k, cfg_ai_base, cfg_ao_base, cfg_afu_mode_r)
+    mode: SEU on captured config word → wrong tile parameters
+    lambda_fit: 0.025   # ~50 FFs * 5e-4 FIT/FF
+    distribution: 0.90
+    classification: dangerous
+    mechanism_id: null
+    rationale: >
+      Captured config drives address generation and MAC count. SEU
+      could read wrong activations or write to wrong AO address —
+      silent data corruption with no fault flag. Closure: ECC or
+      parity on config registers (cheap; few bits).
+
+  - id: npu_top.dma_fsm.seu
+    module: npu_top
+    subpart: npu_dma FSM + address counters
+    mode: SEU on DMA state or address → wrong transfer
+    lambda_fit: 0.020
+    distribution: 0.85
+    classification: dangerous
+    mechanism_id: aggregate_safe_state_fault_out
+    rationale: >
+      Wrong DMA address writes to wrong SRAM location. Some addresses
+      are caught by SRAM bank boundary check (TBD whether
+      npu_sram_ctrl asserts on out-of-range); others corrupt a
+      neighbour buffer silently. Aggregate covers stalled DMAs.
+
+  - id: npu_top.sram_data.seu
+    module: npu_top
+    subpart: SRAM banks WA/AI/AO/SCRATCH data array (4 banks × 256 entries × ~64 bits avg)
+    mode: SEU bit-flip in SRAM cell
+    lambda_fit: 0.080   # 4 banks * ~10kbit * 2e-3 FIT/Mbit avg, scaled
+    distribution: 0.95
+    classification: dangerous
+    mechanism_id: null  # ECC RTL exists but NOT wired into npu_sram_bank yet
+    rationale: >
+      ⚠ Largest single uncovered SRAM exposure today. ECC SECDED RTL
+      exists at rtl/ecc_secded/ but is not instantiated inside
+      rtl/npu_sram_bank/ — confirmed by npu_top.v current-gaps
+      comment ("No ECC, no BIST"). Closure: F1-A6 wires ECC into
+      every bank. After wiring, switch this row's mechanism_id to
+      `ecc_secded` and rerun the FMEDA.
+
+  - id: npu_top.sram_addr.stuck
+    module: npu_top
+    subpart: SRAM address decoder
+    mode: stuck-at on address bit → wrong row accessed
+    lambda_fit: 0.005
+    distribution: 0.90
+    classification: dangerous
+    mechanism_id: null
+    rationale: >
+      Reads/writes wrong row consistently. Closure: address-decoder
+      MBIST at boot + periodic background scrubbing once ECC is wired.
+
+  - id: npu_top.busy_done.seu
+    module: npu_top
+    subpart: top-level busy / done handshake registers
+    mode: SEU sets/clears busy or done spuriously
+    lambda_fit: 0.0015
+    distribution: 0.90
+    classification: dangerous
+    mechanism_id: aggregate_safe_state_fault_out
+    rationale: >
+      Spurious done causes supervisor to read stale AO. Stuck busy
+      causes tile to never accept new start → supervisor watchdog.
+      Aggregate covers the latter; former is a real undetected
+      window. Closure: TMR on busy/done.
+
+  - id: npu_top.precision_mode.stuck
+    module: npu_top
+    subpart: cfg precision_mode broadcast to all PEs
+    mode: stuck-at → wrong precision applied silently
+    lambda_fit: 0.0008
+    distribution: 0.85
+    classification: dangerous
+    mechanism_id: null
+    rationale: >
+      A stuck-at on precision_mode produces consistently wrong outputs
+      (e.g. INT8 path treated as INT4) with no fault flag. Closure:
+      parity on precision_mode broadcast or boot-time self-check
+      vector exercising every precision.
+
+  # --------------------------------------------------------------------
+  # tmr_voter — the TMR voter itself (32-bit, fixed-width)
+  # Special status: this IS a safety mechanism; module-level FMEDA shows
+  # the residual exposure of the voter's OWN flip-flops (which are not
+  # voted recursively). Closure path: formal verification (F4-D-1) +
+  # aggregate downstream coverage; for ASIL-D, optional duplicate-and-
+  # compare on the voter (paranoid pattern).
+  # --------------------------------------------------------------------
+
+  - id: tmr_voter.voted_reg.seu
+    module: tmr_voter
+    subpart: voted output register (32-bit)
+    mode: SEU on voted output bit
+    lambda_fit: 0.016   # 32 FFs * 5e-4
+    distribution: 0.83
+    classification: dangerous
+    mechanism_id: aggregate_safe_state_fault_out
+    rationale: >
+      An SEU on the voted output corrupts the downstream consumer for
+      one or more cycles until the next vote refreshes (combinational
+      voted_next overwrites on next valid). Aggregate covers gross
+      patterns only. Closure: F4-D-1 formal proof of voter properties.
+
+  - id: tmr_voter.fault_flags.seu
+    module: tmr_voter
+    subpart: fault_a / fault_b / fault_c / triple_fault output regs
+    mode: SEU spuriously sets or clears a fault flag
+    lambda_fit: 0.002   # 4 FFs * 5e-4
+    distribution: 0.85
+    classification: dangerous
+    mechanism_id: aggregate_safe_state_fault_out
+    rationale: >
+      A 0→1 flip causes spurious "lane fault" report (safe-side); a
+      1→0 flip drops a real lane-fault report (dangerous). Aggregate
+      covers gross patterns. Property-level formal proof closes the
+      gap (F4-D-1; SVA invariants 1-4 in tmr_voter.v are the formal
+      targets).
+
+  - id: tmr_voter.agreement.seu
+    module: tmr_voter
+    subpart: agreement output register (1-bit)
+    mode: SEU sets/clears agreement spuriously
+    lambda_fit: 0.0005
+    distribution: 0.85
+    classification: dangerous
+    mechanism_id: aggregate_safe_state_fault_out
+    rationale: >
+      A spurious agreement=1 with disagreement-on-data hides a real
+      vote miscount (dangerous direction). Closure via F4-D-1 SVA
+      invariant a_agreement_consistent.
+
+  - id: tmr_voter.vote_logic.stuck
+    module: tmr_voter
+    subpart: ab_eq / ac_eq / bc_eq combinational comparators (32-bit each)
+    mode: stuck-at on a comparator output line → wrong majority detection
+    lambda_fit: 0.005
+    distribution: 0.85
+    classification: dangerous
+    mechanism_id: null
+    rationale: >
+      Stuck-low on bc_eq while A==B==C produces vote_count=2 instead
+      of 3 (cosmetic) but stuck-low on ab_eq + ac_eq while ab_eq is
+      the actual majority would route the wrong lane to voted. No
+      module-level mechanism; closure via duplicate-and-compare voter
+      pattern (Phase D, optional for ASIL-D margin).
+
+  # --------------------------------------------------------------------
+  # ecc_secded — the SECDED block itself (Hamming 72,64)
+  # Like tmr_voter, this IS a safety mechanism; module-level FMEDA
+  # shows the residual exposure of its own FFs (output registers for
+  # data_out / parity_out / single_err / double_err / corrected /
+  # err_pos). Closure: formal proofs (F4-D-2) + interleaved layout
+  # (F4-D-6 closes the parity-bit aliasing limitation).
+  # --------------------------------------------------------------------
+
+  - id: ecc_secded.data_out.seu
+    module: ecc_secded
+    subpart: data_out output register (64-bit)
+    mode: SEU corrupts decoded output AFTER ECC has corrected it
+    lambda_fit: 0.032   # 64 FFs * 5e-4
+    distribution: 0.83
+    classification: dangerous
+    mechanism_id: null
+    rationale: >
+      Bit-flip after correction is invisible — the same logic that
+      detected upstream errors is bypassed by an output-register SEU.
+      Closure: parity on data_out (single bit; cheap) or formal SVA
+      that data_out always equals corrected codeword path. Captured
+      by F4-D-2 formal scope.
+
+  - id: ecc_secded.flag_regs.seu
+    module: ecc_secded
+    subpart: single_err / double_err / corrected output regs
+    mode: SEU spuriously sets or clears an error flag
+    lambda_fit: 0.0015   # 3 FFs * 5e-4
+    distribution: 0.85
+    classification: dangerous
+    mechanism_id: aggregate_safe_state_fault_out
+    rationale: >
+      Stuck-low double_err drops a real uncorrectable detection
+      (dangerous, dropped to safe-state aggregate); spurious double_err
+      causes unnecessary safe-state entry (safe-side). F4-D-2 invariants
+      a_err_mutex + a_corrected_iff_single are the formal targets.
+
+  - id: ecc_secded.syndrome_logic.stuck
+    module: ecc_secded
+    subpart: combinational syndrome computation (h_syndrome 7 bits + overall_recv_parity)
+    mode: stuck-at on syndrome bit → wrong error position computed
+    lambda_fit: 0.0035
+    distribution: 0.85
+    classification: dangerous
+    mechanism_id: null
+    rationale: >
+      Stuck syndrome bit causes mis-classification of single-bit errors
+      (corrected to wrong data) or mis-detection of double-bit errors
+      (returned as single). Closure: formal proof of decode correctness
+      (F4-D-2) + boot-time self-test injecting known errors.
+
+  - id: ecc_secded.parity_out.seu
+    module: ecc_secded
+    subpart: parity_out output register (8-bit)
+    mode: SEU corrupts encoded parity written to SRAM
+    lambda_fit: 0.004   # 8 FFs * 5e-4
+    distribution: 0.83
+    classification: dangerous
+    mechanism_id: null
+    rationale: >
+      Encoded parity is later checked on read, so the SEU manifests
+      as a "single-bit error detected and corrected" event one read
+      later (with the limitations noted in F4-D-6 for parity-bit
+      aliasing). Effectively self-detecting, but not self-correcting
+      at the SRAM cell. Phase D handles via interleaved layout.
+
+  # --------------------------------------------------------------------
+  # safe_state_controller — Layer-3 safety aggregator + state machine
+  # Drives the chip safe-state and limits vehicle envelope. Itself
+  # ASIL-D in the assumed item context. Critical FFs: safe_state[1:0]
+  # (the actual state) and timer (escalation).
+  # --------------------------------------------------------------------
+
+  - id: safe_state_controller.state.seu
+    module: safe_state_controller
+    subpart: safe_state[1:0] output register (2-bit FSM)
+    mode: SEU jumps state — could go to safer (NORMAL→ALERT) or less safe (DEGRADE→NORMAL)
+    lambda_fit: 0.001   # 2 FFs * 5e-4
+    distribution: 0.90
+    classification: dangerous
+    mechanism_id: null
+    rationale: >
+      A 2-bit FSM is the single most critical state in the chip — an
+      SEU dropping from MRC back to NORMAL is catastrophic at item
+      level. No module-level mechanism today. Closure (cheap):
+      Hamming-encoded 5-bit FSM state OR TMR on the 2-bit state. Add
+      as F4-A-7 follow-on; classified as MUST FIX before ASIL-B
+      safety case v1.0.
+
+  - id: safe_state_controller.timer.seu
+    module: safe_state_controller
+    subpart: escalation/recovery timer counter (~16 bits)
+    mode: SEU advances or rewinds escalation timer
+    lambda_fit: 0.008   # 16 FFs * 5e-4
+    distribution: 0.85
+    classification: dangerous
+    mechanism_id: counter_resets_periodically
+    rationale: >
+      Timer resets on every state change or fault-class change, so SEU
+      effect is bounded by next transition. Worst case: spurious
+      escalation (driver alerted unnecessarily — safe-side) or delayed
+      escalation (dangerous if fault is real). Mechanism partial.
+
+  - id: safe_state_controller.max_speed.seu
+    module: safe_state_controller
+    subpart: max_speed_kmh[7:0] output register
+    mode: SEU spuriously raises or lowers commanded max speed
+    lambda_fit: 0.004   # 8 FFs * 5e-4
+    distribution: 0.85
+    classification: dangerous
+    mechanism_id: null
+    rationale: >
+      Spuriously high max_speed during DEGRADE allows over-speed
+      (dangerous); spuriously low limits envelope (safe-side, but
+      surprising). Closure: derive max_speed combinationally from
+      safe_state (already done in some encodings) so the SEU window
+      is on safe_state itself, which is closed by safe_state_controller.state.seu fix.
+
+  - id: safe_state_controller.transition_logic.stuck
+    module: safe_state_controller
+    subpart: combinational state-transition logic
+    mode: stuck-at on transition condition → can't escalate, or can't recover
+    lambda_fit: 0.002
+    distribution: 0.80
+    classification: dangerous
+    mechanism_id: null
+    rationale: >
+      Stuck "can't escalate" is dangerous (driver continues with
+      unmitigated fault); stuck "can't recover" is safe-side (vehicle
+      stays in MRC). Closure: duplicated-and-compared FSM (cheap; 2
+      bits of state). F4-A-7 follow-on candidate.
+
+  # --------------------------------------------------------------------
+  # plausibility_checker — Layer-2 fusion gate-keeper
+  # Decides whether a detection from upstream fusion has the required
+  # cross-sensor redundancy to keep its ASIL claim, or must be degraded
+  # / rejected. Itself ASIL-B-relevant (not ASIL-D — see HARA HE-1.3
+  # safe-side framing).
+  # --------------------------------------------------------------------
+
+  - id: plausibility_checker.check_ok.seu
+    module: plausibility_checker
+    subpart: check_ok output register (1-bit)
+    mode: SEU spuriously passes a violating detection or rejects a clean one
+    lambda_fit: 0.0005
+    distribution: 0.85
+    classification: dangerous
+    mechanism_id: aggregate_safe_state_fault_out
+    rationale: >
+      Spuriously passing a violator routes a low-confidence detection
+      to downstream as ASIL-D (dangerous). Spuriously rejecting a
+      clean detection is safe-side. No module-level mechanism;
+      aggregate covers gross fault patterns.
+
+  - id: plausibility_checker.asil_degrade.seu
+    module: plausibility_checker
+    subpart: asil_degrade[7:0] output register
+    mode: SEU corrupts ASIL routing instruction
+    lambda_fit: 0.004
+    distribution: 0.85
+    classification: dangerous
+    mechanism_id: aggregate_safe_state_fault_out
+    rationale: >
+      Routing affects downstream consumer's safety-decomposition
+      handling. Closure: parity on asil_degrade or formal proof that
+      asil_degrade ∈ {0x00, 0x01, 0xFF} (only valid values).
+
+  - id: plausibility_checker.violation.seu
+    module: plausibility_checker
+    subpart: check_violation[2:0] output register
+    mode: SEU corrupts violation code
+    lambda_fit: 0.0015
+    distribution: 0.85
+    classification: dangerous
+    mechanism_id: aggregate_safe_state_fault_out
+    rationale: >
+      Wrong violation code is informational (telemetry) and does not
+      gate safety decisions if check_ok is correct. Lower severity
+      than check_ok.seu.
+
+  - id: plausibility_checker.rule_logic.stuck
+    module: plausibility_checker
+    subpart: combinational redundancy-rule evaluation
+    mode: stuck-at on rule output → wrong cross-sensor decision
+    lambda_fit: 0.003
+    distribution: 0.80
+    classification: dangerous
+    mechanism_id: null
+    rationale: >
+      A stuck rule output mis-classifies VEHICLE / PEDESTRIAN /
+      PROXIMITY redundancy. Could systematically over-pass or
+      over-reject. Closure: dual-rail rule evaluation (paranoid
+      pattern) or property-level formal proof (Phase D).
+
+  - id: plausibility_checker.counters.seu
+    module: plausibility_checker
+    subpart: total_checks / total_violations counters (32 bits total)
+    mode: SEU on counter
+    lambda_fit: 0.016
+    distribution: 0.85
+    classification: no-effect
+    mechanism_id: null
+    rationale: >
+      Counters are telemetry only — no safety gate depends on their
+      exact value. Saturating, monotone counters; an SEU advances or
+      retreats the count by 1 at most. Classified no-effect for safety;
+      may reduce telemetry quality.

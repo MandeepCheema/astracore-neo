@@ -277,6 +277,17 @@ module dms_fusion #(
     always @(posedge clk)
         tmr_valid_r <= !rst_n ? 1'b0 : (gaze_valid || pose_valid || sensor_fail);
 
+    // F4-A-5 (per docs/safety/findings_remediation_plan_v0_1.md):
+    // Shadow copy of tmr_valid_r for SEU detection. On bit-flip in either
+    // copy the comparator (tmr_valid_seu) asserts; this OR's into the
+    // existing tmr_fault output so a downstream supervisor sees the fault.
+    // Coverage: ~99 % for single-event upset on the 1-bit valid flag
+    // (CCF on both copies in the same cycle remains uncovered — Phase D).
+    reg tmr_valid_r_shadow;
+    always @(posedge clk)
+        tmr_valid_r_shadow <= !rst_n ? 1'b0 : (gaze_valid || pose_valid || sensor_fail);
+    wire tmr_valid_seu = (tmr_valid_r != tmr_valid_r_shadow);
+
     `undef DMS_TMR_OUTPUT_LOGIC
 
     wire [31:0] tmr_lane_a = {21'd0, conf_a, dal_a};
@@ -303,7 +314,8 @@ module dms_fusion #(
 
     assign driver_attention_level = tmr_voted[2:0];
     assign dms_confidence         = tmr_voted[10:3];
-    assign tmr_fault = tmr_fault_a | tmr_fault_b | tmr_fault_c | tmr_triple;
+    assign tmr_fault = tmr_fault_a | tmr_fault_b | tmr_fault_c | tmr_triple
+                       | tmr_valid_seu;   // F4-A-5: SEU on tmr_valid_r escalates
 
     // -------------------------------------------------------------------------
     // 8. Alert output (combinational from voted level)

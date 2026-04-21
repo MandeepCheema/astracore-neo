@@ -1,0 +1,13 @@
+rm -f results.xml
+"make" -f Makefile results.xml
+make[1]: Entering directory '/mnt/c/Users/mande/astracore-neo/sim/fault_injection'
+/home/mandeep/.local/bin/verilator -cc --exe -Mdir sim_build --top-module tb_dms_fusion_fi --timescale 1ns/1ps --vpi --public-flat-rw --prefix Vtop -o Vtop -LDFLAGS "-Wl,-rpath,/usr/local/lib/python3.10/dist-packages/cocotb/libs -L/usr/local/lib/python3.10/dist-packages/cocotb/libs -lcocotbvpi_verilator" -Wno-fatal -Wno-WIDTH tb_dms_fusion_fi.sv ../../rtl/dms_fusion/dms_fusion.v ../../rtl/tmr_voter/tmr_voter.v /usr/local/lib/python3.10/dist-packages/cocotb/share/lib/verilator/verilator.cpp
+%Error-NEEDTIMINGOPT: tb_dms_fusion_fi.sv:68:9: Use --timing or --no-timing to specify how delays should be handled
+                                              : ... note: In instance 'tb_dms_fusion_fi'
+   68 |         #100 rst_n       = 1;
+      |         ^
+                      ... For error description see https://verilator.org/warn/NEEDTIMINGOPT?v=5.036
+%Error: Exiting due to 1 error(s)
+make[1]: *** [/usr/local/lib/python3.10/dist-packages/cocotb_tools/makefiles/simulators/Makefile.verilator:61: sim_build/Vtop.mk] Error 1
+make[1]: Leaving directory '/mnt/c/Users/mande/astracore-neo/sim/fault_injection'
+make: *** [/usr/local/lib/python3.10/dist-packages/cocotb_tools/makefiles/Makefile.inc:17: sim] Error 2

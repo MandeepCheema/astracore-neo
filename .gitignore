@@ -74,3 +74,27 @@ sim/*/__pycache__/
 sim/*/results.xml
 sim/*/dump.vcd
 sim/rtl/
+data/models/zoo/int8/*.onnx
+
+# C++ runtime build artefacts
+cpp/build/
+cpp/*.so
+cpp/*.dylib
+cpp/*.pyd
+cpp/*.dll
+cpp/*.egg-info/
+
+# Qualcomm AI Hub cleaned-opset intermediates
+data/models/*.cleaned.onnx
+data/models/zoo/*.cleaned.onnx
+reports/qualcomm_aihub/*_raw.json
+
+# AI Hub prep intermediates (not reproducible without network)
+data/models/**/*.aihub.onnx
+data/models/**/*.modern.onnx
+
+# Raw ONNX zoo (reproducible via scripts/fetch_model_zoo.py)
+data/models/zoo/*.onnx
+
+# Optimum ONNX exports (heavy; regen via `optimum-cli export onnx ...`)
+data/models/zoo/optimum_exports/

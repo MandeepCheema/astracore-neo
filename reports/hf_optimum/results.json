@@ -1,0 +1,95 @@
+{
+  "track": "Track 3 — Hugging Face Optimum integration",
+  "reference": "docs/external_validation_options.md (row 8: 'Hugging Face Optimum AstraCore EP plugin')",
+  "generated_at": "2026-04-21",
+  "host": {
+    "platform": "win32",
+    "python": "3.12.3",
+    "onnxruntime": "1.17.3",
+    "ort_providers": ["AzureExecutionProvider", "CPUExecutionProvider"],
+    "transformers": "4.40.0",
+    "tokenizers": "0.19.1"
+  },
+  "fixtures": {
+    "distilbert-squad": {
+      "path": "data/models/zoo/optimum_exports/distilbert-squad/",
+      "producer": "pytorch 2.11.0",
+      "opset": 17,
+      "architecture": "DistilBertForQuestionAnswering",
+      "onnx_size_bytes": 265569852,
+      "inputs": ["input_ids", "attention_mask"],
+      "outputs": ["start_logits", "end_logits"]
+    },
+    "bert-large-squad": {
+      "path": "data/models/zoo/optimum_exports/bert-large-squad/",
+      "producer": "pytorch 2.11.0",
+      "opset": 17,
+      "architecture": "BertForQuestionAnswering",
+      "onnx_size_bytes": 1336790031,
+      "inputs": ["input_ids", "attention_mask", "token_type_ids"],
+      "outputs": ["start_logits", "end_logits"]
+    }
+  },
+  "suite": {
+    "file": "tests/test_hf_optimum.py",
+    "default": {"tests": 19, "passed": 19, "failed": 0, "wall_s": 47.07},
+    "integration": {"tests": 3, "passed": 3, "failed": 0, "wall_s": 39.31}
+  },
+  "coverage": [
+    {
+      "name": "test_optimum_export_layout",
+      "count": 2,
+      "asserts": [
+        "config.json + tokenizer.json + tokenizer_config.json + special_tokens_map.json + vocab.txt + model.onnx all present",
+        "architectures field matches expected HF class"
+      ]
+    },
+    {
+      "name": "test_distilbert_graph_signature / test_bert_large_graph_signature",
+      "count": 2,
+      "asserts": [
+        "graph input/output tuple matches Optimum QA contract",
+        "opset >= 14"
+      ]
+    },
+    {
+      "name": "test_distilbert_ort_inference_end_to_end / test_bert_large_ort_inference_end_to_end",
+      "count": 2,
+      "asserts": [
+        "tokenizers.Tokenizer.from_file drives the ONNX session",
+        "start/end_logits are finite and shape (1, 256)",
+        "argmax span lies inside the valid (non-padded) region"
+      ]
+    },
+    {
+      "name": "test_distilbert_astracore_benchmark_harness / test_bert_large_astracore_benchmark_harness",
+      "count": 2,
+      "asserts": [
+        "astracore.benchmark.benchmark_model round-trips Optimum export",
+        "mac_ops_total > 0 (symbolic shape inference resolved MatMul dims)",
+        "silicon_profile records CPUExecutionProvider"
+      ]
+    },
+    {
+      "name": "test_int_input_range_helper",
+      "count": 11,
+      "asserts": [
+        "name-aware int range mapping for input_ids / attention_mask / token_type_ids / segment_ids / input_mask / pad_mask / causal_mask / position_ids / decoder_input_ids / unknown fallback"
+      ]
+    }
+  ],
+  "harness_fix": {
+    "file": "astracore/benchmark.py",
+    "function": "_gen_input_for",
+    "helper_added": "_int_range_for_input",
+    "before": "random int64 in [0, 30000) for every integer input",
+    "after": "name-keyed ranges: attention_mask/*_mask/token_type_ids/segment_ids/_type_ids -> [0, 2); position_ids -> [0, 512); input_ids/decoder_input_ids -> [0, 30000); default -> [0, 30000)",
+    "bug_signature": "onnxruntime Gather bounds check: 'indices element out of data bounds, idx=18968 must be within the inclusive range [-2,1]' at /bert/embeddings/token_type_embeddings/Gather on BERT-large (opset 17)",
+    "latent_for": "bert-squad-10 (opset 10) tolerated out-of-range indices silently but still produced garbage for attention_mask semantics"
+  },
+  "next_steps": [
+    "Build the actual HF Optimum AstraCore execution-provider plugin (ONNX graph rewrite hook + provider registration) — the ~2-engineer-week item called out in docs/external_validation_options.md row 8.",
+    "Submit a PR to huggingface/optimum registering AstraCore under optimum.onnxruntime providers once ORT-EP lands.",
+    "Add HF Hub model-card metadata block template for buyers to ship with fine-tuned checkpoints."
+  ]
+}

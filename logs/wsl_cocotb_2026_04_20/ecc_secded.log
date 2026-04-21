@@ -1,0 +1,21 @@
+rm -f results.xml
+"make" -f Makefile results.xml
+make[1]: Entering directory '/mnt/c/Users/mande/astracore-neo/sim/ecc_secded'
+mkdir -p sim_build
+/home/mandeep/.local/bin/verilator -cc --exe -Mdir sim_build --top-module ecc_secded --timescale 1ns/1ps --vpi --public-flat-rw --prefix Vtop -o Vtop -LDFLAGS "-Wl,-rpath,/usr/local/lib/python3.10/dist-packages/cocotb/libs -L/usr/local/lib/python3.10/dist-packages/cocotb/libs -lcocotbvpi_verilator"  /mnt/c/Users/mande/astracore-neo/rtl/ecc_secded/ecc_secded.v /usr/local/lib/python3.10/dist-packages/cocotb/share/lib/verilator/verilator.cpp
+%Warning-WIDTHTRUNC: /mnt/c/Users/mande/astracore-neo/rtl/ecc_secded/ecc_secded.v:67:17: Logical operator IF expects 1 bit on the If, but If's AND generates 32 bits.
+                                                                                       : ... note: In instance 'ecc_secded'
+   67 |                 if (((j_h + 1) >> i_h) & 1)
+      |                 ^~
+                     ... For warning description see https://verilator.org/warn/WIDTHTRUNC?v=5.036
+                     ... Use "/* verilator lint_off WIDTHTRUNC */" and lint_on around source to disable this message.
+%Warning-WIDTHEXPAND: /mnt/c/Users/mande/astracore-neo/rtl/ecc_secded/ecc_secded.v:121:36: Operator EQ expects 32 bits on the LHS, but LHS's VARREF 'error_position' generates 7 bits.
+                                                                                         : ... note: In instance 'ecc_secded'
+  121 |                 if (error_position == (cp + 1))
+      |                                    ^~
+                      ... For warning description see https://verilator.org/warn/WIDTHEXPAND?v=5.036
+                      ... Use "/* verilator lint_off WIDTHEXPAND */" and lint_on around source to disable this message.
+%Error: Exiting due to 2 warning(s)
+make[1]: *** [/usr/local/lib/python3.10/dist-packages/cocotb_tools/makefiles/simulators/Makefile.verilator:61: sim_build/Vtop.mk] Error 1
+make[1]: Leaving directory '/mnt/c/Users/mande/astracore-neo/sim/ecc_secded'
+make: *** [/usr/local/lib/python3.10/dist-packages/cocotb_tools/makefiles/Makefile.inc:17: sim] Error 2

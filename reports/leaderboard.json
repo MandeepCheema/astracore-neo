@@ -1,0 +1,1050 @@
+{
+  "generated_at_unix": 1776776509,
+  "host": {
+    "platform": "win32",
+    "cpu": "Intel64 Family 6 Model 154 Stepping 4, GenuineIntel",
+    "cpu_count": 12,
+    "python": "3.12.3",
+    "onnxruntime": "1.22.1",
+    "ort_available_eps": [
+      "AzureExecutionProvider",
+      "CPUExecutionProvider"
+    ]
+  },
+  "sources": {
+    "zoo_bench": {
+      "backend": "onnxruntime",
+      "n_models": 8,
+      "n_iter": 3,
+      "wall_s_total": 12.533,
+      "rows": [
+        {
+          "backend": "onnxruntime",
+          "model": "squeezenet-1.1",
+          "n_inferences": 3,
+          "wall_s_total": 0.009813599986955523,
+          "wall_ms_per_inference": 3.271199995651841,
+          "mac_ops_total": 349151936,
+          "mac_ops_effective": 349151936,
+          "mac_util": 0.0,
+          "delivered_tops": 0.11740145786156485,
+          "delivered_tops_per_watt": 0.0,
+          "watts_avg": null,
+          "silicon_profile": "ort-AzureExecutionProvider+CPUExecutionProvider",
+          "precision": "INT8",
+          "sparsity": "dense",
+          "notes": "ORT baseline; not a target-silicon measurement",
+          "extra": {}
+        },
+        {
+          "backend": "onnxruntime",
+          "model": "mobilenetv2-7",
+          "n_inferences": 3,
+          "wall_s_total": 0.01947699996526353,
+          "wall_ms_per_inference": 6.4923333217545105,
+          "mac_ops_total": 429111936,
+          "mac_ops_effective": 429111936,
+          "mac_util": 0.0,
+          "delivered_tops": 0.04278412473826215,
+          "delivered_tops_per_watt": 0.0,
+          "watts_avg": null,
+          "silicon_profile": "ort-AzureExecutionProvider+CPUExecutionProvider",
+          "precision": "INT8",
+          "sparsity": "dense",
+          "notes": "ORT baseline; not a target-silicon measurement",
+          "extra": {}
+        },
+        {
+          "backend": "onnxruntime",
+          "model": "resnet50-v2-7",
+          "n_inferences": 3,
+          "wall_s_total": 0.09381929997471161,
+          "wall_ms_per_inference": 31.27309999157054,
+          "mac_ops_total": 4091330560,
+          "mac_ops_effective": 4091330560,
+          "mac_util": 0.0,
+          "delivered_tops": 0.12704772405020176,
+          "delivered_tops_per_watt": 0.0,
+          "watts_avg": null,
+          "silicon_profile": "ort-AzureExecutionProvider+CPUExecutionProvider",
+          "precision": "INT8",
+          "sparsity": "dense",
+          "notes": "ORT baseline; not a target-silicon measurement",
+          "extra": {}
+        },
+        {
+          "backend": "onnxruntime",
+          "model": "efficientnet-lite4-11",
+          "n_inferences": 3,
+          "wall_s_total": 0.042989399982616305,
+          "wall_ms_per_inference": 14.329799994205436,
+          "mac_ops_total": 1347665152,
+          "mac_ops_effective": 1347665152,
+          "mac_util": 0.0,
+          "delivered_tops": 0.10446854712953055,
+          "delivered_tops_per_watt": 0.0,
+          "watts_avg": null,
+          "silicon_profile": "ort-AzureExecutionProvider+CPUExecutionProvider",
+          "precision": "INT8",
+          "sparsity": "dense",
+          "notes": "ORT baseline; not a target-silicon measurement",
+          "extra": {}
+        },
+        {
+          "backend": "onnxruntime",
+          "model": "shufflenet-v2-10",
+          "n_inferences": 3,
+          "wall_s_total": 0.01407380003365688,
+          "wall_ms_per_inference": 4.6912666778856265,
+          "mac_ops_total": 144932568,
+          "mac_ops_effective": 144932568,
+          "mac_util": 0.0,
+          "delivered_tops": 0.05054670517175634,
+          "delivered_tops_per_watt": 0.0,
+          "watts_avg": null,
+          "silicon_profile": "ort-AzureExecutionProvider+CPUExecutionProvider",
+          "precision": "INT8",
+          "sparsity": "dense",
+          "notes": "ORT baseline; not a target-silicon measurement",
+          "extra": {}
+        },
+        {
+          "backend": "onnxruntime",
+          "model": "yolov8n",
+          "n_inferences": 3,
+          "wall_s_total": 0.2565625999995973,
+          "wall_ms_per_inference": 85.52086666653243,
+          "mac_ops_total": 4371993600,
+          "mac_ops_effective": 4371993600,
+          "mac_util": 0.0,
+          "delivered_tops": 0.053267949639727356,
+          "delivered_tops_per_watt": 0.0,
+          "watts_avg": null,
+          "silicon_profile": "ort-AzureExecutionProvider+CPUExecutionProvider",
+          "precision": "INT8",
+          "sparsity": "dense",
+          "notes": "ORT baseline; not a target-silicon measurement",
+          "extra": {}
+        },
+        {
+          "backend": "onnxruntime",
+          "model": "bert-squad-10",
+          "n_inferences": 3,
+          "wall_s_total": 0.7729356000490952,
+          "wall_ms_per_inference": 257.6452000163651,
+          "mac_ops_total": 1292897280,
+          "mac_ops_effective": 1292897280,
+          "mac_util": 0.0,
+          "delivered_tops": 0.005648755295825052,
+          "delivered_tops_per_watt": 0.0,
+          "watts_avg": null,
+          "silicon_profile": "ort-AzureExecutionProvider+CPUExecutionProvider",
+          "precision": "INT8",
+          "sparsity": "dense",
+          "notes": "ORT baseline; not a target-silicon measurement",
+          "extra": {}
+        },
+        {
+          "backend": "onnxruntime",
+          "model": "gpt-2-10",
+          "n_inferences": 3,
+          "wall_s_total": 0.06945209999685176,
+          "wall_ms_per_inference": 23.150699998950586,
+          "mac_ops_total": 84953088,
+          "mac_ops_effective": 84953088,
+          "mac_util": 0.0,
+          "delivered_tops": 0.004109791444968371,
+          "delivered_tops_per_watt": 0.0,
+          "watts_avg": null,
+          "silicon_profile": "ort-AzureExecutionProvider+CPUExecutionProvider",
+          "precision": "INT8",
+          "sparsity": "dense",
+          "notes": "ORT baseline; not a target-silicon measurement",
+          "extra": {}
+        }
+      ]
+    },
+    "zoo_detailed": true,
+    "int8_manifest": true
+  },
+  "zoo_bench": {
+    "squeezenet-1.1": {
+      "latency_ms": 3.271,
+      "gmacs": 0.349,
+      "delivered_tops": 0.1174
+    },
+    "mobilenetv2-7": {
+      "latency_ms": 6.492,
+      "gmacs": 0.429,
+      "delivered_tops": 0.0428
+    },
+    "resnet50-v2-7": {
+      "latency_ms": 31.273,
+      "gmacs": 4.091,
+      "delivered_tops": 0.127
+    },
+    "efficientnet-lite4-11": {
+      "latency_ms": 14.33,
+      "gmacs": 1.348,
+      "delivered_tops": 0.1045
+    },
+    "shufflenet-v2-10": {
+      "latency_ms": 4.691,
+      "gmacs": 0.145,
+      "delivered_tops": 0.0505
+    },
+    "yolov8n": {
+      "latency_ms": 85.521,
+      "gmacs": 4.372,
+      "delivered_tops": 0.0533
+    },
+    "bert-squad-10": {
+      "latency_ms": 257.645,
+      "gmacs": 1.293,
+      "delivered_tops": 0.0056
+    },
+    "gpt-2-10": {
+      "latency_ms": 23.151,
+      "gmacs": 0.085,
+      "delivered_tops": 0.0041
+    }
+  },
+  "zoo_detailed": {
+    "squeezenet-1.1": {
+      "p50_ms": 2.048,
+      "p99_ms": 3.089,
+      "p99p9_ms": 3.14,
+      "stdev_ms": 0.342,
+      "output_fingerprint": "b2b2616eb8983529",
+      "warmup_ms": 4.2
+    },
+    "mobilenetv2-7": {
+      "p50_ms": 3.673,
+      "p99_ms": 7.374,
+      "p99p9_ms": 7.98,
+      "stdev_ms": 1.028,
+      "output_fingerprint": "ff4ec4c029d2fb39",
+      "warmup_ms": 7.89
+    },
+    "resnet50-v2-7": {
+      "p50_ms": 23.436,
+      "p99_ms": 25.206,
+      "p99p9_ms": 25.221,
+      "stdev_ms": 0.866,
+      "output_fingerprint": "feee425fbda37992",
+      "warmup_ms": 25.86
+    },
+    "efficientnet-lite4-11": {
+      "p50_ms": 9.771,
+      "p99_ms": 11.589,
+      "p99p9_ms": 11.715,
+      "stdev_ms": 0.846,
+      "output_fingerprint": "a9e75ec8e543bff7",
+      "warmup_ms": 11.93
+    },
+    "shufflenet-v2-10": {
+      "p50_ms": 3.246,
+      "p99_ms": 5.342,
+      "p99p9_ms": 5.608,
+      "stdev_ms": 0.568,
+      "output_fingerprint": "c2e83c17f8325d97",
+      "warmup_ms": 4.68
+    },
+    "yolov8n": {
+      "p50_ms": 49.956,
+      "p99_ms": 54.93,
+      "p99p9_ms": 55.191,
+      "stdev_ms": 2.04,
+      "output_fingerprint": "4d0e67ca350be102",
+      "warmup_ms": 56.88
+    },
+    "bert-squad-10": {
+      "p50_ms": 214.451,
+      "p99_ms": 310.461,
+      "p99p9_ms": 314.353,
+      "stdev_ms": 30.318,
+      "output_fingerprint": "ad626defe99d70f3",
+      "warmup_ms": 185.66
+    },
+    "gpt-2-10": {
+      "p50_ms": 33.712,
+      "p99_ms": 40.742,
+      "p99p9_ms": 40.76,
+      "stdev_ms": 5.048,
+      "output_fingerprint": "fb6f6da263ea651e",
+      "warmup_ms": 55.6
+    }
+  },
+  "int8": {
+    "squeezenet-1.1": {
+      "engine": "ort",
+      "snr_db": 28.66,
+      "cosine": 0.999396,
+      "source_bytes": 4956208,
+      "output_bytes": 1350643,
+      "drift_error": ""
+    },
+    "mobilenetv2-7": {
+      "engine": "ort",
+      "snr_db": 11.61,
+      "cosine": 0.96623,
+      "source_bytes": 14246826,
+      "output_bytes": 4057414,
+      "drift_error": ""
+    },
+    "resnet50-v2-7": {
+      "engine": "ort",
+      "snr_db": 24.76,
+      "cosine": 0.998371,
+      "source_bytes": 102442452,
+      "output_bytes": 26140707,
+      "drift_error": ""
+    },
+    "efficientnet-lite4-11": {
+      "engine": "ort",
+      "snr_db": 3.89,
+      "cosine": 0.815744,
+      "source_bytes": 51946641,
+      "output_bytes": 14176755,
+      "drift_error": ""
+    },
+    "shufflenet-v2-10": {
+      "engine": "ort",
+      "snr_db": 21.28,
+      "cosine": 0.996316,
+      "source_bytes": 9218554,
+      "output_bytes": 2586652,
+      "drift_error": ""
+    },
+    "yolov8n": {
+      "engine": "internal",
+      "snr_db": 37.85,
+      "cosine": 0.999918,
+      "source_bytes": 12851047,
+      "output_bytes": 12884138,
+      "drift_error": ""
+    },
+    "bert-squad-10": {
+      "engine": "ort",
+      "snr_db": 0.0,
+      "cosine": 0.0,
+      "source_bytes": 435852734,
+      "output_bytes": 111738470,
+      "drift_error": "TypeError: input 'unique_ids_raw_output___9:0': must be float32, got int64"
+    },
+    "gpt-2-10": {
+      "engine": "ort",
+      "snr_db": 0.0,
+      "cosine": 0.0,
+      "source_bytes": 548227537,
+      "output_bytes": 176591756,
+      "drift_error": "TypeError: input 'input1': must be float32, got int64"
+    }
+  },
+  "multistream": {
+    "yolov8n": {
+      "single_stream_ips": 14.67,
+      "best_throughput_ips": 21.69,
+      "scaling_factor": 1.478,
+      "n_slices": 4
+    },
+    "shufflenet-v2-10": {
+      "single_stream_ips": 230.33,
+      "best_throughput_ips": 437.13,
+      "scaling_factor": 1.898,
+      "n_slices": 4
+    },
+    "mobilenetv2-7": {
+      "single_stream_ips": 139.17,
+      "best_throughput_ips": 218.79,
+      "scaling_factor": 1.572,
+      "n_slices": 4
+    }
+  },
+  "deep_tests": {
+    "int8_drift_yolov8n": {
+      "snr_db": 29.7,
+      "cosine": 0.999469,
+      "calibration_samples": 1
+    },
+    "bert_deterministic_across_10_runs": true,
+    "gpt2_paris_rank": [
+      5
+    ],
+    "yolo_determinism_28_images": true
+  },
+  "yolo_eval": {
+    "n_images": 28,
+    "score_threshold": 0.25,
+    "npu_score_threshold": 0.2,
+    "iou_thresholds": [
+      0.5,
+      0.7,
+      0.9
+    ],
+    "wall_s_total": 229.94868199998746,
+    "aggregate_match_rate": {
+      "iou>=0.50": 0.976,
+      "iou>=0.70": 0.96,
+      "iou>=0.90": 0.92
+    },
+    "per_image_match_rate_stats": {
+      "iou>=0.50": {
+        "n": 27,
+        "min": 0.8333333333333334,
+        "p10": 0.9636363636363636,
+        "median": 1.0,
+        "mean": 0.9851691518358185,
+        "max": 1.0
+      },
+      "iou>=0.70": {
+        "n": 27,
+        "min": 0.5,
+        "p10": 0.8883116883116883,
+        "median": 1.0,
+        "mean": 0.9653278819945487,
+        "max": 1.0
+      },
+      "iou>=0.90": {
+        "n": 27,
+        "min": 0.3333333333333333,
+        "p10": 0.8333333333333334,
+        "median": 1.0,
+        "mean": 0.9291726791726792,
+        "max": 1.0
+      }
+    },
+    "tensor_snr_db": {
+      "min": 25.848977722176446,
+      "p10": 27.47577764614478,
+      "median": 28.88832581006649,
+      "mean": 29.27282209937825,
+      "max": 33.32227330879923
+    },
+    "per_image": [
+      {
+        "i": 0,
+        "n_ref": 1,
+        "n_pred": 1,
+        "matched": {
+          "0.50": 1,
+          "0.70": 1,
+          "0.90": 1
+        },
+        "snr_db": 28.593390249639384,
+        "cos": 0.999311851469292,
+        "wall_s": 8.20178829994984
+      },
+      {
+        "i": 1,
+        "n_ref": 12,
+        "n_pred": 13,
+        "matched": {
+          "0.50": 12,
+          "0.70": 12,
+          "0.90": 10
+        },
+        "snr_db": 28.25126692072972,
+        "cos": 0.9992586354885042,
+        "wall_s": 8.175287799967919
+      },
+      {
+        "i": 2,
+        "n_ref": 11,
+        "n_pred": 11,
+        "matched": {
+          "0.50": 11,
+          "0.70": 11,
+          "0.90": 11
+        },
+        "snr_db": 28.306330668063215,
+        "cos": 0.9992662473906766,
+        "wall_s": 8.174783800030127
+      },
+      {
+        "i": 3,
+        "n_ref": 2,
+        "n_pred": 2,
+        "matched": {
+          "0.50": 2,
+          "0.70": 2,
+          "0.90": 2
+        },
+        "snr_db": 29.858071782311843,
+        "cos": 0.9994854238217921,
+        "wall_s": 8.16743430000497
+      },
+      {
+        "i": 4,
+        "n_ref": 3,
+        "n_pred": 3,
+        "matched": {
+          "0.50": 3,
+          "0.70": 3,
+          "0.90": 3
+        },
+        "snr_db": 26.43815601122565,
+        "cos": 0.9988803290238673,
+        "wall_s": 8.154561200004537
+      },
+      {
+        "i": 5,
+        "n_ref": 28,
+        "n_pred": 28,
+        "matched": {
+          "0.50": 28,
+          "0.70": 27,
+          "0.90": 27
+        },
+        "snr_db": 28.876210244758962,
+        "cos": 0.9993591577538062,
+        "wall_s": 8.173738300043624
+      },
+      {
+        "i": 6,
+        "n_ref": 1,
+        "n_pred": 3,
+        "matched": {
+          "0.50": 1,
+          "0.70": 1,
+          "0.90": 1
+        },
+        "snr_db": 29.917616035704736,
+        "cos": 0.9994904288439678,
+        "wall_s": 8.173004499985836
+      },
+      {
+        "i": 7,
+        "n_ref": 3,
+        "n_pred": 3,
+        "matched": {
+          "0.50": 3,
+          "0.70": 3,
+          "0.90": 3
+        },
+        "snr_db": 29.18751521153721,
+        "cos": 0.9994006828180138,
+        "wall_s": 8.170260399987455
+      },
+      {
+        "i": 8,
+        "n_ref": 1,
+        "n_pred": 1,
+        "matched": {
+          "0.50": 1,
+          "0.70": 1,
+          "0.90": 1
+        },
+        "snr_db": 31.85326022926248,
+        "cos": 0.9996739041906588,
+        "wall_s": 8.153069699998014
+      },
+      {
+        "i": 9,
+        "n_ref": 1,
+        "n_pred": 2,
+        "matched": {
+          "0.50": 1,
+          "0.70": 1,
+          "0.90": 1
+        },
+        "snr_db": 33.32227330879923,
+        "cos": 0.9997674837107711,
+        "wall_s": 8.159164799959399
+      },
+      {
+        "i": 10,
+        "n_ref": 4,
+        "n_pred": 5,
+        "matched": {
+          "0.50": 4,
+          "0.70": 4,
+          "0.90": 4
+        },
+        "snr_db": 30.547960624335516,
+        "cos": 0.9995594049541305,
+        "wall_s": 8.188592399994377
+      },
+      {
+        "i": 11,
+        "n_ref": 1,
+        "n_pred": 1,
+        "matched": {
+          "0.50": 1,
+          "0.70": 1,
+          "0.90": 1
+        },
+        "snr_db": 28.900441375374022,
+        "cos": 0.9993583846606056,
+        "wall_s": 8.221422600036021
+      },
+      {
+        "i": 12,
+        "n_ref": 1,
+        "n_pred": 1,
+        "matched": {
+          "0.50": 1,
+          "0.70": 1,
+          "0.90": 1
+        },
+        "snr_db": 29.794888798741034,
+        "cos": 0.9994773880918533,
+        "wall_s": 8.261197199986782
+      },
+      {
+        "i": 13,
+        "n_ref": 0,
+        "n_pred": 0,
+        "matched": {
+          "0.50": 0,
+          "0.70": 0,
+          "0.90": 0
+        },
+        "snr_db": 29.92169425969579,
+        "cos": 0.9994960460013026,
+        "wall_s": 8.257890400011092
+      },
+      {
+        "i": 14,
+        "n_ref": 7,
+        "n_pred": 8,
+        "matched": {
+          "0.50": 7,
+          "0.70": 7,
+          "0.90": 6
+        },
+        "snr_db": 25.848977722176446,
+        "cos": 0.9987109083049505,
+        "wall_s": 8.23464620008599
+      },
+      {
+        "i": 15,
+        "n_ref": 6,
+        "n_pred": 5,
+        "matched": {
+          "0.50": 5,
+          "0.70": 5,
+          "0.90": 5
+        },
+        "snr_db": 28.404723487549298,
+        "cos": 0.9992807571221232,
+        "wall_s": 8.268595199973788
+      },
+      {
+        "i": 16,
+        "n_ref": 6,
+        "n_pred": 6,
+        "matched": {
+          "0.50": 6,
+          "0.70": 6,
+          "0.90": 6
+        },
+        "snr_db": 31.867033641399463,
+        "cos": 0.9996758370347175,
+        "wall_s": 8.18973579996964
+      },
+      {
+        "i": 17,
+        "n_ref": 11,
+        "n_pred": 11,
+        "matched": {
+          "0.50": 10,
+          "0.70": 10,
+          "0.90": 10
+        },
+        "snr_db": 32.47170181035638,
+        "cos": 0.9997172694361561,
+        "wall_s": 8.221429899975192
+      },
+      {
+        "i": 18,
+        "n_ref": 1,
+        "n_pred": 2,
+        "matched": {
+          "0.50": 1,
+          "0.70": 1,
+          "0.90": 1
+        },
+        "snr_db": 27.639861422300097,
+        "cos": 0.99914669191328,
+        "wall_s": 8.232205599953886
+      },
+      {
+        "i": 19,
+        "n_ref": 2,
+        "n_pred": 3,
+        "matched": {
+          "0.50": 2,
+          "0.70": 1,
+          "0.90": 1
+        },
+        "snr_db": 28.363803835462114,
+        "cos": 0.9992744069278064,
+        "wall_s": 8.24616599996807
+      },
+      {
+        "i": 20,
+        "n_ref": 4,
+        "n_pred": 4,
+        "matched": {
+          "0.50": 4,
+          "0.70": 4,
+          "0.90": 4
+        },
+        "snr_db": 29.318893514410604,
+        "cos": 0.9994166061712939,
+        "wall_s": 8.227935099974275
+      },
+      {
+        "i": 21,
+        "n_ref": 2,
+        "n_pred": 2,
+        "matched": {
+          "0.50": 2,
+          "0.70": 2,
+          "0.90": 2
+        },
+        "snr_db": 29.689815665811324,
+        "cos": 0.9994668604766147,
+        "wall_s": 8.26298819994554
+      },
+      {
+        "i": 22,
+        "n_ref": 1,
+        "n_pred": 1,
+        "matched": {
+          "0.50": 1,
+          "0.70": 1,
+          "0.90": 1
+        },
+        "snr_db": 28.767313498044373,
+        "cos": 0.9993384747567123,
+        "wall_s": 8.314376600028481
+      },
+      {
+        "i": 23,
+        "n_ref": 7,
+        "n_pred": 7,
+        "matched": {
+          "0.50": 6,
+          "0.70": 6,
+          "0.90": 6
+        },
+        "snr_db": 27.186803019223934,
+        "cos": 0.9990548718440807,
+        "wall_s": 8.242739899957087
+      },
+      {
+        "i": 24,
+        "n_ref": 1,
+        "n_pred": 1,
+        "matched": {
+          "0.50": 1,
+          "0.70": 1,
+          "0.90": 1
+        },
+        "snr_db": 27.599623914825145,
+        "cos": 0.9991378025944221,
+        "wall_s": 8.161771400016733
+      },
+      {
+        "i": 25,
+        "n_ref": 3,
+        "n_pred": 5,
+        "matched": {
+          "0.50": 3,
+          "0.70": 3,
+          "0.90": 1
+        },
+        "snr_db": 28.061352390011443,
+        "cos": 0.9992214598744698,
+        "wall_s": 8.163161499949638
+      },
+      {
+        "i": 26,
+        "n_ref": 3,
+        "n_pred": 5,
+        "matched": {
+          "0.50": 3,
+          "0.70": 3,
+          "0.90": 3
+        },
+        "snr_db": 32.01166376178201,
+        "cos": 0.9996860825167302,
+        "wall_s": 8.191379800031427
+      },
+      {
+        "i": 27,
+        "n_ref": 2,
+        "n_pred": 2,
+        "matched": {
+          "0.50": 2,
+          "0.70": 2,
+          "0.90": 2
+        },
+        "snr_db": 28.63837537905967,
+        "cos": 0.9993225488544148,
+        "wall_s": 8.158639000030234
+      }
+    ]
+  },
+  "alarm_scenarios": {
+    "parking_crawl_5_to_0p5_kph": true,
+    "highway_cruise_100_kph_clear_road": true,
+    "emergency_brake_60_kph_to_35_kph": true,
+    "us_dropout_lidar_only_detection": true
+  },
+  "qualcomm_aihub": [
+    {
+      "model": "bert-large-squad",
+      "device": "Samsung Galaxy S24",
+      "inference_ms": 9.517,
+      "peak_memory_mb": 749.53,
+      "job_url": "https://app.aihub.qualcomm.com/jobs/jp01wk8eg"
+    },
+    {
+      "model": "distilbert-squad",
+      "device": "QCS8550 (Proxy)",
+      "inference_ms": 1.739,
+      "peak_memory_mb": 200.45,
+      "job_url": "https://app.aihub.qualcomm.com/jobs/j5wdkxqmg"
+    },
+    {
+      "model": "distilbert-squad",
+      "device": "Samsung Galaxy S24",
+      "inference_ms": 1.353,
+      "peak_memory_mb": 214.22,
+      "job_url": "https://app.aihub.qualcomm.com/jobs/jpy4ln6lp"
+    },
+    {
+      "model": "efficientnet-lite4-11",
+      "device": "QCS8550 (Proxy)",
+      "inference_ms": 1.218,
+      "peak_memory_mb": 106.39,
+      "job_url": "https://app.aihub.qualcomm.com/jobs/jg93r4kmg"
+    },
+    {
+      "model": "efficientnet-lite4-11",
+      "device": "Samsung Galaxy S24",
+      "inference_ms": 0.936,
+      "peak_memory_mb": 230.62,
+      "job_url": "https://app.aihub.qualcomm.com/jobs/j563x3465"
+    },
+    {
+      "model": "efficientnet-lite4-11",
+      "device": "Snapdragon X Elite CRD",
+      "inference_ms": 1.378,
+      "peak_memory_mb": 68.82,
+      "job_url": "https://app.aihub.qualcomm.com/jobs/jp1d9d28p"
+    },
+    {
+      "model": "gpt-2-10",
+      "device": "QCS8550 (Proxy)",
+      "inference_ms": 3.708,
+      "peak_memory_mb": 555.28,
+      "job_url": "https://app.aihub.qualcomm.com/jobs/jgkl1r8v5"
+    },
+    {
+      "model": "mobilenetv2-7",
+      "device": "QCS8550 (Proxy)",
+      "inference_ms": 0.529,
+      "peak_memory_mb": 106.36,
+      "job_url": "https://app.aihub.qualcomm.com/jobs/jp4x7wx25"
+    },
+    {
+      "model": "mobilenetv2-7",
+      "device": "Samsung Galaxy S24",
+      "inference_ms": 0.382,
+      "peak_memory_mb": 195.29,
+      "job_url": "https://app.aihub.qualcomm.com/jobs/jgj09l38p"
+    },
+    {
+      "model": "mobilenetv2-7",
+      "device": "Snapdragon X Elite CRD",
+      "inference_ms": 0.696,
+      "peak_memory_mb": 47.14,
+      "job_url": "https://app.aihub.qualcomm.com/jobs/jp01wrxeg"
+    },
+    {
+      "model": "resnet50-v2-7",
+      "device": "QCS8550 (Proxy)",
+      "inference_ms": 2.097,
+      "peak_memory_mb": 123.83,
+      "job_url": "https://app.aihub.qualcomm.com/jobs/jpr4ry9kg"
+    },
+    {
+      "model": "resnet50-v2-7",
+      "device": "Samsung Galaxy S24",
+      "inference_ms": 1.546,
+      "peak_memory_mb": 137.3,
+      "job_url": "https://app.aihub.qualcomm.com/jobs/jg93r4rlg"
+    },
+    {
+      "model": "resnet50-v2-7",
+      "device": "Snapdragon X Elite CRD",
+      "inference_ms": 2.142,
+      "peak_memory_mb": 89.11,
+      "job_url": "https://app.aihub.qualcomm.com/jobs/j5q7n2j4g"
+    },
+    {
+      "model": "shufflenet-v2-10",
+      "device": "QCS8550 (Proxy)",
+      "inference_ms": 0.469,
+      "peak_memory_mb": 107.96,
+      "job_url": "https://app.aihub.qualcomm.com/jobs/jp01wrd0g"
+    },
+    {
+      "model": "shufflenet-v2-10",
+      "device": "Samsung Galaxy S24",
+      "inference_ms": 0.309,
+      "peak_memory_mb": 172.68,
+      "job_url": "https://app.aihub.qualcomm.com/jobs/j563x1605"
+    },
+    {
+      "model": "shufflenet-v2-10",
+      "device": "Snapdragon X Elite CRD",
+      "inference_ms": 1.656,
+      "peak_memory_mb": 44.65,
+      "job_url": "https://app.aihub.qualcomm.com/jobs/jgzx679k5"
+    },
+    {
+      "model": "squeezenet-1.1",
+      "device": "QCS8550 (Proxy)",
+      "inference_ms": 0.289,
+      "peak_memory_mb": 97.53,
+      "job_url": "https://app.aihub.qualcomm.com/jobs/jgkl1ydv5"
+    },
+    {
+      "model": "squeezenet-1.1",
+      "device": "Samsung Galaxy S24",
+      "inference_ms": 0.216,
+      "peak_memory_mb": 144.75,
+      "job_url": "https://app.aihub.qualcomm.com/jobs/jgl0dkleg"
+    },
+    {
+      "model": "squeezenet-1.1",
+      "device": "Snapdragon X Elite CRD",
+      "inference_ms": 0.414,
+      "peak_memory_mb": 42.02,
+      "job_url": "https://app.aihub.qualcomm.com/jobs/jp1d98jkp"
+    },
+    {
+      "model": "yolov8n",
+      "device": "QCS8550 (Proxy)",
+      "inference_ms": 5.672,
+      "peak_memory_mb": 92.93,
+      "job_url": "https://app.aihub.qualcomm.com/jobs/j563x1zy5"
+    },
+    {
+      "model": "yolov8n",
+      "device": "Samsung Galaxy S24",
+      "inference_ms": 4.309,
+      "peak_memory_mb": 204.64,
+      "job_url": "https://app.aihub.qualcomm.com/jobs/jp01wr2ng"
+    },
+    {
+      "model": "yolov8n",
+      "device": "Snapdragon X Elite CRD",
+      "inference_ms": 6.442,
+      "peak_memory_mb": 52.51,
+      "job_url": "https://app.aihub.qualcomm.com/jobs/j563x1ny5"
+    }
+  ],
+  "qualcomm_aihub_int8": [
+    {
+      "model": "mobilenetv2-7",
+      "device": "QCS8550 (Proxy)",
+      "inference_ms": 1.762,
+      "peak_memory_mb": 104.91,
+      "job_url": "https://app.aihub.qualcomm.com/jobs/jp34d48mg"
+    },
+    {
+      "model": "squeezenet-1.1",
+      "device": "QCS8550 (Proxy)",
+      "inference_ms": 0.227,
+      "peak_memory_mb": 95.43,
+      "job_url": "https://app.aihub.qualcomm.com/jobs/jpx7q71lg"
+    }
+  ],
+  "qualcomm_aihub_qnn_context_binary": [
+    {
+      "model": "efficientnet-lite4-11",
+      "device": "Samsung Galaxy S24",
+      "inference_ms": 0.934,
+      "peak_memory_mb": 98.2,
+      "job_url": "https://app.aihub.qualcomm.com/jobs/j563xr3y5"
+    },
+    {
+      "model": "mobilenetv2-7",
+      "device": "Samsung Galaxy S24",
+      "inference_ms": 0.389,
+      "peak_memory_mb": 95.49,
+      "job_url": "https://app.aihub.qualcomm.com/jobs/jpy4lqj8p"
+    },
+    {
+      "model": "resnet50-v2-7",
+      "device": "Samsung Galaxy S24",
+      "inference_ms": 1.503,
+      "peak_memory_mb": 98.51,
+      "job_url": "https://app.aihub.qualcomm.com/jobs/jgo1xo3q5"
+    },
+    {
+      "model": "shufflenet-v2-10",
+      "device": "Samsung Galaxy S24",
+      "inference_ms": 0.331,
+      "peak_memory_mb": 96.44,
+      "job_url": "https://app.aihub.qualcomm.com/jobs/jgo1xonq5"
+    },
+    {
+      "model": "squeezenet-1.1",
+      "device": "Samsung Galaxy S24",
+      "inference_ms": 0.216,
+      "peak_memory_mb": 96.76,
+      "job_url": "https://app.aihub.qualcomm.com/jobs/j57jmklv5"
+    },
+    {
+      "model": "yolov8n",
+      "device": "Samsung Galaxy S24",
+      "inference_ms": 3.501,
+      "peak_memory_mb": 103.91,
+      "job_url": "https://app.aihub.qualcomm.com/jobs/jgdrk8erp"
+    }
+  ],
+  "qualcomm_aihub_failures": [
+    {
+      "model": "bert-large-squad",
+      "device": "QCS8550 (Proxy)",
+      "status": "profile_failed",
+      "message": "Failed to profile the model because memory usage exceeded device limits.",
+      "job_url": "https://app.aihub.qualcomm.com/jobs/jp271j3q5"
+    },
+    {
+      "model": "bert-squad-10",
+      "device": "QCS8550 (Proxy)",
+      "status": "profile_failed",
+      "message": "Three attempts: (1) raw ONNX - node 667 Pow(x,3) in GELU unsupported on QNN HTP; (2) onnx-simplified - same node 667; (3) Pow->Mul rewrite - moves failure to node 679 (another Mul in GELU). Root cause",
+      "job_url": "https://app.aihub.qualcomm.com/jobs/jpy4lv8rp"
+    },
+    {
+      "model": "bert-squad-10",
+      "device": "Samsung Galaxy S24",
+      "status": "profile_failed",
+      "message": "Failed to profile the model: [tflite] Node number 667 (TfLiteQnnDelegate) failed to invoke.",
+      "job_url": "https://app.aihub.qualcomm.com/jobs/jpy4lvxrp"
+    },
+    {
+      "model": "bert-squad-10.nopow",
+      "device": "QCS8550 (Proxy)",
+      "status": "profile_failed",
+      "message": "Failed to profile the model: [tflite] Node number 679 (TfLiteQnnDelegate) failed to invoke.",
+      "job_url": "https://app.aihub.qualcomm.com/jobs/j5mw7v2wp"
+    },
+    {
+      "model": "bert-squad-10.simplified",
+      "device": "QCS8550 (Proxy)",
+      "status": "profile_failed",
+      "message": "Failed to profile the model: [tflite] Node number 667 (TfLiteQnnDelegate) failed to invoke.",
+      "job_url": "https://app.aihub.qualcomm.com/jobs/jperq4x7g"
+    }
+  ]
+}

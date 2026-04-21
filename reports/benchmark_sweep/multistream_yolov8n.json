@@ -1,0 +1,57 @@
+{
+  "model": "yolov8n.onnx",
+  "backend": "onnxruntime",
+  "mac_ops_per_inference": 4371993600,
+  "warmup_s": 1.0,
+  "duration_s_per_slice": 3.0,
+  "slices": [
+    {
+      "n_streams": 1,
+      "n_inferences_total": 45,
+      "wall_s": 3.0668487999937497,
+      "throughput_ips": 14.673041592429243,
+      "aggregate_tops": 0.06415044393463445,
+      "mean_latency_ms": 68.09846444391749,
+      "p50_latency_ms": 63.34490000153892,
+      "p99_latency_ms": 109.16265999432653,
+      "scaling_vs_single": 1.0,
+      "util_vs_single": 1.0
+    },
+    {
+      "n_streams": 2,
+      "n_inferences_total": 57,
+      "wall_s": 3.0739180000091437,
+      "throughput_ips": 18.543110128451847,
+      "aggregate_tops": 0.08107035880568667,
+      "mean_latency_ms": 107.44239298449094,
+      "p50_latency_ms": 106.1729000066407,
+      "p99_latency_ms": 141.32390801096332,
+      "scaling_vs_single": 1.2637536676798775,
+      "util_vs_single": 1.2637536676798777
+    },
+    {
+      "n_streams": 4,
+      "n_inferences_total": 64,
+      "wall_s": 3.2255188999988604,
+      "throughput_ips": 19.841768715112043,
+      "aggregate_tops": 0.08674808583515008,
+      "mean_latency_ms": 195.29738906248895,
+      "p50_latency_ms": 194.53275001433212,
+      "p99_latency_ms": 336.8219739955383,
+      "scaling_vs_single": 1.3522601016376643,
+      "util_vs_single": 1.3522601016376643
+    },
+    {
+      "n_streams": 8,
+      "n_inferences_total": 77,
+      "wall_s": 3.549404300021706,
+      "throughput_ips": 21.69378112251938,
+      "aggregate_tops": 0.09484507222745553,
+      "mean_latency_ms": 349.3556103898914,
+      "p50_latency_ms": 348.50120000191964,
+      "p99_latency_ms": 530.3401040111203,
+      "scaling_vs_single": 1.478478813398347,
+      "util_vs_single": 1.4784788133983469
+    }
+  ]
+}

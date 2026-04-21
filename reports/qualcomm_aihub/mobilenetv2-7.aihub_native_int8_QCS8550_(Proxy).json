@@ -1,0 +1,8 @@
+{
+  "model": "data/models/zoo/mobilenetv2-7.onnx",
+  "device": "QCS8550 (Proxy)",
+  "pipeline": "aihub_native_int8",
+  "status": "sdk_blocked_2bugs",
+  "failure_message": "Two SDK bugs in qai-hub native quantize pipeline: (1) compile_job rejects quantize output with external-data message, (2) downloading + inlining external data hits protobuf DecodeError. Root cause requires upstream qai-hub SDK fix. Documented for Phase B+. Workaround for now: use ORT QDQ (\u00a76b) or qai-hub-models --quantize w8a8 export path which handles internals correctly.",
+  "quantize_job_succeeded": true
+}

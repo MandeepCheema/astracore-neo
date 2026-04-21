@@ -1,0 +1,12 @@
+{
+  "model": "data\\models\\zoo\\optimum_exports\\bert-large-squad.aihub.onnx",
+  "device": "QCS8550 (Proxy)",
+  "compile_job": "jp83n83og",
+  "profile_job": "jp271j3q5",
+  "job_url": "https://app.aihub.qualcomm.com/jobs/jp271j3q5",
+  "wall_s": 2320.3,
+  "generated_at": 1776767006,
+  "status": "profile_failed",
+  "failure_message": "Failed to profile the model because memory usage exceeded device limits.",
+  "raw_profile": "C:\\Users\\mande\\astracore-neo\\reports\\qualcomm_aihub\\bert-large-squad.aihub_QCS8550_(Proxy)_raw.json"
+}

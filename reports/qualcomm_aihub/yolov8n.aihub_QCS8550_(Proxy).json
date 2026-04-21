@@ -1,0 +1,12 @@
+{
+  "model": "data\\models\\yolov8n.cleaned.onnx",
+  "device": "QCS8550 (Proxy)",
+  "compile_job": "jgkl1y7n5",
+  "profile_job": "j563x1zy5",
+  "job_url": "https://app.aihub.qualcomm.com/jobs/j563x1zy5",
+  "wall_s": 274.1,
+  "generated_at": 1776744029,
+  "inference_ms": 5.672,
+  "peak_memory_mb": 92.93,
+  "raw_profile": "C:\\Users\\mande\\astracore-neo\\reports\\qualcomm_aihub\\yolov8n.cleaned_QCS8550_(Proxy)_raw.json"
+}

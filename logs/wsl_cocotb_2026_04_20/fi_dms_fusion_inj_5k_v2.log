@@ -1,0 +1,1 @@
+/usr/local/lib/python3.10/dist-packages/cocotb_tools/makefiles/simulators/Makefile.verilator:29: *** cocotb requires Verilator 5.036 or later, but using 5.030.  Stop.

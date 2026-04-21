@@ -1,0 +1,12 @@
+{
+  "model": "data\\models\\zoo\\optimum_exports\\bert-large-squad.aihub.onnx",
+  "device": "Samsung Galaxy S24",
+  "compile_job": "jgl0d7qeg",
+  "profile_job": "jp01wk8eg",
+  "job_url": "https://app.aihub.qualcomm.com/jobs/jp01wk8eg",
+  "wall_s": 2692.8,
+  "generated_at": 1776768989,
+  "inference_ms": 9.517,
+  "peak_memory_mb": 749.53,
+  "raw_profile": "C:\\Users\\mande\\astracore-neo\\reports\\qualcomm_aihub\\bert-large-squad.aihub_Samsung_Galaxy_S24_raw.json"
+}

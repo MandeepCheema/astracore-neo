@@ -1,0 +1,12 @@
+{
+  "model": "C:\\Users\\mande\\astracore-neo\\data\\models\\zoo\\shufflenet-v2-10.aihub.onnx",
+  "device": "Snapdragon X Elite CRD",
+  "compile_job": "jp01wrq6g",
+  "profile_job": "jgzx679k5",
+  "job_url": "https://app.aihub.qualcomm.com/jobs/jgzx679k5",
+  "wall_s": 360.9,
+  "generated_at": 1776752006,
+  "inference_ms": 1.656,
+  "peak_memory_mb": 44.65,
+  "raw_profile": "C:\\Users\\mande\\astracore-neo\\reports\\qualcomm_aihub\\shufflenet-v2-10.aihub_Snapdragon_X_Elite_CRD_raw.json"
+}

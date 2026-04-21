@@ -1,0 +1,17 @@
+{
+  "model": "C:\\Users\\mande\\astracore-neo\\data\\models\\zoo\\bert-squad-10.aihub.onnx",
+  "device": "QCS8550 (Proxy)",
+  "compile_job": "jpv18zl7p",
+  "profile_job": "jpy4lv8rp",
+  "job_url": "https://app.aihub.qualcomm.com/jobs/jpy4lv8rp",
+  "wall_s": 848.7,
+  "generated_at": 1776759697,
+  "status": "profile_failed",
+  "failure_message": "Three attempts: (1) raw ONNX - node 667 Pow(x,3) in GELU unsupported on QNN HTP; (2) onnx-simplified - same node 667; (3) Pow->Mul rewrite - moves failure to node 679 (another Mul in GELU). Root cause: this specific BERT-Squad-10 export uses ops QNN HTP delegate rejects. Fix: re-export from HuggingFace Optimum with --opset 17 and device-aware GELU fusion \u2014 Phase C work.",
+  "raw_profile": "C:\\Users\\mande\\astracore-neo\\reports\\qualcomm_aihub\\bert-squad-10.aihub_QCS8550_(Proxy)_raw.json",
+  "tried_variants": [
+    "raw",
+    "onnx-simplified",
+    "Pow-as-Mul"
+  ]
+}

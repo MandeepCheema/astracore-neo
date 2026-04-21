@@ -1,0 +1,54 @@
+{
+  "asil_target": "ASIL-B",
+  "modules": [
+    {
+      "module": "dms_fusion",
+      "asil_target": "ASIL-B",
+      "spfm_pct": 85.51679359500098,
+      "lfm_pct": 92.99384150260943,
+      "pmhf_fit": 0.007416856719396326
+    },
+    {
+      "module": "ecc_secded",
+      "asil_target": "ASIL-B",
+      "spfm_pct": 1.4942865514210313,
+      "lfm_pct": 0.0,
+      "pmhf_fit": 0.033620073125195
+    },
+    {
+      "module": "npu_top",
+      "asil_target": "ASIL-B",
+      "spfm_pct": 2.077926875444447,
+      "lfm_pct": 0.0,
+      "pmhf_fit": 0.5301561499525751
+    },
+    {
+      "module": "plausibility_checker",
+      "asil_target": "ASIL-B",
+      "spfm_pct": 27.200000000000003,
+      "lfm_pct": 0.0,
+      "pmhf_fit": 0.00546000994698
+    },
+    {
+      "module": "safe_state_controller",
+      "asil_target": "ASIL-B",
+      "spfm_pct": 34.80314960629922,
+      "lfm_pct": 0.0,
+      "pmhf_fit": 0.008280015266489998
+    },
+    {
+      "module": "tmr_voter",
+      "asil_target": "ASIL-B",
+      "spfm_pct": 31.350801322818622,
+      "lfm_pct": 0.0,
+      "pmhf_fit": 0.013493023477019
+    },
+    {
+      "module": "aggregate",
+      "asil_target": "ASIL-B",
+      "spfm_pct": 10.227295229522948,
+      "lfm_pct": 0.0,
+      "pmhf_fit": 0.5984261284876553
+    }
+  ]
+}

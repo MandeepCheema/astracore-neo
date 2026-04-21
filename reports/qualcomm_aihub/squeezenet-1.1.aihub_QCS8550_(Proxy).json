@@ -1,0 +1,12 @@
+{
+  "model": "C:\\Users\\mande\\astracore-neo\\data\\models\\zoo\\squeezenet-1.1.aihub.onnx",
+  "device": "QCS8550 (Proxy)",
+  "compile_job": "jp01wrk0g",
+  "profile_job": "jgkl1ydv5",
+  "job_url": "https://app.aihub.qualcomm.com/jobs/jgkl1ydv5",
+  "wall_s": 270.0,
+  "generated_at": 1776747562,
+  "inference_ms": 0.289,
+  "peak_memory_mb": 97.53,
+  "raw_profile": "C:\\Users\\mande\\astracore-neo\\reports\\qualcomm_aihub\\squeezenet-1.1.aihub_QCS8550_(Proxy)_raw.json"
+}

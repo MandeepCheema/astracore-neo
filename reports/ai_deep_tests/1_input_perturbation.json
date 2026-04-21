@@ -1,0 +1,129 @@
+{
+  "rows": [
+    {
+      "model": "squeezenet-1.1",
+      "sigma": 0.0,
+      "top1_idx": 654,
+      "top1_prob": 0.08481897413730621
+    },
+    {
+      "model": "squeezenet-1.1",
+      "sigma": 0.01,
+      "top1_idx": 412,
+      "top1_prob": 0.1088428944349289
+    },
+    {
+      "model": "squeezenet-1.1",
+      "sigma": 0.05,
+      "top1_idx": 559,
+      "top1_prob": 0.12199772894382477
+    },
+    {
+      "model": "squeezenet-1.1",
+      "sigma": 0.1,
+      "top1_idx": 765,
+      "top1_prob": 0.2863667607307434
+    },
+    {
+      "model": "squeezenet-1.1",
+      "sigma": 0.2,
+      "top1_idx": 703,
+      "top1_prob": 0.12963390350341797
+    },
+    {
+      "model": "mobilenetv2-7",
+      "sigma": 0.0,
+      "top1_idx": 654,
+      "top1_prob": 0.7695222496986389
+    },
+    {
+      "model": "mobilenetv2-7",
+      "sigma": 0.01,
+      "top1_idx": 654,
+      "top1_prob": 0.8434137105941772
+    },
+    {
+      "model": "mobilenetv2-7",
+      "sigma": 0.05,
+      "top1_idx": 654,
+      "top1_prob": 0.96523118019104
+    },
+    {
+      "model": "mobilenetv2-7",
+      "sigma": 0.1,
+      "top1_idx": 654,
+      "top1_prob": 0.4844338893890381
+    },
+    {
+      "model": "mobilenetv2-7",
+      "sigma": 0.2,
+      "top1_idx": 786,
+      "top1_prob": 0.16941416263580322
+    },
+    {
+      "model": "shufflenet-v2-10",
+      "sigma": 0.0,
+      "top1_idx": 654,
+      "top1_prob": 0.4393760859966278
+    },
+    {
+      "model": "shufflenet-v2-10",
+      "sigma": 0.01,
+      "top1_idx": 734,
+      "top1_prob": 0.3705269992351532
+    },
+    {
+      "model": "shufflenet-v2-10",
+      "sigma": 0.05,
+      "top1_idx": 654,
+      "top1_prob": 0.8115014433860779
+    },
+    {
+      "model": "shufflenet-v2-10",
+      "sigma": 0.1,
+      "top1_idx": 829,
+      "top1_prob": 0.5570948123931885
+    },
+    {
+      "model": "shufflenet-v2-10",
+      "sigma": 0.2,
+      "top1_idx": 791,
+      "top1_prob": 0.9553872346878052
+    }
+  ],
+  "verdicts": {
+    "squeezenet-1.1": {
+      "top1_stable_per_sigma": {
+        "0.0": true,
+        "0.01": false,
+        "0.05": false,
+        "0.1": false,
+        "0.2": false
+      },
+      "survives_up_to_sigma": 0.0,
+      "base_top1_prob": 0.08481897413730621
+    },
+    "mobilenetv2-7": {
+      "top1_stable_per_sigma": {
+        "0.0": true,
+        "0.01": true,
+        "0.05": true,
+        "0.1": true,
+        "0.2": false
+      },
+      "survives_up_to_sigma": 0.1,
+      "base_top1_prob": 0.7695222496986389
+    },
+    "shufflenet-v2-10": {
+      "top1_stable_per_sigma": {
+        "0.0": true,
+        "0.01": false,
+        "0.05": true,
+        "0.1": false,
+        "0.2": false
+      },
+      "survives_up_to_sigma": 0.05,
+      "base_top1_prob": 0.4393760859966278
+    }
+  }
+}

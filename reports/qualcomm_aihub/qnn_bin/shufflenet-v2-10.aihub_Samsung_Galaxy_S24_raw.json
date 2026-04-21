@@ -1,0 +1,1163 @@
+{
+  "execution_summary": {
+    "estimated_inference_time": 331,
+    "estimated_inference_peak_memory": 101122048,
+    "first_load_time": 197235,
+    "first_load_peak_memory": 95023104,
+    "warm_load_time": 144729,
+    "warm_load_peak_memory": 97296384,
+    "compile_time": 0,
+    "compile_peak_memory": 0,
+    "compile_memory_increase_range": [
+      0,
+      0
+    ],
+    "compile_memory_peak_range": [
+      0,
+      0
+    ],
+    "first_load_memory_increase_range": [
+      7380416,
+      14450704
+    ],
+    "first_load_memory_peak_range": [
+      12984320,
+      20054608
+    ],
+    "warm_load_memory_increase_range": [
+      0,
+      1542464
+    ],
+    "warm_load_memory_peak_range": [
+      614400,
+      8465360
+    ],
+    "inference_memory_increase_range": [
+      0,
+      622640
+    ],
+    "inference_memory_peak_range": [
+      0,
+      7979216
+    ],
+    "all_compile_times": [],
+    "all_first_load_times": [
+      197235
+    ],
+    "all_warm_load_times": [
+      144729
+    ],
+    "all_inference_times": [
+      910,
+      359,
+      335,
+      334,
+      331,
+      339,
+      339,
+      337,
+      338,
+      332,
+      337,
+      642,
+      442,
+      416,
+      410,
+      405,
+      414,
+      429,
+      347,
+      352,
+      353,
+      346,
+      354,
+      346,
+      346,
+      348,
+      353,
+      378,
+      353,
+      348,
+      351,
+      352,
+      351,
+      351,
+      347,
+      346,
+      347,
+      346,
+      351,
+      351,
+      341,
+      333,
+      338,
+      337,
+      334,
+      339,
+      334,
+      333,
+      337,
+      339,
+      341,
+      341,
+      341,
+      343,
+      340,
+      340,
+      342,
+      341,
+      340,
+      340,
+      335,
+      338,
+      394,
+      340,
+      332,
+      335,
+      332,
+      334,
+      335,
+      333,
+      333,
+      334,
+      332,
+      333,
+      337,
+      334,
+      334,
+      337,
+      336,
+      334,
+      337,
+      333,
+      331,
+      335,
+      333,
+      333,
+      338,
+      332,
+      334,
+      334,
+      334,
+      333,
+      336,
+      334,
+      332,
+      338,
+      333,
+      333,
+      336,
+      334
+    ]
+  },
+  "execution_detail": [
+    {
+      "name": "Input",
+      "type": "Input",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 2286
+    },
+    {
+      "name": "input_0231",
+      "type": "input",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 240472
+    },
+    {
+      "name": "node_Conv_0",
+      "type": "node",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "Relu_2",
+      "type": "Relu",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 357022
+    },
+    {
+      "name": "MaxPool_3",
+      "type": "MaxPool",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 202064
+    },
+    {
+      "name": "node_Conv_1",
+      "type": "node",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 25940
+    },
+    {
+      "name": "node_Conv_2",
+      "type": "node",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "Relu_8",
+      "type": "Relu",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 1742
+    },
+    {
+      "name": "node_Conv_3",
+      "type": "node",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "Relu_11",
+      "type": "Relu",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 7634
+    },
+    {
+      "name": "node_Conv_4",
+      "type": "node",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 45523
+    },
+    {
+      "name": "node_Conv_5",
+      "type": "node",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "Relu_16",
+      "type": "Relu",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 2246
+    },
+    {
+      "name": "Concat_17",
+      "type": "Concat",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "_channel_shuffle_0",
+      "type": "channel",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 38968
+    },
+    {
+      "name": "Split_23",
+      "type": "Split",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "node_Conv_6",
+      "type": "node",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "Relu_26",
+      "type": "Relu",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 33691
+    },
+    {
+      "name": "node_Conv_7",
+      "type": "node",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 4036
+    },
+    {
+      "name": "node_Conv_8",
+      "type": "node",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "Relu_31",
+      "type": "Relu",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 1767
+    },
+    {
+      "name": "Concat_32",
+      "type": "Concat",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 7481
+    },
+    {
+      "name": "_channel_shuffle_1",
+      "type": "channel",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 12379
+    },
+    {
+      "name": "Split_38",
+      "type": "Split",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "node_Conv_9",
+      "type": "node",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "Relu_41",
+      "type": "Relu",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 16990
+    },
+    {
+      "name": "node_Conv_10",
+      "type": "node",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 3285
+    },
+    {
+      "name": "node_Conv_11",
+      "type": "node",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "Relu_46",
+      "type": "Relu",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 1820
+    },
+    {
+      "name": "Concat_47",
+      "type": "Concat",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 7457
+    },
+    {
+      "name": "_channel_shuffle_2",
+      "type": "channel",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 12299
+    },
+    {
+      "name": "Split_53",
+      "type": "Split",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "node_Conv_12",
+      "type": "node",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "Relu_56",
+      "type": "Relu",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 16278
+    },
+    {
+      "name": "node_Conv_13",
+      "type": "node",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 3156
+    },
+    {
+      "name": "node_Conv_14",
+      "type": "node",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "Relu_61",
+      "type": "Relu",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 1708
+    },
+    {
+      "name": "Concat_62",
+      "type": "Concat",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 7431
+    },
+    {
+      "name": "_channel_shuffle_3",
+      "type": "channel",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 12399
+    },
+    {
+      "name": "node_Conv_15",
+      "type": "node",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 32300
+    },
+    {
+      "name": "node_Conv_16",
+      "type": "node",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "Relu_72",
+      "type": "Relu",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 1883
+    },
+    {
+      "name": "node_Conv_17",
+      "type": "node",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "Relu_75",
+      "type": "Relu",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 4349
+    },
+    {
+      "name": "node_Conv_18",
+      "type": "node",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 30869
+    },
+    {
+      "name": "node_Conv_19",
+      "type": "node",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "Relu_80",
+      "type": "Relu",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 1765
+    },
+    {
+      "name": "Concat_81",
+      "type": "Concat",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "_channel_shuffle_4",
+      "type": "channel",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 11910
+    },
+    {
+      "name": "Split_87",
+      "type": "Split",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "node_Conv_20",
+      "type": "node",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "Relu_90",
+      "type": "Relu",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 8709
+    },
+    {
+      "name": "node_Conv_21",
+      "type": "node",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 3188
+    },
+    {
+      "name": "node_Conv_22",
+      "type": "node",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "Relu_95",
+      "type": "Relu",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 1830
+    },
+    {
+      "name": "Concat_96",
+      "type": "Concat",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 4333
+    },
+    {
+      "name": "_channel_shuffle_5",
+      "type": "channel",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 6779
+    },
+    {
+      "name": "Split_102",
+      "type": "Split",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "node_Conv_23",
+      "type": "node",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "Relu_105",
+      "type": "Relu",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 9165
+    },
+    {
+      "name": "node_Conv_24",
+      "type": "node",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 2454
+    },
+    {
+      "name": "node_Conv_25",
+      "type": "node",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "Relu_110",
+      "type": "Relu",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 1779
+    },
+    {
+      "name": "Concat_111",
+      "type": "Concat",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 4348
+    },
+    {
+      "name": "_channel_shuffle_6",
+      "type": "channel",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 6837
+    },
+    {
+      "name": "Split_117",
+      "type": "Split",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "node_Conv_26",
+      "type": "node",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "Relu_120",
+      "type": "Relu",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 9475
+    },
+    {
+      "name": "node_Conv_27",
+      "type": "node",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 2368
+    },
+    {
+      "name": "node_Conv_28",
+      "type": "node",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "Relu_125",
+      "type": "Relu",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 2231
+    },
+    {
+      "name": "Concat_126",
+      "type": "Concat",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 4315
+    },
+    {
+      "name": "_channel_shuffle_7",
+      "type": "channel",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 6881
+    },
+    {
+      "name": "Split_132",
+      "type": "Split",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "node_Conv_29",
+      "type": "node",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "Relu_135",
+      "type": "Relu",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 8822
+    },
+    {
+      "name": "node_Conv_30",
+      "type": "node",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 2423
+    },
+    {
+      "name": "node_Conv_31",
+      "type": "node",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "Relu_140",
+      "type": "Relu",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 1825
+    },
+    {
+      "name": "Concat_141",
+      "type": "Concat",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 4395
+    },
+    {
+      "name": "_channel_shuffle_8",
+      "type": "channel",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 6801
+    },
+    {
+      "name": "Split_147",
+      "type": "Split",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "node_Conv_32",
+      "type": "node",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "Relu_150",
+      "type": "Relu",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 8645
+    },
+    {
+      "name": "node_Conv_33",
+      "type": "node",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 2482
+    },
+    {
+      "name": "node_Conv_34",
+      "type": "node",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "Relu_155",
+      "type": "Relu",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 1771
+    },
+    {
+      "name": "Concat_156",
+      "type": "Concat",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 4320
+    },
+    {
+      "name": "_channel_shuffle_9",
+      "type": "channel",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 6838
+    },
+    {
+      "name": "Split_162",
+      "type": "Split",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "node_Conv_35",
+      "type": "node",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "Relu_165",
+      "type": "Relu",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 8677
+    },
+    {
+      "name": "node_Conv_36",
+      "type": "node",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 2446
+    },
+    {
+      "name": "node_Conv_37",
+      "type": "node",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "Relu_170",
+      "type": "Relu",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 1813
+    },
+    {
+      "name": "Concat_171",
+      "type": "Concat",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 4385
+    },
+    {
+      "name": "_channel_shuffle_10",
+      "type": "channel",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 6813
+    },
+    {
+      "name": "Split_177",
+      "type": "Split",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "node_Conv_38",
+      "type": "node",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "Relu_180",
+      "type": "Relu",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 8448
+    },
+    {
+      "name": "node_Conv_39",
+      "type": "node",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 2596
+    },
+    {
+      "name": "node_Conv_40",
+      "type": "node",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "Relu_185",
+      "type": "Relu",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 1770
+    },
+    {
+      "name": "Concat_186",
+      "type": "Concat",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 4392
+    },
+    {
+      "name": "_channel_shuffle_11",
+      "type": "channel",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 6795
+    },
+    {
+      "name": "node_Conv_41",
+      "type": "node",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 24733
+    },
+    {
+      "name": "node_Conv_42",
+      "type": "node",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "Relu_196",
+      "type": "Relu",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 1546
+    },
+    {
+      "name": "node_Conv_43",
+      "type": "node",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "Relu_199",
+      "type": "Relu",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 4663
+    },
+    {
+      "name": "node_Conv_44",
+      "type": "node",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 22510
+    },
+    {
+      "name": "node_Conv_45",
+      "type": "node",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "Relu_204",
+      "type": "Relu",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 1477
+    },
+    {
+      "name": "Concat_205",
+      "type": "Concat",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 2339
+    },
+    {
+      "name": "_channel_shuffle_12",
+      "type": "channel",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 3308
+    },
+    {
+      "name": "Split_211",
+      "type": "Split",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 3478
+    },
+    {
+      "name": "node_Conv_46",
+      "type": "node",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "Relu_214",
+      "type": "Relu",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 1493
+    },
+    {
+      "name": "node_Conv_47",
+      "type": "node",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 1593
+    },
+    {
+      "name": "node_Conv_48",
+      "type": "node",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "Relu_219",
+      "type": "Relu",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 1471
+    },
+    {
+      "name": "Concat_220",
+      "type": "Concat",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 2296
+    },
+    {
+      "name": "_channel_shuffle_13",
+      "type": "channel",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 3308
+    },
+    {
+      "name": "Split_226",
+      "type": "Split",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 3267
+    },
+    {
+      "name": "node_Conv_49",
+      "type": "node",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "Relu_229",
+      "type": "Relu",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 1533
+    },
+    {
+      "name": "node_Conv_50",
+      "type": "node",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 1600
+    },
+    {
+      "name": "node_Conv_51",
+      "type": "node",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "Relu_234",
+      "type": "Relu",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 1563
+    },
+    {
+      "name": "Concat_235",
+      "type": "Concat",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 2468
+    },
+    {
+      "name": "_channel_shuffle_14",
+      "type": "channel",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 3317
+    },
+    {
+      "name": "Split_241",
+      "type": "Split",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 3287
+    },
+    {
+      "name": "node_Conv_52",
+      "type": "node",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "Relu_244",
+      "type": "Relu",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 1492
+    },
+    {
+      "name": "node_Conv_53",
+      "type": "node",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 1574
+    },
+    {
+      "name": "node_Conv_54",
+      "type": "node",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "Relu_249",
+      "type": "Relu",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 1471
+    },
+    {
+      "name": "Concat_250",
+      "type": "Concat",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 2367
+    },
+    {
+      "name": "_channel_shuffle_15",
+      "type": "channel",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 3296
+    },
+    {
+      "name": "node_Conv_55",
+      "type": "node",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 0
+    },
+    {
+      "name": "Relu_258",
+      "type": "Relu",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 9308
+    },
+    {
+      "name": "ReduceMean_259",
+      "type": "ReduceMean",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 26764
+    },
+    {
+      "name": "Gemm_260",
+      "type": "Gemm",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 14346
+    },
+    {
+      "name": "Output",
+      "type": "Output",
+      "compute_unit": "NPU",
+      "execution_time": 0,
+      "execution_cycles": 3305
+    }
+  ]
+}

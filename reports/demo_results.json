@@ -1,0 +1,45 @@
+{
+  "backend": "onnxruntime",
+  "rows": [
+    {
+      "model": "efficientnet-lite4-11",
+      "family": "vision-classification",
+      "backend": "onnxruntime",
+      "input_source": "bus",
+      "wall_ms": 11.333699978422374,
+      "predictions": [
+        {
+          "class_id": 654,
+          "label": "minibus",
+          "prob": 0.9989339709281921
+        },
+        {
+          "class_id": 734,
+          "label": "police van",
+          "prob": 0.0007101903902366757
+        },
+        {
+          "class_id": 874,
+          "label": "trolleybus",
+          "prob": 0.0001958897482836619
+        },
+        {
+          "class_id": 656,
+          "label": "minivan",
+          "prob": 8.504677680321038e-05
+        },
+        {
+          "class_id": 705,
+          "label": "passenger car",
+          "prob": 1.931086808326654e-05
+        }
+      ],
+      "summary": "top-1: minibus (99.89%)  |  top-5: minibus, police van, trolleybus, minivan, passenger car",
+      "raw_shape": [
+        1000
+      ],
+      "ok": true,
+      "error": null
+    }
+  ]
+}

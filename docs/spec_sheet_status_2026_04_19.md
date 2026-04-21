@@ -59,7 +59,7 @@
 | Precision — INT8 | | 🟢 | Full datapath + quantiser + compiler tested on real yolov8n. **Production recipe (100-img cal + percentile-99.9999 + NPU-thr 0.20) measured at 98.4% / 96.0% / 91.2% detection match @ IoU ≥ 0.5/0.7/0.9** vs FP32 on 28 real eval images. Competitive with TensorRT / OpenVINO. |
 | Precision — FP4 | | 🟡 | F1-A1. Not in RTL today. |
 | Precision — FP8 (E4M3/E5M2) | | 🟡 | F1-A1: Python goldens + RTL sim-gate done (`tools/npu_ref/fp_ref.py`, `sim/npu_fp_*` cocotb 5/5 PASS). Synthesisable RTL is F1-A1.1. |
-| Precision — FP16 | | 🟡 | Today "placeholder, falls back to INT8" per `npu_top.v`. Full FP16 datapath in F1-A1. |
+| Precision — FP16 | | 🟡 | Today "placeholder, falls back to INT8" per `npu_top.v`. Full FP16 datapath in F1-A1.1 (sim-gate PASS; integration into main systolic array pending). |
 | Precision — BF16 / TF32 / FP32 | | 🟡 | F1-A2 (blocked by F1-A1). |
 | Precision — INT2 | (not on spec sheet but shipped) | ✅ | `cfg_precision_mode=10`, `test_precision_int2_end_to_end` PASS. Worth adding to the sheet if positioning the chip at ultra-low-power modes. |
 | Transformer Engine | 8× MHSA, dynamic sparsity, rotary PE, fused softmax, layer norm, GeLU | 🟠 | Softmax RTL ✅ (F1-A4, `rtl/npu_softmax/`, bit-exact vs mirror). LayerNorm/RMSNorm RTL ✅ (F1-A4, `rtl/npu_layernorm/`). GeLU: needs LUT entry in AFU (close to F1-A4 scope). Rotary PE: op in IR (F1-B1, `OP_ROTARY_EMB`) — no dedicated RTL. 8× MHSA tile: F1-A5 (not started, blocked by F1-A4). **Dynamic sparsity is F1-A3** (not started). |

@@ -1,0 +1,12 @@
+{
+  "model": "data\\models\\zoo\\squeezenet-1.1.aihub.onnx",
+  "device": "Samsung Galaxy S24",
+  "compile_job": "jg93rkywg",
+  "profile_job": "j57jmklv5",
+  "job_url": "https://app.aihub.qualcomm.com/jobs/j57jmklv5",
+  "wall_s": 276.8,
+  "generated_at": 1776774925,
+  "inference_ms": 0.216,
+  "peak_memory_mb": 96.76,
+  "raw_profile": "reports\\qualcomm_aihub\\qnn_bin\\squeezenet-1.1.aihub_Samsung_Galaxy_S24_raw.json"
+}
